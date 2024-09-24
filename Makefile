@@ -12,6 +12,7 @@ START		= $(KERNEL_DIR)/start32.asm
 START_OBJ	= $(KERNEL_DIR)/start32.o
 KMAIN		= $(KERNEL_DIR)/kernel.c
 KMAIN_OBJ	= $(KERNEL_DIR)/kernel.o
+LINKER		= $(KERNEL_DIR)/linker.ld
 KERNEL		= $(ROOTFS)/boot/kernel.elf
 
 all: tcc $(KERNEL) $(ISO) qemu
@@ -30,7 +31,7 @@ qemu:
 	qemu-system-i386 -cdrom $(ISO)
 
 $(KERNEL): $(START_OBJ) $(KMAIN_OBJ)
-	$(CC) -nostdlib -Wl,-Ttext,0x100000 $(START_OBJ) $(KMAIN_OBJ) -o $(KERNEL)
+	$(LD) -nostdlib -m elf_i386 --script=$(LINKER) $(START_OBJ) $(KMAIN_OBJ) -o $(KERNEL)
 
 .ONESHELL:
 $(START_OBJ):
