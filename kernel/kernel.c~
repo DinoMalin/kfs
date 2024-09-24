@@ -20,8 +20,8 @@
 # define WHITE      15
 
 # define combine(bg, fg) (bg * 16 + fg)
-# define NEXT_LINE      last_written_addr + (COL - (((last_written_addr - video_memory) / 2) % COL)) * 2
-# define START_LINE   last_written_addr - (((last_written_addr - video_memory) / 2) % COL) * 2
+# define next_line  (COL - (((last_written_addr - video_memory) / 2) % COL)) * 2
+# define restart_line  (((last_written_addr - video_memory) / 2) % COL) * 2
 
 unsigned char *video_memory         = (unsigned char *)0xB8000;
 unsigned char *last_written_addr    = (unsigned char *)0xB8000;
@@ -36,10 +36,10 @@ int strlen(char *str)
 
 int handle_special_char(char c) {
     if (c == '\n') {
-        last_written_addr = NEXT_LINE;
+        last_written_addr += next_line;
         return 1;
     } else if (c == '\r') {
-        last_written_addr = START_LINE;
+        last_written_addr -= restart_line;
         return 1;
     }
     return 0;
@@ -81,9 +81,7 @@ void putstrk(char *str, unsigned char color, int x, int y) {
 }
 
 void kmain() {
-    char s1[] = "42 | DinoMalin was here\nThis is the line 2";
-    char s2[] = "\r42 | DinoMalin was here\nThis is the line 3";
-    writek(s1, combine(WHITE, BLUE), strlen(s1));
-    writek(s2, combine(WHITE, BLUE), strlen(s2));
+    writek("42 | DinoMalin was here\nThis is the line 2", combine(WHITE, BLUE), 42);
+    writek("\r42 | DinoMalin was here\nThis is the line 3", combine(WHITE, BLUE), 43);
 
 }
