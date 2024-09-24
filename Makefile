@@ -34,15 +34,11 @@ $(KERNEL): $(START_OBJ) $(KMAIN_OBJ)
 
 .ONESHELL:
 $(START_OBJ):
-	cd rootfs
 	nasm $(START) -f elf
-	cd ..
 
 .ONESHELL:
 $(KMAIN_OBJ):
-	cd rootfs
-	$(CC) -c $(KMAIN)
-	cd ..
+	$(CC) -c $(KMAIN) -o $(KMAIN_OBJ)
 
 clean:
 	rm $(ISO) -f
