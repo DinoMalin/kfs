@@ -17,16 +17,10 @@ KMAIN_OBJ	= $(OBJ_DIR)/$(KERNEL_DIR)/kernel.o
 LINKER		= $(KERNEL_DIR)/linker.ld
 KERNEL		= $(ROOTFS)/boot/kernel.elf
 
-DINOLIB_DIR		= dinolibc
-DINOLIB_LIB_SRC	= dinoio dinostring
-DINOLIB_LIB_DIR	= $(DINOLIB_DIR)/headers
-DINOLIB_LIB		= $(addprefix $(DINOLIB_LIB_DIR)/, $(addsuffix .h, $(DINOLIB_LIB_SRC)))
-DINOLIB			= strlen writek
-DINOLIB_SRC		= $(addprefix $(DINOLIB_DIR)/, $(addsuffix .c, $(DINOLIB)))
-DINOLIB_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(DINOLIB_DIR)/, $(addsuffix .o, $(DINOLIB))))
-
-BG=WHITE
-FG=RED
+DINOLIB_DIR	= dinolibc
+DINOLIB		= strlen
+DINOLIB_SRC	= $(addprefix $(DINOLIB_DIR)/, $(addsuffix .c, $(DINOLIB)))
+DINOLIB_OBJ	= $(addprefix $(OBJ_DIR)/, $(addprefix $(DINOLIB_DIR)/, $(addsuffix .o, $(DINOLIB))))
 
 all: tcc $(KERNEL) $(ISO) qemu
 
@@ -51,7 +45,7 @@ $(START_OBJ):
 
 obj/%.o: %.c
 	mkdir -p $(dir $@)
-	$(CC) -I $(DINOLIB_LIB_DIR) -DMAIN_COLOR_FG=$(FG) -DMAIN_COLOR_BG=$(BG) -c $< -o $@
+	$(CC) -c $< -o $@
 
 clean:
 	rm $(ISO) -f
