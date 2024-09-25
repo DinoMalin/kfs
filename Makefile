@@ -7,6 +7,7 @@ KERNEL_DIR	= kernel
 
 TCC_DIR	= tinycc
 CC		= ./$(TCC_DIR)/i386-tcc
+CFLAGS	= -nostdlib -fno-builtin -fno-stack-protector
 
 OBJ_DIR		= obj
 
@@ -44,14 +45,14 @@ qemu:
 	qemu-system-i386 -cdrom $(ISO)
 
 $(KERNEL): $(START_OBJ) $(KMAIN_OBJ) $(DINOLIB_OBJ)
-	$(LD) -nostdlib -m elf_i386 --script=$(LINKER) $(START_OBJ) $(KMAIN_OBJ) $(DINOLIB_OBJ) -o $(KERNEL)
+	$(LD) -m elf_i386 --script=$(LINKER) $(START_OBJ) $(KMAIN_OBJ) $(DINOLIB_OBJ) -o $(KERNEL)
 
 $(START_OBJ):
 	nasm $(START) -f elf -o $(START_OBJ)
 
 obj/%.o: %.c
 	mkdir -p $(dir $@)
-	$(CC) -I $(DINOLIB_LIB_DIR) -DMAIN_COLOR_FG=$(FG) -DMAIN_COLOR_BG=$(BG) -c $< -o $@
+	$(CC) $(CFLAGS) -I $(DINOLIB_LIB_DIR) -DMAIN_COLOR_FG=$(FG) -DMAIN_COLOR_BG=$(BG) -c $< -o $@
 
 clean:
 	rm $(ISO) -f
