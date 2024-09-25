@@ -19,10 +19,8 @@ LINKER		= $(KERNEL_DIR)/linker.ld
 KERNEL		= $(ROOTFS)/boot/kernel.elf
 
 DINOLIB_DIR		= dinolibc
-DINOLIB_LIB_SRC	= dinoio dinostring
 DINOLIB_LIB_DIR	= $(DINOLIB_DIR)/headers
-DINOLIB_LIB		= $(addprefix $(DINOLIB_LIB_DIR)/, $(addsuffix .h, $(DINOLIB_LIB_SRC)))
-DINOLIB			= strlen writek
+DINOLIB			= strlen strncmp writek printk
 DINOLIB_SRC		= $(addprefix $(DINOLIB_DIR)/, $(addsuffix .c, $(DINOLIB)))
 DINOLIB_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(DINOLIB_DIR)/, $(addsuffix .o, $(DINOLIB))))
 
@@ -48,7 +46,8 @@ $(KERNEL): $(START_OBJ) $(KMAIN_OBJ) $(DINOLIB_OBJ)
 	$(LD) -m elf_i386 --script=$(LINKER) $(START_OBJ) $(KMAIN_OBJ) $(DINOLIB_OBJ) -o $(KERNEL)
 
 $(START_OBJ):
-	nasm $(START) -f elf -o $(START_OBJ)
+	mkdir -p $(dir $@)
+	nasm $(START) -f elf -o $@
 
 obj/%.o: %.c
 	mkdir -p $(dir $@)
@@ -57,6 +56,7 @@ obj/%.o: %.c
 clean:
 	rm $(ISO) -f
 	rm $(KMAIN_OBJ) $(START_OBJ) -f
+	rm -rf $(OBJ_DIR)
 
 fclean: clean
 	cd $(TCC_DIR) && \
