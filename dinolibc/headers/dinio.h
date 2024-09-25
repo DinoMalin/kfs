@@ -20,8 +20,11 @@
 # define YELLOW     14
 # define WHITE      15
 
-# define NEXT_LINE    last_written_addr + (COL - (((last_written_addr - video_memory) / 2) % COL)) * 2
-# define START_LINE   last_written_addr - (((last_written_addr - video_memory) / 2) % COL) * 2
+# define NEXT_LINE			last_written_addr + (COL - (((last_written_addr - video_memory) / 2) % COL)) * 2
+# define START_LINE			last_written_addr - (((last_written_addr - video_memory) / 2) % COL) * 2
+# define LAST_LINE			0xB8EFF
+# define END_VMEM			0xB8FA0
+# define islastline(addr)	(addr >= LAST_LINE)
 
 # ifndef MAIN_COLOR_BG
 # 	define MAIN_COLOR_BG BLUE

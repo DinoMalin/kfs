@@ -66,6 +66,9 @@ int printk(char *str, ...) {
     va_list variadic;
     va_start(variadic, str);
 
+    if (last_written_addr != video_memory)
+	writek("\n", DEFAULT, 1);
+
     while (str[i])
     {
         count += basic(str + i, &i);
@@ -73,6 +76,5 @@ int printk(char *str, ...) {
     }
 
     va_end(variadic);
-    writek("\n", DEFAULT, 1);
     return count;
 }
