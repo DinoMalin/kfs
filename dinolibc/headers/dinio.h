@@ -41,3 +41,5 @@ extern unsigned char *video_memory;
 
 void    writek(char *str, unsigned char color, int len);
 int		printk(char *str, ...);
+void	init_serial();
+void	write_serial(char *str);

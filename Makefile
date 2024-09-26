@@ -20,7 +20,8 @@ KERNEL		= $(ROOTFS)/boot/kernel.elf
 
 DINOLIB_DIR		= dinolibc
 DINOLIB_LIB_DIR	= $(DINOLIB_DIR)/headers
-DINOLIB			= dinostring/strlen dinostring/strncmp dinio/writek dinio/printk
+DINOLIB			= dinostring/strlen dinostring/strncmp \
+				  dinio/writek dinio/printk dinio/out
 DINOLIB_SRC		= $(addprefix $(DINOLIB_DIR)/, $(addsuffix .c, $(DINOLIB)))
 DINOLIB_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(DINOLIB_DIR)/, $(addsuffix .o, $(DINOLIB))))
 
