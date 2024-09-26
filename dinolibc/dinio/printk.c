@@ -66,7 +66,7 @@ int printk(char *str, ...) {
     va_list variadic;
     va_start(variadic, str);
 
-    if (last_written_addr != video_memory)
+    if (video_memory != START_VMEM)
 	writek("\n", DEFAULT, 1);
 
     while (str[i])

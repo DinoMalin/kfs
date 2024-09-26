@@ -1,9 +1,6 @@
 #include "dinio.h"
 #include "dinostring.h"
 
-unsigned char *video_memory         = (unsigned char *)0xB8000;
-unsigned char *last_written_addr    = (unsigned char *)0xB8000;
-
 void kmain() {
     printk("LINE 1");
     printk("LINE 2");
@@ -32,7 +29,7 @@ void kmain() {
     printk("LINE 24");
     printk("LINE 25");
     printk("LINE 26");
-    printk("LINE 27");
+    printk("LINE 26");
     printk("LINE 28");
     printk("LINE 29");
     printk("LINE 30");

@@ -20,11 +20,11 @@
 # define YELLOW     14
 # define WHITE      15
 
-# define NEXT_LINE			last_written_addr + (COL - (((last_written_addr - video_memory) / 2) % COL)) * 2
-# define START_LINE			last_written_addr - (((last_written_addr - video_memory) / 2) % COL) * 2
-# define LAST_LINE			0xB8EFF
-# define END_VMEM			0xB8FA0
-# define islastline(addr)	(addr >= LAST_LINE)
+# define START_VMEM			((unsigned char *)0xB8000)
+# define LAST_LINE			((unsigned char *)0xB8EFF)
+# define END_VMEM			((unsigned char *)0xB8FA0)
+# define NEXT_LINE			((unsigned char *)video_memory + (COL - (((video_memory - START_VMEM) / 2) % COL)) * 2)
+# define START_LINE			((unsigned char *)video_memory - (((video_memory - START_VMEM) / 2) % COL) * 2)
 
 # ifndef MAIN_COLOR_BG
 # 	define MAIN_COLOR_BG BLUE
@@ -38,7 +38,6 @@
 # define DEFAULT combine(MAIN_COLOR_BG, MAIN_COLOR_FG)
 
 extern unsigned char *video_memory;
-extern unsigned char *last_written_addr;
 
 void    writek(char *str, unsigned char color, int len);
 int		printk(char *str, ...);
