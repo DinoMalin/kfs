@@ -28,8 +28,10 @@ void gdt_install() {
     gdt_set_gate(null_descriptor);
     gdt_set_gate(kernel_code);
     gdt_set_gate(kernel_data);
+    gdt_set_gate(kernel_stack);
     gdt_set_gate(user_code);
     gdt_set_gate(user_data);
+    gdt_set_gate(user_stack);
 
     gdt_flush();
 }

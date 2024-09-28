@@ -34,10 +34,12 @@ void gdt_install();
  * for more informations on access and granularity bytes.
 */
 
-# define NB_SEGMENTS		5
+# define NB_SEGMENTS		7
 # define null_descriptor	0, 0, 0, 0
 # define kernel_code		0, LIMIT_MAX, 0b10011011, 0b11001111
 # define kernel_data		0, LIMIT_MAX, 0b10010011, 0b11001111
+# define kernel_stack		0, LIMIT_MAX, 0b10010011, 0b11001111
 # define user_code		0, LIMIT_MAX, 0b11111011, 0b11001111
 # define user_data		0, LIMIT_MAX, 0b11110011, 0b11001111
+# define user_stack		0, LIMIT_MAX, 0b11110011, 0b11001111
 
