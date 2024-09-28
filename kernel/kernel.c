@@ -4,5 +4,5 @@
 
 void kmain() {
     gdt_install();
-    printk("LINE 1");
+    print_stack(25);
 }

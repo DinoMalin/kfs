@@ -37,9 +37,10 @@
 # define combine(bg, fg) (bg * 16 + fg)
 # define DEFAULT combine(MAIN_COLOR_BG, MAIN_COLOR_FG)
 
-extern unsigned char *video_memory;
+extern unsigned char	*video_memory;
 
 void    writek(char *str, unsigned char color, int len);
 int		printk(char *str, ...);
 void	init_serial();
 void	write_serial(char *str);
+void	print_stack(int nb);
