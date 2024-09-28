@@ -5,4 +5,5 @@
 void kmain() {
     gdt_install();
     print_stack(25);
+    write_serial("DinoMalin");
 }
