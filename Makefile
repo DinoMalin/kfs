@@ -21,7 +21,7 @@ UTILS_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(UTILS_DIR)/, $(addsuffix .o,
 
 DINOLIB_DIR		= dinolibc
 DINOLIB_LIB_DIR	= $(DINOLIB_DIR)/headers
-DINOLIB			= dinostring/strlen dinostring/strncmp \
+DINOLIB			= dinostring/strlen dinostring/strncmp dinostring/memset \
 				  dinio/writek dinio/printk dinio/out dinio/print_stack
 DINOLIB_SRC		= $(addprefix $(DINOLIB_DIR)/, $(addsuffix .c, $(DINOLIB)))
 DINOLIB_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(DINOLIB_DIR)/, $(addsuffix .o, $(DINOLIB))))
