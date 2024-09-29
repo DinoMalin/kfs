@@ -8,5 +8,5 @@ void kmain() {
     gdt_install();
     idt_install();
     print_stack(25);
-    write_serial("DinoMalin");
+    int a = 9 / 0;
 }
