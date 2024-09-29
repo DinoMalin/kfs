@@ -15,7 +15,7 @@ LINKER		= $(KERNEL_DIR)/linker.ld
 KERNEL		= $(ROOTFS)/boot/kernel.elf
 
 UTILS_DIR		= utils
-UTILS			= gdt
+UTILS			= gdt idt
 UTILS_SRC		= $(addprefix $(UTILS_DIR)/, $(addsuffix .c, $(UTILS)))
 UTILS_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(UTILS_DIR)/, $(addsuffix .o, $(UTILS))))
 
