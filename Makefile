@@ -7,8 +7,8 @@ KERNEL_DIR	= kernel
 
 OBJ_DIR		= obj
 
-START		= $(KERNEL_DIR)/start32.asm
-START_OBJ	= $(OBJ_DIR)/$(KERNEL_DIR)/start32.o
+START		= $(KERNEL_DIR)/start.s
+START_OBJ	= $(OBJ_DIR)/$(KERNEL_DIR)/start.o
 KMAIN		= $(KERNEL_DIR)/kernel.c
 KMAIN_OBJ	= $(OBJ_DIR)/$(KERNEL_DIR)/kernel.o
 LINKER		= $(KERNEL_DIR)/linker.ld
