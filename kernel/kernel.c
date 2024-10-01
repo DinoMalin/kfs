@@ -10,7 +10,6 @@ void kmain() {
     irq_install();
     asm volatile ("sti");
     timer_install();
-    printk("one");
-    wait(200);
-    printk("two");
+    keyboard_install();
+    while (1) {}
 }

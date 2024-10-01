@@ -18,8 +18,6 @@ void timer_phase(int hz) {
 
 void timer_handler(struct regs *r) {
     ticks++;
-    if (ticks % RATE == 0)
-        printk("One second has passed !");
 }
 
 void timer_install() {
