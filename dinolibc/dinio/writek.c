@@ -23,9 +23,9 @@ int handle_special_char(char c) {
         video_memory = START_LINE;
         return 1;
     } else if (c == '\b') {
-        video_memory -= 2;
-        *video_memory = 0;
-        *(video_memory + 1) = 0;
+        if (video_memory - 2 >= START_VMEM)
+            video_memory -= 2;
+        clear_cell(video_memory);
         return 1;
     }
     return 0;

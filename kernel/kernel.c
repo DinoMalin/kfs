@@ -11,5 +11,6 @@ void kmain() {
     asm volatile ("sti");
     timer_install();
     keyboard_install();
+    clear_screen();
     while (1) {}
 }

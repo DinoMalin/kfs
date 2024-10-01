@@ -37,8 +37,9 @@
 # endif
 
 
-# define combine(bg, fg) (bg * 16 + fg)
-# define DEFAULT combine(MAIN_COLOR_BG, MAIN_COLOR_FG)
+# define combine(bg, fg)	(bg * 16 + fg)
+# define DEFAULT			combine(MAIN_COLOR_BG, MAIN_COLOR_FG)
+# define clear_cell(vmem)	{vmem[0] = ' '; vmem[1] = DEFAULT;}
 
 extern unsigned char	*video_memory;
 
@@ -49,3 +50,4 @@ void		write_serial(char *str);
 void		print_stack(int nb);
 void		outb(uint16_t port, uint8_t val);
 uint8_t		inb(uint16_t port);
+void		clear_screen();
