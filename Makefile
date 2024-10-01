@@ -34,8 +34,8 @@ TCC_DIR	= tinycc
 CC		= ./$(TCC_DIR)/i386-tcc
 CFLAGS	= -nostdlib -fno-builtin -fno-stack-protector -I $(DINOLIB_LIB_DIR) -I $(SYSTEM_INC_DIR)
 
-BG=WHITE
-FG=RED
+BG=BLUE
+FG=WHITE
 
 all: tcc $(KERNEL) $(ISO) qemu
 
