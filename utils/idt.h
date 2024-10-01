@@ -33,6 +33,7 @@ void idt_install();
 # define NB_ENTRIES 256
 # define ISR(num) (unsigned)isr##num, 0x08, 0b10001110
 
+// Load IDT and ISR functions
 extern void idt_load();
 extern void isr0();
 extern void isr1();

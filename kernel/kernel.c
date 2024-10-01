@@ -7,6 +7,7 @@
 void kmain() {
     gdt_install();
     idt_install();
+    irq_install();
     print_stack(25);
     int a = 9 / 0;
 }

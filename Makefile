@@ -11,11 +11,13 @@ START		= $(KERNEL_DIR)/start.s
 START_OBJ	= $(OBJ_DIR)/$(KERNEL_DIR)/start.o
 KMAIN		= $(KERNEL_DIR)/kernel.c
 KMAIN_OBJ	= $(OBJ_DIR)/$(KERNEL_DIR)/kernel.o
+SYTEM		= $(KERNEL_DIR)/system.s
+SYSTEM_OBJ	= $(OBJ_DIR)/$(KERNEL_DIR)/system.o
 LINKER		= $(KERNEL_DIR)/linker.ld
 KERNEL		= $(ROOTFS)/boot/kernel.elf
 
 UTILS_DIR		= utils
-UTILS			= gdt idt
+UTILS			= gdt idt irq
 UTILS_SRC		= $(addprefix $(UTILS_DIR)/, $(addsuffix .c, $(UTILS)))
 UTILS_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(UTILS_DIR)/, $(addsuffix .o, $(UTILS))))
 
@@ -48,14 +50,14 @@ $(ISO):
 qemu:
 	qemu-system-i386 -cdrom $(ISO) -serial stdio
 
-$(KERNEL): $(START_OBJ) $(KMAIN_OBJ) $(DINOLIB_OBJ) $(UTILS_OBJ)
-	$(LD) -m elf_i386 --script=$(LINKER) $(START_OBJ) $(KMAIN_OBJ) $(DINOLIB_OBJ) $(UTILS_OBJ) -o $(KERNEL)
+$(KERNEL): $(START_OBJ) $(KMAIN_OBJ) $(SYSTEM_OBJ) $(DINOLIB_OBJ) $(UTILS_OBJ)
+	$(LD) -m elf_i386 --script=$(LINKER) $(START_OBJ) $(KMAIN_OBJ) $(SYSTEM_OBJ) $(DINOLIB_OBJ) $(UTILS_OBJ) -o $(KERNEL)
 
-$(START_OBJ):
+$(OBJ_DIR)/%.o: %.s
 	mkdir -p $(dir $@)
-	nasm $(START) -f elf -o $@
+	nasm $< -f elf -o $@
 
-obj/%.o: %.c
+$(OBJ_DIR)/%.o: %.c
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -DMAIN_COLOR_FG=$(FG) -DMAIN_COLOR_BG=$(BG) -c $< -o $@
 

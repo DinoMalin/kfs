@@ -1,9 +1,8 @@
 #include "dinio.h"
-#include "dinoint.h"
 
 #define COM1 0x3f8
 
-static inline void outb(uint16_t port, uint8_t val) {
+inline void outb(uint16_t port, uint8_t val) {
     asm volatile ("outb %b0, %w1" : : "a"(val), "Nd"(port) : "memory");
 }
 
