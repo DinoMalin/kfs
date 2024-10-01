@@ -12,5 +12,6 @@ void kmain() {
     timer_install();
     keyboard_install();
     clear_screen();
+    print_stack(4);
     while (1) {}
 }

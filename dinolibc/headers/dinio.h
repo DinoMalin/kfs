@@ -23,7 +23,7 @@
 # define WHITE      15
 
 # define START_VMEM			((unsigned char *)0xB8000)
-# define LAST_LINE			((unsigned char *)0xB8EFF)
+# define LAST_LINE			((unsigned char *)0xB8F00)
 # define END_VMEM			((unsigned char *)0xB8FA0)
 # define NEXT_LINE			((unsigned char *)video_memory + (COL - (((video_memory - START_VMEM) / 2) % COL)) * 2)
 # define START_LINE			((unsigned char *)video_memory - (((video_memory - START_VMEM) / 2) % COL) * 2)

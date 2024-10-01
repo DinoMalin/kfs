@@ -9,11 +9,11 @@ void scroll() {
    }
    for (int i = 3840; i <= 4000; i+=2)
        START_VMEM[i] = 0;
-   video_memory = START_LINE;
+   video_memory = LAST_LINE;
 }
 
 void backspace() {
-    while (*video_memory == 0 && video_memory >= START_VMEM)
+    while (*video_memory == 0 && video_memory > START_VMEM)
         video_memory -= 2;
     clear_cell(video_memory);
 }
@@ -39,8 +39,11 @@ void writek(char *str, unsigned char color, int len) {
     for (int i = 0; i < len; i++) {
         if (handle_special_char(str[i]))
             continue;
+        if (video_memory >= END_VMEM)
+            scroll();
         *video_memory = str[i];
         *(video_memory + 1) = color;
         video_memory += 2;
     }
+    move_cursor();
 }
