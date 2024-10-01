@@ -11,15 +11,17 @@ START		= $(KERNEL_DIR)/start.s
 START_OBJ	= $(OBJ_DIR)/$(KERNEL_DIR)/start.o
 KMAIN		= $(KERNEL_DIR)/kernel.c
 KMAIN_OBJ	= $(OBJ_DIR)/$(KERNEL_DIR)/kernel.o
-SYTEM		= $(KERNEL_DIR)/system.s
-SYSTEM_OBJ	= $(OBJ_DIR)/$(KERNEL_DIR)/system.o
 LINKER		= $(KERNEL_DIR)/linker.ld
 KERNEL		= $(ROOTFS)/boot/kernel.elf
 
-UTILS_DIR		= utils
-UTILS			= gdt idt irq
-UTILS_SRC		= $(addprefix $(UTILS_DIR)/, $(addsuffix .c, $(UTILS)))
-UTILS_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(UTILS_DIR)/, $(addsuffix .o, $(UTILS))))
+SYSTEM_DIR		= system
+SYSTEM_C		= gdt idt irq
+SYSTEM_S		= interrupts
+SYSTEM_SRC		= $(addprefix $(SYSTEM_DIR)/, $(addsuffix .c, $(SYSTEM_C))) \
+				  $(addprefix $(SYSTEM_DIR)/, $(addsuffix .s, $(SYSTEM_S)))
+SYSTEM_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(SYSTEM_DIR)/, $(addsuffix .o, $(SYSTEM_C)))) \
+				  $(addprefix $(OBJ_DIR)/, $(addprefix $(SYSTEM_DIR)/, $(addsuffix .o, $(SYSTEM_S))))
+SYSTEM_INC_DIR	= $(SYSTEM_DIR)/include
 
 DINOLIB_DIR		= dinolibc
 DINOLIB_LIB_DIR	= $(DINOLIB_DIR)/headers
@@ -30,7 +32,7 @@ DINOLIB_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(DINOLIB_DIR)/, $(addsuffix
 
 TCC_DIR	= tinycc
 CC		= ./$(TCC_DIR)/i386-tcc
-CFLAGS	= -nostdlib -fno-builtin -fno-stack-protector -I $(DINOLIB_LIB_DIR) -I $(UTILS_DIR)
+CFLAGS	= -nostdlib -fno-builtin -fno-stack-protector -I $(DINOLIB_LIB_DIR) -I $(SYSTEM_INC_DIR)
 
 BG=WHITE
 FG=RED
@@ -50,8 +52,8 @@ $(ISO):
 qemu:
 	qemu-system-i386 -cdrom $(ISO) -serial stdio
 
-$(KERNEL): $(START_OBJ) $(KMAIN_OBJ) $(SYSTEM_OBJ) $(DINOLIB_OBJ) $(UTILS_OBJ)
-	$(LD) -m elf_i386 --script=$(LINKER) $(START_OBJ) $(KMAIN_OBJ) $(SYSTEM_OBJ) $(DINOLIB_OBJ) $(UTILS_OBJ) -o $(KERNEL)
+$(KERNEL): $(START_OBJ) $(KMAIN_OBJ) $(DINOLIB_OBJ) $(SYSTEM_OBJ)
+	$(LD) -m elf_i386 --script=$(LINKER) $(START_OBJ) $(KMAIN_OBJ) $(DINOLIB_OBJ) $(SYSTEM_OBJ) -o $(KERNEL)
 
 $(OBJ_DIR)/%.o: %.s
 	mkdir -p $(dir $@)

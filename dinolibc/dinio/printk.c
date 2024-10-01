@@ -12,12 +12,6 @@ int putstr(char *str) {
     return len;
 }
 
-int putptr(void *ptr) {
-    if (ptr == 0)
-	return putstr("(nil)");
-    return putstr("0x") + puthexa((unsigned int)ptr);
-}
-
 int putchar(char c) { 
 	writek(&c, DEFAULT, 1);
 	return 1;
@@ -28,6 +22,12 @@ int puthexa(unsigned int n) {
     if (n >= 16)
 	return puthexa(n / 16) + puthexa(n % 16);
     return putchar(hexa[n]);
+}
+
+int putptr(void *ptr) {
+    if (ptr == 0)
+	return putstr("(nil)");
+    return putstr("0x") + puthexa((unsigned int)ptr);
 }
 
 int putnbr(int n) {
