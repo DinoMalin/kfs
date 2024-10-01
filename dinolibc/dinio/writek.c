@@ -12,6 +12,12 @@ void scroll() {
    video_memory = START_LINE;
 }
 
+void backspace() {
+    while (*video_memory == 0 && video_memory >= START_VMEM)
+        video_memory -= 2;
+    clear_cell(video_memory);
+}
+
 int handle_special_char(char c) {
     if (c == '\n') {
         if (video_memory >= LAST_LINE)
@@ -23,9 +29,7 @@ int handle_special_char(char c) {
         video_memory = START_LINE;
         return 1;
     } else if (c == '\b') {
-        if (video_memory - 2 >= START_VMEM)
-            video_memory -= 2;
-        clear_cell(video_memory);
+        backspace();
         return 1;
     }
     return 0;
