@@ -7,7 +7,7 @@ void scroll() {
        START_VMEM[i] = START_VMEM[i + COL * 2];
        START_VMEM[i + 1] = START_VMEM[i + 1 + COL * 2];
    }
-   for (int i = 3840; i <= 4000; i++)
+   for (int i = 3840; i <= 4000; i+=2)
        START_VMEM[i] = 0;
    video_memory = START_LINE;
 }

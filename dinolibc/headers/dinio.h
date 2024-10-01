@@ -39,7 +39,7 @@
 
 # define combine(bg, fg)	(bg * 16 + fg)
 # define DEFAULT			combine(MAIN_COLOR_BG, MAIN_COLOR_FG)
-# define clear_cell(vmem)	{vmem[0] = ' '; vmem[1] = DEFAULT;}
+# define clear_cell(vmem)	{vmem[0] = 0; vmem[1] = DEFAULT;}
 
 extern unsigned char	*video_memory;
 

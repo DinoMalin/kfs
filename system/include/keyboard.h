@@ -3,12 +3,6 @@
 # include "irq.h"
 
 typedef enum {
-    capslock	= 1 << 0,
-    numlock	= 1 << 1,
-    scrolllock	= 1 << 2
-} lock_status;
-
-typedef enum {
     ctrl    = 1 << 0,
     alt	    = 1 << 1,
     shift   = 1 << 2
@@ -20,6 +14,27 @@ void keyboard_install();
 # define KB_DATA    0x60
 
 # define RELEASE    0b10000000
+# define KB_READY   0b00000010
+
+# define LSHIFT_SC_PRESS    0x2A
+# define RSHIFT_SC_PRESS    0x36
+# define LSHIFT_SC_RELEASE  0xAA
+# define RSHIFT_SC_RELEASE  0xB6
+
+# define isshift(x) (x == LSHIFT_SC_PRESS || x == RSHIFT_SC_PRESS || x == LSHIFT_SC_RELEASE || x == RSHIFT_SC_RELEASE)
+
+# define maj(scancode) (ks & shift ? scancode + 128 : scancode)
+# define unmapped_end	0, 0, 0, 0, \
+			0, 0, 0, 0, \
+			0, 0, 0, 0, \
+			0, 0, 0, 0, \
+			0, 0, 0, 0, \
+			0, 0, 0, 0, \
+			0, 0, 0, 0, \
+			0, 0, 0, 0, \
+			0, 0, 0, 0, \
+			0, 0, 0 \
+
 
 # define ESCAPE          27
 # define BACKSPACE      '\b'
