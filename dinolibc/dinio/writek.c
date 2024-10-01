@@ -22,6 +22,11 @@ int handle_special_char(char c) {
     } else if (c == '\r') {
         video_memory = START_LINE;
         return 1;
+    } else if (c == '\b') {
+        video_memory -= 2;
+        *video_memory = 0;
+        *(video_memory + 1) = 0;
+        return 1;
     }
     return 0;
 }
