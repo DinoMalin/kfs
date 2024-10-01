@@ -47,4 +47,5 @@ int			printk(char *str, ...);
 void		init_serial();
 void		write_serial(char *str);
 void		print_stack(int nb);
-void	outb(uint16_t port, uint8_t val);
+void		outb(uint16_t port, uint8_t val);
+uint8_t		inb(uint16_t port);
