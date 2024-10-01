@@ -9,6 +9,8 @@ void kmain() {
     idt_install();
     irq_install();
     asm volatile ("sti");
-    print_stack(25);
-    int a = 9 / 0;
+    timer_install();
+    printk("one");
+    wait(200);
+    printk("two");
 }
