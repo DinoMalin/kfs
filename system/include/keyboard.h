@@ -1,6 +1,8 @@
 #pragma once
+
 # include "dinio.h"
 # include "irq.h"
+# include "workspace.h"
 
 typedef enum {
     ctrl    = 1 << 0,
@@ -21,7 +23,13 @@ void keyboard_install();
 # define LSHIFT_SC_RELEASE  0xAA
 # define RSHIFT_SC_RELEASE  0xB6
 
+# define CTRL_SC_PRESS    0x1D
+# define CTRL_SC_RELEASE  0x9D
+
 # define isshift(x) (x == LSHIFT_SC_PRESS || x == RSHIFT_SC_PRESS || x == LSHIFT_SC_RELEASE || x == RSHIFT_SC_RELEASE)
+# define isctrl(x) (x == CTRL_SC_PRESS || x == CTRL_SC_RELEASE)
+
+# define CTRL_SHORT(KEY) (ks & ctrl && kbus[scancode] == KEY)
 
 # define maj(scancode) (ks & shift ? scancode + 128 : scancode)
 # define unmapped_end	0, 0, 0, 0, \

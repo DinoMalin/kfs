@@ -19,9 +19,20 @@ unsigned char kbus[256] = {
 
 key_status	ks = 0;
 
+int shortcut(unsigned char scancode) {
+    if (CTRL_SHORT('a')) {
+        switch_workspace();
+        return 1;
+    }
+    return 0;
+}
+
 int check_key(unsigned char scancode) {
     if (isshift(scancode)) {
         ks ^= shift;
+        return 1;
+    } else if (isctrl(scancode)) {
+        ks ^= ctrl;
         return 1;
     }
     return 0;
@@ -32,7 +43,7 @@ void keyboard_handler(struct regs *r) {
     if (scancode & RELEASE) {
         check_key(scancode);
     } else {
-        if (!check_key(scancode)) {
+        if (!check_key(scancode) && !shortcut(scancode)) {
             writek(&kbus[maj(scancode)], DEFAULT, 1);
         }
     }
