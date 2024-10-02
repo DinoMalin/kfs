@@ -15,7 +15,8 @@ LINKER		= $(KERNEL_DIR)/linker.ld
 KERNEL		= $(ROOTFS)/boot/kernel.elf
 
 SYSTEM_DIR		= system
-SYSTEM_C		= gdt idt irq timer keyboard cursor workspace
+SYSTEM_C		= gdt idt irq timer keyboard cursor workspace \
+				  shell/shell shell/sh_utils shell/commands
 SYSTEM_S		= interrupts
 SYSTEM_SRC		= $(addprefix $(SYSTEM_DIR)/, $(addsuffix .c, $(SYSTEM_C))) \
 				  $(addprefix $(SYSTEM_DIR)/, $(addsuffix .s, $(SYSTEM_S)))
@@ -26,6 +27,7 @@ SYSTEM_INC_DIR	= $(SYSTEM_DIR)/include
 DINOLIB_DIR		= dinolibc
 DINOLIB_LIB_DIR	= $(DINOLIB_DIR)/headers
 DINOLIB			= dinostring/strlen dinostring/strncmp dinostring/memset \
+				  dinostring/isalpha dinostring/isdigit \
 				  dinio/writek dinio/printk dinio/io dinio/print_stack dinio/clear
 DINOLIB_SRC		= $(addprefix $(DINOLIB_DIR)/, $(addsuffix .c, $(DINOLIB)))
 DINOLIB_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(DINOLIB_DIR)/, $(addsuffix .o, $(DINOLIB))))

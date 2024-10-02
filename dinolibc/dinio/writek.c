@@ -1,6 +1,7 @@
 #include "dinio.h"
 
 unsigned char *video_memory = START_VMEM;
+extern int ps1_len;
 
 void scroll() {
    for (int i = 0; !is_last_line(START_VMEM + i); i += 2) {
@@ -14,7 +15,8 @@ void scroll() {
 }
 
 void backspace() {
-    while (*video_memory == 0 && video_memory > START_VMEM)
+    char *start_line = get_command(video_memory);
+    while (*video_memory == 0 && video_memory > start_line)
         video_memory -= 2;
     clear_cell(video_memory);
 }

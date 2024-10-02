@@ -17,7 +17,8 @@ unsigned char kbus[256] = {
     PAGE_DOWN, INSERT, DELETE, UNMAPPED, UNMAPPED, UNMAPPED, F11, F12, UNMAPPED,
 };
 
-key_status	ks = 0;
+key_status  ks = 0;
+int         enter = 0;    
 
 int shortcut(unsigned char scancode) {
     if (CTRL_SHORT('a')) {
@@ -33,6 +34,9 @@ int check_key(unsigned char scancode) {
         return 1;
     } else if (isctrl(scancode)) {
         ks ^= ctrl;
+        return 1;
+    } else if (isenter(scancode)) {
+        shell();
         return 1;
     }
     return 0;

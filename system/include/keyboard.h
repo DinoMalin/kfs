@@ -3,6 +3,7 @@
 # include "dinio.h"
 # include "irq.h"
 # include "workspace.h"
+# include "shell.h"
 
 typedef enum {
     ctrl    = 1 << 0,
@@ -23,11 +24,14 @@ void keyboard_install();
 # define LSHIFT_SC_RELEASE  0xAA
 # define RSHIFT_SC_RELEASE  0xB6
 
-# define CTRL_SC_PRESS    0x1D
-# define CTRL_SC_RELEASE  0x9D
+# define CTRL_SC_PRESS	    0x1D
+# define CTRL_SC_RELEASE    0x9D
+
+# define ENTER_SC_PRESS	    0x1C
 
 # define isshift(x) (x == LSHIFT_SC_PRESS || x == RSHIFT_SC_PRESS || x == LSHIFT_SC_RELEASE || x == RSHIFT_SC_RELEASE)
 # define isctrl(x) (x == CTRL_SC_PRESS || x == CTRL_SC_RELEASE)
+# define isenter(x) (x == ENTER_SC_PRESS)
 
 # define CTRL_SHORT(KEY) (ks & ctrl && kbus[scancode] == KEY)
 
@@ -47,7 +51,7 @@ void keyboard_install();
 # define ESCAPE          27
 # define BACKSPACE      '\b'
 # define TAB            '\t'
-# define ENTER          '\n'
+# define ENTER          0
 # define CTRL           0
 # define LSHIFT         0
 # define RSHIFT         0

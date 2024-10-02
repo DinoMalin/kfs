@@ -3,6 +3,7 @@
 
 #include "gdt.h"
 #include "idt.h"
+#include "shell.h"
 
 void kmain() {
     gdt_install();
@@ -12,6 +13,6 @@ void kmain() {
     timer_install();
     keyboard_install();
     clear_screen();
-    print_stack(4);
-    while (1) {}
+    init_shell();
+    while (1) {};
 }

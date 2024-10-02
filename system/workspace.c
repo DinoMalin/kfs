@@ -16,9 +16,10 @@ void	display_workspace() {
 
     if (ws[active_ws].cursor)
 	video_memory = ws[active_ws].cursor;
-    else
-	video_memory = START_VMEM;
-
+    else {
+ 	video_memory = START_VMEM;
+	init_shell();
+    }
     move_cursor();
 }
 
