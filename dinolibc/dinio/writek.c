@@ -1,14 +1,15 @@
 #include "dinio.h"
 
-unsigned char *video_memory         = START_VMEM;
+unsigned char *video_memory = START_VMEM;
 
 void scroll() {
-   for (int i = 0; START_VMEM + i < LAST_LINE; i += 2) {
-       START_VMEM[i] = START_VMEM[i + COL * 2];
-       START_VMEM[i + 1] = START_VMEM[i + 1 + COL * 2];
+   for (int i = 0; !is_last_line(START_VMEM + i); i += 2) {
+       copy_next_line(START_VMEM + i);
+       copy_next_line(START_VMEM + i + 1);
    }
-   for (int i = 3840; i <= 4000; i+=2)
+   for (int i = 3840; i <= 4000; i += 2) {
        START_VMEM[i] = 0;
+   }
    video_memory = LAST_LINE;
 }
 
@@ -19,19 +20,23 @@ void backspace() {
 }
 
 int handle_special_char(char c) {
-    if (c == '\n') {
-        if (video_memory >= LAST_LINE)
+    switch (c) {
+        case '\n':
+        if (is_last_line(video_memory))
             scroll();
         else
-            video_memory = NEXT_LINE;
+            go_next_line(video_memory);
         return 1;
-    } else if (c == '\r') {
-        video_memory = START_LINE;
+
+        case '\r':
+        go_start_line(video_memory);
         return 1;
-    } else if (c == '\b') {
+
+        case '\b':
         backspace();
         return 1;
     }
+
     return 0;
 }
 
@@ -41,8 +46,9 @@ void writek(char *str, unsigned char color, int len) {
             continue;
         if (video_memory >= END_VMEM)
             scroll();
-        *video_memory = str[i];
-        *(video_memory + 1) = color;
+
+        video_memory[0] = str[i];
+        video_memory[1] = color;
         video_memory += 2;
     }
     move_cursor();

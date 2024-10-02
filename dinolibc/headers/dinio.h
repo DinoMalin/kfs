@@ -1,8 +1,8 @@
 #pragma once
 # include "dinoint.h"
 
-# define LIN 24
-# define COL 80
+# define LIN		24
+# define COL		80
 
 # define BLACK      0
 # define BLUE       1
@@ -25,8 +25,11 @@
 # define START_VMEM			((unsigned char *)0xB8000)
 # define LAST_LINE			((unsigned char *)0xB8F00)
 # define END_VMEM			((unsigned char *)0xB8FA0)
-# define NEXT_LINE			((unsigned char *)video_memory + (COL - (((video_memory - START_VMEM) / 2) % COL)) * 2)
-# define START_LINE			((unsigned char *)video_memory - (((video_memory - START_VMEM) / 2) % COL) * 2)
+
+# define is_last_line(vmem)		(vmem >= LAST_LINE ? 1 : 0)
+# define go_next_line(vmem)		((unsigned char *)vmem += (COL - (((vmem - START_VMEM) / 2) % COL)) * 2)
+# define go_start_line(vmem)	((unsigned char *)vmem -= (((vmem - START_VMEM) / 2) % COL) * 2)
+# define copy_next_line(vmem)	(vmem)[0] = (vmem)[COL * 2];
 
 # ifndef MAIN_COLOR_BG
 # 	define MAIN_COLOR_BG BLUE
