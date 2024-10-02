@@ -29,7 +29,7 @@
 # define is_last_line(vmem)		(vmem >= LAST_LINE ? 1 : 0)
 # define go_next_line(vmem)		((unsigned char *)vmem += (COL - (((vmem - START_VMEM) / 2) % COL)) * 2)
 # define go_start_line(vmem)	((unsigned char *)vmem -= (((vmem - START_VMEM) / 2) % COL) * 2)
-# define get_command(vmem)  vmem - (vmem - START_VMEM) % (COL * 2) + ps1_len * 2
+# define get_command(vmem)		(vmem - (vmem - START_VMEM) % (COL * 2) + ps1_len * 2)
 
 # define copy_next_line(vmem)	(vmem)[0] = (vmem)[COL * 2];
 
@@ -43,10 +43,11 @@
 
 
 # define combine(bg, fg)	(bg * 16 + fg)
-# define DEFAULT			combine(MAIN_COLOR_BG, MAIN_COLOR_FG)
-# define clear_cell(vmem)	{vmem[0] = 0; vmem[1] = DEFAULT;}
+# define color_cell(vmem)	{vmem[1] = default_color;}
+# define clear_cell(vmem)	{vmem[0] = 0; vmem[1] = default_color;}
 
 extern unsigned char	*video_memory;
+extern int				default_color;
 
 void    	writek(char *str, unsigned char color, int len);
 int			printk(char *str, ...);
@@ -55,4 +56,5 @@ void		write_serial(char *str);
 void		print_stack(int nb);
 void		outb(uint16_t port, uint8_t val);
 uint8_t		inb(uint16_t port);
+void		color_screen();
 void		clear_screen();

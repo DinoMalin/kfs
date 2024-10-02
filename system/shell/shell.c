@@ -14,6 +14,8 @@ void interpret() {
 	lilalelolu(args(LILALELOLU));
     else if (check_arg(cmd, SWITCH))
 	sh_switch(args(SWITCH));
+    else if (check_arg(cmd, THEME))
+	theme(args(THEME));
     else
 	printk(UNKNOWN);
 }

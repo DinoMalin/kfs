@@ -48,7 +48,7 @@ void keyboard_handler(struct regs *r) {
         check_key(scancode);
     } else {
         if (!check_key(scancode) && !shortcut(scancode)) {
-            writek(&kbus[maj(scancode)], DEFAULT, 1);
+            writek(&kbus[maj(scancode)], default_color, 1);
         }
     }
 }

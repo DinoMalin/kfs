@@ -13,6 +13,8 @@ void	stack(char *cmd);
 void	echo(char *cmd);
 void	lilalelolu();
 void	sh_switch(char *cmd);
+void	theme(char *cmd);
+int	get_color(char *str);
 
 # define PS1 "DinOS> "
 
@@ -23,10 +25,15 @@ void	sh_switch(char *cmd);
 # define ECHO		"echo"
 # define ECHO_USAGE	"echo <message>"
 # define LILALELOLU	"lilalelolu"
+# define THEME		"theme\0"
+# define THEME_USAGE	"theme <foreground color> <background color>"
+
+# define WRONG_COLOR	16
 
 # define ERSYNT	    "dinosh: Usage: %s"
 # define ERVALUE    "dinosh: Unexpected value"
 # define UNKNOWN    "dinosh: Command not found"
 # define ERTOOBIG   "dinosh: Value too big (max: %d)"
+# define ERCOLOR    "dinosh: Color is not valid"
 
 # define args(x) (cmd + (strlen(x) * 2))

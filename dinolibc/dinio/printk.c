@@ -8,12 +8,12 @@ int putstr(char *str) {
     if (!str)
 	return putstr("(null)");
     int len = strlen(str);
-    writek(str, DEFAULT, len);
+    writek(str, default_color, len);
     return len;
 }
 
 int putchar(char c) { 
-	writek(&c, DEFAULT, 1);
+	writek(&c, default_color, 1);
 	return 1;
 }
 
@@ -52,7 +52,7 @@ int basic(char *str, int *index) {
     int i = 0;
     while (str[i] && str[i] != '%')
        i++;
-    writek(str, DEFAULT, i);
+    writek(str, default_color, i);
     *index += i;
     return i;
 }
@@ -107,7 +107,7 @@ int printk(char *str, ...) {
     va_start(variadic, str);
 
     if (video_memory != START_VMEM && !no_newline)
-	writek("\n", DEFAULT, 1);
+	writek("\n", default_color, 1);
 
     no_newline = 0;
     while (str[i])

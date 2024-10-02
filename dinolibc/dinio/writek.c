@@ -1,6 +1,8 @@
 #include "dinio.h"
 
-unsigned char *video_memory = START_VMEM;
+unsigned char   *video_memory = START_VMEM;
+int             default_color = combine(MAIN_COLOR_BG, MAIN_COLOR_FG);
+
 extern int ps1_len;
 
 void scroll() {
