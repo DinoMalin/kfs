@@ -8,7 +8,7 @@ unsigned char kbus[256] = {
     ALT, SPACE, CAPS_LOCK, F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, NUM_LOCK,
     SCROLL_LOCK, HOME, UP, PAGE_UP, '-', LEFT, UNMAPPED, RIGHT, '+', END, DOWN,
     PAGE_DOWN, INSERT, DELETE, UNMAPPED, UNMAPPED, UNMAPPED, F11, F12, unmapped_end,
-    0, ESCAPE, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', BACKSPACE,
+    0, ESCAPE, '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '_', '=', BACKSPACE,
     TAB, 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '[', ']', ENTER,	CTRL,
     'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ';', '\'', '`',
     LSHIFT, '\\', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', ',', '.', '/',   RSHIFT, '*',
