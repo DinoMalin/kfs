@@ -16,8 +16,6 @@ void	sh_switch(char *cmd);
 void	theme(char *cmd);
 int	get_color(char *str);
 
-# define PS1 "DinOS> "
-
 # define STACK		"stack"
 # define STACK_USAGE	"stack <value>"
 # define SWITCH		"switch"

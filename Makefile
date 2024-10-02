@@ -32,12 +32,13 @@ DINOLIB			= dinostring/strlen dinostring/strncmp dinostring/memset \
 DINOLIB_SRC		= $(addprefix $(DINOLIB_DIR)/, $(addsuffix .c, $(DINOLIB)))
 DINOLIB_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(DINOLIB_DIR)/, $(addsuffix .o, $(DINOLIB))))
 
-TCC_DIR	= tinycc
-CC		= ./$(TCC_DIR)/i386-tcc
-CFLAGS	= -nostdlib -fno-builtin -fno-stack-protector -I $(DINOLIB_LIB_DIR) -I $(SYSTEM_INC_DIR)
-
 BG=BLUE
 FG=WHITE
+PS1="DinOS> "
+TCC_DIR	= tinycc
+CC		= ./$(TCC_DIR)/i386-tcc
+CFLAGS	= -nostdlib -fno-builtin -fno-stack-protector -I $(DINOLIB_LIB_DIR) -I $(SYSTEM_INC_DIR) -DMAIN_COLOR_FG=$(FG) -DMAIN_COLOR_BG=$(BG) '-DPS1=$(PS1)'
+
 
 all: tcc $(KERNEL) $(ISO) qemu
 
@@ -63,7 +64,7 @@ $(OBJ_DIR)/%.o: %.s
 
 $(OBJ_DIR)/%.o: %.c
 	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -DMAIN_COLOR_FG=$(FG) -DMAIN_COLOR_BG=$(BG) -c $< -o $@
+	$(CC) $(CFLAGS)  -c $< -o $@
 
 clean:
 	rm $(ISO) -f
@@ -71,8 +72,6 @@ clean:
 	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	cd $(TCC_DIR) && \
-	make clean && \
-	cd ..
+	make -C $(TCC_DIR) clean
 
 re: clean all

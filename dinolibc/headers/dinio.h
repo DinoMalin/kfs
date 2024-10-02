@@ -33,15 +33,6 @@
 
 # define copy_next_line(vmem)	(vmem)[0] = (vmem)[COL * 2];
 
-# ifndef MAIN_COLOR_BG
-# 	define MAIN_COLOR_BG BLUE
-# endif
-
-# ifndef MAIN_COLOR_FG
-# 	define MAIN_COLOR_FG BLUE
-# endif
-
-
 # define combine(bg, fg)	(bg * 16 + fg)
 # define color_cell(vmem)	{vmem[1] = default_color;}
 # define clear_cell(vmem)	{vmem[0] = 0; vmem[1] = default_color;}
