@@ -36,3 +36,7 @@ void echo(char *cmd) {
 	printk("");
 	sh_putstr(&cmd[i]);
 }
+
+void	lilalelolu() {
+		printk("lalelilalo");
+}

@@ -6,9 +6,11 @@ void interpret() {
     char *cmd = get_command(video_memory);
 
     if (check_arg(cmd, STACK))
-	stack(cmd + (strlen(STACK) * 2));
+	stack(args(STACK));
     else if (check_arg(cmd, ECHO))
-	echo(cmd + (strlen(ECHO) * 2));
+	echo(args(ECHO));
+    else if (check_arg(cmd, LILALELOLU))
+	lilalelolu(args(LILALELOLU));
     else
 	printk(UNKNOWN);
 }
