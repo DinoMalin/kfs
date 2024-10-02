@@ -29,6 +29,7 @@ int	get_color(char *str);
 # define THEME_USAGE	"theme <foreground color> <background color>"
 
 # define WRONG_COLOR	16
+# define BUFF_SIZE	2000
 
 # define ERSYNT	    "dinosh: Usage: %s"
 # define ERVALUE    "dinosh: Unexpected value"
@@ -36,4 +37,4 @@ int	get_color(char *str);
 # define ERTOOBIG   "dinosh: Value too big (max: %d)"
 # define ERCOLOR    "dinosh: Color is not valid"
 
-# define args(x) (cmd + (strlen(x) * 2))
+# define args(x) (cmd + strlen(x))

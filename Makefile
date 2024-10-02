@@ -27,7 +27,7 @@ SYSTEM_INC_DIR	= $(SYSTEM_DIR)/include
 DINOLIB_DIR		= dinolibc
 DINOLIB_LIB_DIR	= $(DINOLIB_DIR)/headers
 DINOLIB			= dinostring/strlen dinostring/strncmp dinostring/memset \
-				  dinostring/isalpha dinostring/isdigit \
+				  dinostring/isalpha dinostring/isdigit dinostring/atoi \
 				  dinio/writek dinio/printk dinio/io dinio/print_stack dinio/color_screen
 DINOLIB_SRC		= $(addprefix $(DINOLIB_DIR)/, $(addsuffix .c, $(DINOLIB)))
 DINOLIB_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(DINOLIB_DIR)/, $(addsuffix .o, $(DINOLIB))))

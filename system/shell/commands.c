@@ -9,9 +9,8 @@ void echo(char *cmd) {
 		printk(ERSYNT, ECHO_USAGE);
 		return ;
     }
-    i += 2;
-	printk("");
-	sh_putstr(&cmd[i]);
+    i++;
+	printk("%s", &cmd[i]);
 }
 
 void stack(char *cmd) {
@@ -21,14 +20,14 @@ void stack(char *cmd) {
 		printk(ERSYNT, STACK_USAGE);
 		return ;
     }
-    i += 2;
+    i++;
 
     if (!isdigit(cmd[i])) {
 		printk(ERVALUE);
 		return ;
     }
 
-    int lines = sh_atoi(cmd);
+    int lines = atoi(cmd);
     if (lines > LIN) {
 		printk(ERTOOBIG, LIN);
 		return ;
@@ -43,16 +42,15 @@ void sh_switch(char *cmd) {
 		printk(ERSYNT, SWITCH_USAGE);
 		return ;
     }
-    i += 2;
-
+    i++;
     if (!isdigit(cmd[i])) {
 		printk(ERVALUE);
 		return ;
     }
 
-    int nb = sh_atoi(cmd);
+    int nb = atoi(cmd + i);
     if (nb > NB_WS) {
-		printk(ERTOOBIG, NB_WS);
+		printk(ERTOOBIG, nb);
 		return ;
     }
 
@@ -68,7 +66,7 @@ void theme(char *cmd) {
 		printk(ERSYNT, THEME_USAGE);
 		return ;
     }
-    i += 2;
+    i++;
     if (!isalpha(cmd[i])) {
 		printk(ERSYNT, THEME_USAGE);
 		return ;
@@ -77,12 +75,12 @@ void theme(char *cmd) {
 	int fg = get_color(&cmd[i]);
 
 	while (isalpha(cmd[i]))
-		i += 2;
+		i++;
     if (cmd[i] != ' ') {
 		printk(ERSYNT, THEME_USAGE);
 		return ;
     }
-	i += 2;
+	i++;
     if (!isalpha(cmd[i])) {
 		printk(ERSYNT, THEME_USAGE);
 		return ;
