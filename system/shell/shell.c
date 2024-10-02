@@ -7,6 +7,8 @@ void interpret() {
 
     if (check_arg(cmd, STACK))
 	stack(cmd + (strlen(STACK) * 2));
+    else if (check_arg(cmd, ECHO))
+	echo(cmd + (strlen(ECHO) * 2));
     else
 	printk(UNKNOWN);
 }

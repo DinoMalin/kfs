@@ -39,3 +39,7 @@ int	sh_atoi(const char *str) {
 	return result * minus;
 }
 
+void sh_putstr(char *str) {
+	for (int i = 0; str[i]; i += 2)
+		writek(&str[i], DEFAULT, 1);
+}
