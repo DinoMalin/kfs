@@ -22,7 +22,7 @@ int         enter = 0;
 
 int shortcut(unsigned char scancode) {
     if (CTRL_SHORT('a')) {
-        switch_workspace();
+        auto_switch_workspace();
         return 1;
     }
     return 0;

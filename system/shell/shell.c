@@ -1,6 +1,7 @@
 #include "shell.h"
 
-int ps1_len = 0;
+int ps1_len	= 0;
+int switching	= 0;
 
 void interpret() {
     char *cmd = get_command(video_memory);
@@ -11,13 +12,17 @@ void interpret() {
 	echo(args(ECHO));
     else if (check_arg(cmd, LILALELOLU))
 	lilalelolu(args(LILALELOLU));
+    else if (check_arg(cmd, SWITCH))
+	sh_switch(args(SWITCH));
     else
 	printk(UNKNOWN);
 }
 
 void shell() {
     interpret();
-    printk(PS1);
+    if (!switching)
+	printk(PS1);
+    switching = 0;
 }
 
 void init_shell() {

@@ -23,13 +23,22 @@ void	display_workspace() {
     move_cursor();
 }
 
-void	switch_workspace() {
+void	auto_switch_workspace() {
     copy_workspace(); 
 
     if (active_ws >= NB_WS - 1)
 	active_ws = 0;
     else
 	active_ws++;
+
+    display_workspace();
+}
+
+void	switch_workspace(int nb) {
+    copy_workspace(); 
+    
+    if (nb < NB_WS && nb >= 0 && nb != active_ws)
+	active_ws = nb;
 
     display_workspace();
 }

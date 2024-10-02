@@ -10,4 +10,5 @@ typedef struct {
     unsigned char   *cursor;
 } workspace;
 
-void	switch_workspace();
+void	auto_switch_workspace();
+void	switch_workspace(int nb);
