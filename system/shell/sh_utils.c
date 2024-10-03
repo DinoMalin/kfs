@@ -47,3 +47,36 @@ int get_color(char *str) {
 		return WHITE;
 	return WRONG_COLOR;
 }
+
+int custom_theme(char *str) {
+    if (check_arg(str, "dinosaur"))
+	return combine(LGREEN, BLACK);
+    else if (check_arg(str, "papyrus"))
+	return combine(YELLOW, BLACK);
+    return 0;
+}
+
+int count_args(char *str) {
+    int is_arg = 0;
+    int result = 0;
+
+    for (int i = 0; str[i]; i++) {
+	if (str[i] == ' ' && is_arg)
+	    is_arg = 0;
+	else if (str[i] != ' ') {
+	    if (!is_arg)
+		result++;
+	    is_arg = 1;
+	}
+    }
+
+    return result;
+}
+
+int good_syntax(char *str) {
+    for (int i = 0; str[i]; i++) {
+	if (!authorized_character(str[i]))
+	    return 0;
+    }
+    return 1;
+}

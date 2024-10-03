@@ -3,99 +3,85 @@
 extern int switching;
 
 void echo(char *cmd) {
-    int i = 0;
-
-    if (cmd[i] != ' ') {
-		printk(ERSYNT, ECHO_USAGE);
-		return ;
-    }
-    i++;
-	printk("%s", &cmd[i]);
+    next_arg(cmd);
+	printk("%s", cmd);
 }
 
 void stack(char *cmd) {
-    int i = 0;
-
-    if (cmd[i] != ' ') {
+    int nb_args = count_args(cmd);
+    if (!good_syntax(cmd) || (nb_args != STACK_ARGS)) {
 		printk(ERSYNT, STACK_USAGE);
 		return ;
     }
-    i++;
 
-    if (!isdigit(cmd[i])) {
+    next_arg(cmd);
+    int lines = atoi(cmd);
+
+    if (!isdigit(*cmd)) {
 		printk(ERVALUE);
 		return ;
     }
-
-    int lines = atoi(cmd);
     if (lines > LIN) {
 		printk(ERTOOBIG, LIN);
 		return ;
     }
+
 	print_stack(lines);
 }
 
 void sh_switch(char *cmd) {
-    int i = 0;
-
-    if (cmd[i] != ' ') {
-		printk(ERSYNT, SWITCH_USAGE);
+    int nb_args = count_args(cmd);
+    if (!good_syntax(cmd) || (nb_args != SWITCH_ARGS)) {
+		printk(ERSYNT, STACK_USAGE);
 		return ;
     }
-    i++;
-    if (!isdigit(cmd[i])) {
+
+    next_arg(cmd);
+    int workspace = atoi(cmd);
+
+    if (!isdigit(*cmd)) {
 		printk(ERVALUE);
 		return ;
     }
-
-    int nb = atoi(cmd + i);
-    if (nb > NB_WS) {
-		printk(ERTOOBIG, nb);
+    if (workspace > NB_WS) {
+		printk(ERTOOBIG, NB_WS);
 		return ;
     }
 
 	printk(PS1);
-	switch_workspace(nb - 1);
+	switch_workspace(workspace - 1);
 	switching = 1;
 }
 
 void theme(char *cmd) {
-	int i = 0;
-
-    if (cmd[i] != ' ') {
-		printk(ERSYNT, THEME_USAGE);
-		return ;
-    }
-    i++;
-    if (!isalpha(cmd[i])) {
+    int nb_args = count_args(cmd);
+    if (!good_syntax(cmd) || (nb_args != THEME_ARGS && nb_args != THEME_ARGS_OPT)) {
 		printk(ERSYNT, THEME_USAGE);
 		return ;
     }
 
-	int fg = get_color(&cmd[i]);
-
-	while (isalpha(cmd[i]))
-		i++;
-    if (cmd[i] != ' ') {
-		printk(ERSYNT, THEME_USAGE);
-		return ;
-    }
-	i++;
-    if (!isalpha(cmd[i])) {
-		printk(ERSYNT, THEME_USAGE);
-		return ;
+    next_arg(cmd);
+    if (nb_args == 1) {
+        int custom = custom_theme(cmd);
+        if (!custom)
+            printk(ERSYNT, THEME_USAGE);
+        else
+            apply_color(custom);
+        return ;
     }
 
-	int bg = get_color(&cmd[i]);
-	if (fg == WRONG_COLOR || bg == WRONG_COLOR) {
-			printk(ERCOLOR);
-			return ;
-	}
+    int fg = get_color(cmd);
+    next_arg(cmd);
+    int bg = get_color(cmd);
 
-	default_color = combine(bg, fg);
-    color_screen();
+    if (fg == WRONG_COLOR || bg == WRONG_COLOR) {
+		printk(ERCOLOR, THEME_USAGE);
+		return ;
+    }
+    apply_color(combine(bg, fg));
 }
 
 void	lilalelolu() {
 		printk("lalelilalo");
 }
+

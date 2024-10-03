@@ -32,8 +32,8 @@ DINOLIB			= dinostring/strlen dinostring/strncmp dinostring/memset \
 DINOLIB_SRC		= $(addprefix $(DINOLIB_DIR)/, $(addsuffix .c, $(DINOLIB)))
 DINOLIB_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(DINOLIB_DIR)/, $(addsuffix .o, $(DINOLIB))))
 
-BG=BLUE
-FG=WHITE
+BG=LGREEN
+FG=BLACK
 PS1="DinOS> "
 TCC_DIR	= tinycc
 CC		= ./$(TCC_DIR)/i386-tcc
