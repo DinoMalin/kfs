@@ -40,7 +40,9 @@ CC		= ./$(TCC_DIR)/i386-tcc
 CFLAGS	= -nostdlib -fno-builtin -fno-stack-protector -I $(DINOLIB_LIB_DIR) -I $(SYSTEM_INC_DIR) -DMAIN_COLOR_FG=$(FG) -DMAIN_COLOR_BG=$(BG) '-DPS1=$(PS1)'
 
 
-all: tcc $(KERNEL) $(ISO) qemu
+all: tcc $(KERNEL)
+	grub-mkrescue -o $(ISO) $(ROOTFS) "--install-modules=$(GRUB_MOD)" -- -rm_r $(GRUB_RM) -- 
+	qemu-system-i386 -cdrom $(ISO) -serial stdio
 
 .ONESHELL:
 tcc:
@@ -48,12 +50,6 @@ tcc:
 	./configure
 	make cross-i386
 	cd ..
-
-$(ISO):
-	grub-mkrescue -o $(ISO) $(ROOTFS) "--install-modules=$(GRUB_MOD)" -- -rm_r $(GRUB_RM) -- 
-
-qemu:
-	qemu-system-i386 -cdrom $(ISO) -serial stdio
 
 $(KERNEL): $(START_OBJ) $(KMAIN_OBJ) $(DINOLIB_OBJ) $(SYSTEM_OBJ)
 	$(LD) -m elf_i386 --script=$(LINKER) $(START_OBJ) $(KMAIN_OBJ) $(DINOLIB_OBJ) $(SYSTEM_OBJ) -o $(KERNEL)
@@ -74,4 +70,4 @@ clean:
 fclean: clean
 	make -C $(TCC_DIR) clean
 
-re: clean all
+re: fclean all
