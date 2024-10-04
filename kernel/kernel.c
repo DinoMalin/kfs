@@ -13,6 +13,8 @@ void kmain() {
     timer_install();
     keyboard_install();
     clear_screen();
+
+    default_color = custom_theme(default_theme);
     init_shell();
     while (1) {};
 }
