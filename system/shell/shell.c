@@ -23,7 +23,7 @@ void interpret() {
 
     if (!executed)
 		printk(UNKNOWN);
-	executed = 0;
+    executed = 0;
 }
 
 void shell() {

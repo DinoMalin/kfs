@@ -66,8 +66,11 @@ int get_color(char *str) {
 int custom_theme(char *str) {
 	add_theme("dinosaur", LGREEN, BLACK);
 	add_theme("papyrus", YELLOW, BLACK);
-	add_theme("demolinux", MAGENTA, BLACK);
+	add_theme("demolinux", MAGENTA, WHITE);
 	add_theme("powershell", BLUE, WHITE);
+	add_theme("casamit", BLACK, MAGENTA);
+	add_theme("rosa", MAGENTA, LGREEN);
+	add_theme("default", BLACK, WHITE);
 
     return 0;
 }
