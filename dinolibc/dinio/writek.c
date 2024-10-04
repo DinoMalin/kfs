@@ -1,7 +1,7 @@
 #include "dinio.h"
 
 unsigned char   *video_memory = START_VMEM;
-int             default_color = combine(MAIN_COLOR_BG, MAIN_COLOR_FG);
+int             default_color = DEFAULT;
 
 extern int ps1_len;
 

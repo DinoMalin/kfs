@@ -34,6 +34,7 @@ void shell() {
 }
 
 void init_shell() {
+    apply_color(custom_theme(default_theme));
     ps1_len = strlen(PS1);
     printk(PS1);
 }

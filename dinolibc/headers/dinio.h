@@ -37,6 +37,8 @@
 # define color_cell(vmem)	{vmem[1] = default_color;}
 # define clear_cell(vmem)	{vmem[0] = 0; vmem[1] = default_color;}
 
+# define DEFAULT			combine(WHITE, BLACK)
+
 extern unsigned char	*video_memory;
 extern int				default_color;
 

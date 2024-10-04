@@ -32,14 +32,13 @@ DINOLIB			= dinostring/strlen dinostring/strncmp dinostring/memset \
 DINOLIB_SRC		= $(addprefix $(DINOLIB_DIR)/, $(addsuffix .c, $(DINOLIB)))
 DINOLIB_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(DINOLIB_DIR)/, $(addsuffix .o, $(DINOLIB))))
 
-BG=LGREEN
-FG=BLACK
-PS1="DinOS> "
+theme=dinosaur
+PS1=DinOS>
 
 TCC_GIT	= https://github.com/TinyCC/tinycc
 TCC_DIR	= tinycc
 CC		= ./$(TCC_DIR)/i386-tcc
-CFLAGS	= -nostdlib -fno-builtin -fno-stack-protector -I $(DINOLIB_LIB_DIR) -I $(SYSTEM_INC_DIR) -DMAIN_COLOR_FG=$(FG) -DMAIN_COLOR_BG=$(BG) '-DPS1=$(PS1)'
+CFLAGS	= -nostdlib -fno-builtin -fno-stack-protector -I $(DINOLIB_LIB_DIR) -I $(SYSTEM_INC_DIR) '-Ddefault_theme="$(theme)"' '-DPS1="$(PS1) "'
 
 
 all: tcc $(KERNEL)
