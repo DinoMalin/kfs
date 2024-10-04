@@ -23,7 +23,7 @@ extern int ps1_len;
 
 # define STACK			"stack"
 # define STACK_USAGE	"stack <value>"
-# define STACK_ARG		1
+# define STACK_ARGS		1
 
 # define SWITCH			"switch"
 # define SWITCH_USAGE	"switch <value>"
@@ -52,5 +52,8 @@ extern int ps1_len;
 # define args(x)					(cmd + strlen(x))
 # define isword(c)					(isalpha(c) || isdigit(c) || c == '_' || c == '-')
 # define authorized_character(c)	(isword(c) || c == ' ')
+
 # define next_arg(str)				{while (isword(*str)) {str++;} while (*str == ' ') {str++;}}
 # define apply_color(color)			{default_color = color; color_screen();}
+# define add_theme(name, bg, fg)	if (check_arg(str, name)) return combine(bg, fg)
+

@@ -64,10 +64,9 @@ int get_color(char *str) {
 }
 
 int custom_theme(char *str) {
-    if (check_arg(str, "dinosaur"))
-		return combine(LGREEN, BLACK);
-    else if (check_arg(str, "papyrus"))
-		return combine(YELLOW, BLACK);
+	add_theme("dinosaur", LGREEN, BLACK);
+	add_theme("papyrus", YELLOW, BLACK);
+
     return 0;
 }
 
