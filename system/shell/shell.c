@@ -20,6 +20,8 @@ void interpret() {
     command(cmd, LILALELOLU, lilalelolu);
     command(cmd, SWITCH, sh_switch);
     command(cmd, THEME, theme);
+    command(cmd, HELP, help);
+    command(cmd, MAN, help);
 
     if (!executed)
 		printk(UNKNOWN);

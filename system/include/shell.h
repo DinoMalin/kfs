@@ -12,6 +12,7 @@ void	echo(char *cmd);
 void	lilalelolu();
 void	sh_switch(char *cmd);
 void	theme(char *cmd);
+void	help(char *cmd);
 
 int		check_arg(char *cmd, char *str);
 int		get_color(char *str);
@@ -34,6 +35,8 @@ extern int ps1_len;
 # define ECHO_ARGS		1
 
 # define LILALELOLU		"lilalelolu"
+# define HELP			"help"
+# define MAN			"man"
 
 # define THEME			"theme\0"
 # define THEME_USAGE	"theme <foreground color> <background color>"
@@ -57,3 +60,15 @@ extern int ps1_len;
 # define apply_color(color)			{default_color = color; color_screen();}
 # define add_theme(name, bg, fg)	if (check_arg(str, name)) return combine(bg, fg)
 
+# define HELP_MSG	"DINOS - HELP\n" \
+					"echo <value>                           display <value> on the output.\n" \
+					"\n" \
+					"lilalelolu                             lalelilalo\n" \
+					"\n" \
+					"stack <number>                         display <number> lines from the stack,\n" \
+					"                                       with 16 bytes per line.\n" \
+					"\n" \
+					"switch <number>                        switch to the <number> workspace.\n" \
+					"\n" \
+					"theme <foreground> <background>        modify the colors of the output.\n" \
+					"      <theme>                          use a custom theme.\n" \

@@ -3,8 +3,12 @@
 extern int switching;
 
 void echo(char *cmd) {
-    next_arg(cmd);
+	next_arg(cmd);
 	printk("%s", cmd);
+}
+
+void help(char *cmd) {
+	printk(HELP_MSG);
 }
 
 void stack(char *cmd) {
