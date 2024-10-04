@@ -1,5 +1,20 @@
 #include "shell.h"
 
+void fill_buffer(char *buff) {
+    unsigned char *start = video_memory;
+    go_start_line(start);
+    start += ps1_len * 2;
+
+    int i = 0;
+    int j = 0;
+
+    while (start + i < END_VMEM) {
+		buff[j] = start[i];
+		i += 2;
+		j++;
+    }
+}
+
 int check_arg(char *cmd, char *str) {
     int	i;
 
@@ -50,9 +65,9 @@ int get_color(char *str) {
 
 int custom_theme(char *str) {
     if (check_arg(str, "dinosaur"))
-	return combine(LGREEN, BLACK);
+		return combine(LGREEN, BLACK);
     else if (check_arg(str, "papyrus"))
-	return combine(YELLOW, BLACK);
+		return combine(YELLOW, BLACK);
     return 0;
 }
 
@@ -61,13 +76,13 @@ int count_args(char *str) {
     int result = 0;
 
     for (int i = 0; str[i]; i++) {
-	if (str[i] == ' ' && is_arg)
-	    is_arg = 0;
-	else if (str[i] != ' ') {
-	    if (!is_arg)
-		result++;
-	    is_arg = 1;
-	}
+		if (str[i] == ' ' && is_arg)
+			is_arg = 0;
+		else if (str[i] != ' ') {
+			if (!is_arg)
+			result++;
+			is_arg = 1;
+		}
     }
 
     return result;
