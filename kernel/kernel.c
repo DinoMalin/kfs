@@ -15,6 +15,7 @@ void kmain() {
     clear_screen();
 
     default_color = custom_theme(default_theme);
+    printk("This 42 is mandatory");
     init_shell();
     while (1) {};
 }
