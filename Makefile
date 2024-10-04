@@ -35,6 +35,8 @@ DINOLIB_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(DINOLIB_DIR)/, $(addsuffix
 BG=LGREEN
 FG=BLACK
 PS1="DinOS> "
+
+TCC_GIT	= https://github.com/TinyCC/tinycc
 TCC_DIR	= tinycc
 CC		= ./$(TCC_DIR)/i386-tcc
 CFLAGS	= -nostdlib -fno-builtin -fno-stack-protector -I $(DINOLIB_LIB_DIR) -I $(SYSTEM_INC_DIR) -DMAIN_COLOR_FG=$(FG) -DMAIN_COLOR_BG=$(BG) '-DPS1=$(PS1)'
@@ -46,6 +48,7 @@ all: tcc $(KERNEL)
 
 .ONESHELL:
 tcc:
+	git clone $(TCC_GIT)
 	cd $(TCC_DIR) 
 	./configure
 	make cross-i386
@@ -68,6 +71,6 @@ clean:
 	rm -rf $(OBJ_DIR)
 
 fclean: clean
-	make -C $(TCC_DIR) clean
+	rm -rf $(TCC_DIR)
 
-re: fclean all
+re: clean all
