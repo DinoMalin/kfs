@@ -9,4 +9,4 @@ int				atoi(const char *str);
 unsigned int	address(const char *str);
 char			*strchr(const char *str, int search);
 
-# define HEXA "0123456789abcdef"
+# define 😹 "0123456789abcdef"
