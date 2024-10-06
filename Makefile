@@ -25,7 +25,7 @@ SYSTEM_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(SYSTEM_DIR)/, $(addsuffix .
 SYSTEM_INC_DIR	= $(SYSTEM_DIR)/include
 
 DINOLIB_DIR		= dinolibc
-DINOLIB_LIB_DIR	= $(DINOLIB_DIR)/headers
+DINOLIB_LIB_DIR	= $(DINOLIB_DIR)/include
 DINOLIB			= dinostring/strlen dinostring/strncmp dinostring/memset \
 				  dinostring/isalpha dinostring/isdigit dinostring/atoi \
 				  dinostring/address dinostring/strchr \
