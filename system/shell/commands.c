@@ -19,16 +19,15 @@ void halt(char *cmd) {
 	exit = EXIT_HALT;
 }
 
-void stack(char *cmd) {
+void memory(char *cmd) {
     int nb_args = count_args(cmd);
-    if (!good_syntax(cmd) || (nb_args != STACK_ARGS)) {
-		printk(ERSYNT, STACK_USAGE);
+    if (!good_syntax(cmd) || (nb_args != MEMORY_ARGS && nb_args != MEMORY_ARGS_OPT)) {
+		printk(ERSYNT, MEMORY_USAGE);
 		return ;
     }
 
     next_arg(cmd);
     int lines = atoi(cmd);
-
     if (!isdigit(*cmd)) {
 		printk(ERVALUE);
 		return ;
@@ -38,13 +37,24 @@ void stack(char *cmd) {
 		return ;
     }
 
-	print_stack(lines);
+	if (nb_args == MEMORY_ARGS) {
+		print_stack(lines);
+		return ;
+	}
+
+	next_arg(cmd);
+	if (strncmp(cmd, "0x", 2) || skip_prefix(cmd) || !valid_address(cmd)) {
+		printk(ERADDR);
+		return ;
+	}
+	unsigned int addr = address(cmd);
+	print_memory(lines, addr);
 }
 
 void sh_switch(char *cmd) {
     int nb_args = count_args(cmd);
     if (!good_syntax(cmd) || (nb_args != SWITCH_ARGS)) {
-		printk(ERSYNT, STACK_USAGE);
+		printk(ERSYNT, SWITCH_USAGE);
 		return ;
     }
 

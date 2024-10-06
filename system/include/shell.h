@@ -7,7 +7,7 @@
 void	shell();
 void	init_shell();
 
-void	stack(char *cmd);
+void	memory(char *cmd);
 void	echo(char *cmd);
 void	lilalelolu();
 void	sh_switch(char *cmd);
@@ -25,9 +25,10 @@ void	fill_buffer(char *buff);
 extern int ps1_len;
 extern int exit;
 
-# define STACK			"stack"
-# define STACK_USAGE	"stack <value>"
-# define STACK_ARGS		1
+# define MEMORY			"memory"
+# define MEMORY_USAGE	"memory <number> [address]"
+# define MEMORY_ARGS		1
+# define MEMORY_ARGS_OPT	2
 
 # define SWITCH			"switch"
 # define SWITCH_USAGE	"switch <value>"
@@ -51,11 +52,12 @@ extern int exit;
 # define WRONG_COLOR	16
 # define BUFF_SIZE		2000
 
-# define ERSYNT	    "dinosh: Usage: %s"
-# define ERVALUE    "dinosh: Unexpected value"
-# define UNKNOWN    "dinosh: Command not found"
-# define ERTOOBIG   "dinosh: Value too big (max: %d)"
-# define ERCOLOR    "dinosh: Color is not valid"
+# define ERSYNT		"dinosh: Usage: %s"
+# define ERVALUE	"dinosh: Unexpected value"
+# define UNKNOWN	"dinosh: Command not found"
+# define ERTOOBIG	"dinosh: Value too big (max: %d)"
+# define ERCOLOR	"dinosh: Color is not valid"
+# define ERADDR		"dinosh: Address is not valid"
 
 # define EXIT_REBOOT	1;
 # define EXIT_HALT		2;
@@ -67,20 +69,23 @@ extern int exit;
 # define next_arg(str)				{while (isword(*str)) {str++;} while (*str == ' ') {str++;}}
 # define apply_color(color)			{default_color = color; color_screen();}
 # define add_theme(name, bg, fg)	if (check_arg(str, name)) return combine(bg, fg)
+# define skip_prefix(str)			!(str += 2)
 
 # define HELP_MSG	"DINOS - HELP\n" \
-					"echo <value>                           display <value> on the output.\n" \
+					"echo <value>                 display <value> on the output.\n" \
 					"\n" \
-					"halt                                   halt the computer.\n" \
+					"halt                         halt the computer.\n" \
 					"\n" \
-					"lilalelolu                             lalelilalo\n" \
+					"lilalelolu                   lalelilalo\n" \
 					"\n" \
-					"reboot                                 restart the computer.\n" \
+					"reboot                       restart the computer.\n" \
 					"\n" \
-					"stack <number>                         display <number> lines from the stack,\n" \
-					"                                       with 16 bytes per line.\n" \
+					"memory <number> [address]    display <number> lines from the given address,\n" \
+					"                             address with 16 bytes per line. If address is\n" \
+					"                             unspecified, display <number> lines from the stack.\n" \
+					"                             address must start with 0x and be in hexadecimal." \
 					"\n" \
-					"switch <number>                        switch to the <number> workspace.\n" \
+					"switch <number>              switch to the <number> workspace.\n" \
 					"\n" \
-					"theme <foreground> <background>        modify the colors of the output.\n" \
-					"      <theme>                          use a custom theme.\n" \
+					"theme <fg> <bg>              modify the colors of the output.\n" \
+					"      <theme>                use a custom theme.\n" \

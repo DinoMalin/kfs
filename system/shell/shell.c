@@ -15,7 +15,7 @@ void interpret() {
     char cmd[BUFF_SIZE];
     fill_buffer(cmd);
 
-    command(cmd, STACK, stack);
+    command(cmd, MEMORY, memory);
     command(cmd, ECHO, echo);
     command(cmd, LILALELOLU, lilalelolu);
     command(cmd, SWITCH, sh_switch);

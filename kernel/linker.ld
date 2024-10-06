@@ -20,9 +20,12 @@ SECTIONS
 		*(.data)
 	}
 
+
 	.bss BLOCK(4K) : ALIGN(4K)
 	{
 		*(COMMON)
 		*(.bss)
 	}
+
+	.gdt 0x800 : { *(.gdt) }
 }

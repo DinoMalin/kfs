@@ -1,7 +1,7 @@
 #include "dinoint.h"
 #include "gdt.h"
 
-struct gdt_entry gdt[NB_SEGMENTS];
+struct gdt_entry gdt[NB_SEGMENTS] __attribute__((section(".gdt")));
 struct gdt_ptr gp;
 
 extern void gdt_flush();
