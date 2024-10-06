@@ -37,6 +37,9 @@
 # define color_cell(vmem)	{vmem[1] = default_color;}
 # define clear_cell(vmem)	{vmem[0] = 0; vmem[1] = default_color;}
 
+# define COM1 0x3f8
+# define putchar_serial(c)  outb(COM1, c)
+
 # define DEFAULT			combine(WHITE, BLACK)
 
 extern unsigned char	*video_memory;
@@ -51,7 +54,6 @@ void		print_memory(int nb, unsigned int addr);
 void		outb(uint16_t port, uint8_t val);
 uint8_t		inb(uint16_t port);
 void		init_serial();
-void		putchar_serial(char c);
 void		putstr_serial(char *str);
 
 void		color_screen();

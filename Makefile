@@ -15,8 +15,7 @@ LINKER		= $(KERNEL_DIR)/linker.ld
 KERNEL		= $(ROOTFS)/boot/kernel.elf
 
 SYSTEM_DIR		= system
-SYSTEM_C		= gdt idt irq timer keyboard cursor workspace \
-				  shell/shell shell/sh_utils shell/commands
+SYSTEM_C		= gdt idt irq timer keyboard cursor workspace
 SYSTEM_S		= interrupts
 SYSTEM_SRC		= $(addprefix $(SYSTEM_DIR)/, $(addsuffix .c, $(SYSTEM_C))) \
 				  $(addprefix $(SYSTEM_DIR)/, $(addsuffix .s, $(SYSTEM_S)))
@@ -29,17 +28,26 @@ DINOLIB_LIB_DIR	= $(DINOLIB_DIR)/include
 DINOLIB			= dinostring/strlen dinostring/strncmp dinostring/memset \
 				  dinostring/isalpha dinostring/isdigit dinostring/atoi \
 				  dinostring/address dinostring/strchr \
-				  dinio/writek dinio/printk dinio/io dinio/print_stack dinio/color_screen
+				  dinio/writek dinio/printk dinio/io dinio/memory dinio/screen
 DINOLIB_SRC		= $(addprefix $(DINOLIB_DIR)/, $(addsuffix .c, $(DINOLIB)))
 DINOLIB_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(DINOLIB_DIR)/, $(addsuffix .o, $(DINOLIB))))
+
+DINOSH_DIR		= shell
+DINOSH			= shell utils commands
+DINOSH_SRC		= $(addprefix $(DINOSH_DIR)/, $(addsuffix .c, $(DINOSH)))
+DINOSH_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(DINOSH_DIR)/, $(addsuffix .o, $(DINOSH))))
 
 theme=dinosaur
 PS1=DinOS>
 
 TCC_GIT	= https://github.com/TinyCC/tinycc
 TCC_DIR	= tinycc
-CC		= ./$(TCC_DIR)/i386-tcc
-CFLAGS	= -nostdlib -fno-builtin -fno-stack-protector -I $(DINOLIB_LIB_DIR) -I $(SYSTEM_INC_DIR) '-Ddefault_theme="$(theme)"' '-DPS1="$(PS1) "'
+
+CC			= ./$(TCC_DIR)/i386-tcc
+CFLAGS		= -nostdlib -fno-builtin -fno-stack-protector \
+			  -I $(DINOLIB_LIB_DIR) -I $(SYSTEM_INC_DIR) -I $(DINOSH_DIR) \
+			  '-Ddefault_theme="$(theme)"' '-DPS1="$(PS1) "'
+LDFLAGS		= -m elf_i386 
 
 
 all: tcc $(KERNEL)
@@ -54,8 +62,8 @@ tcc:
 	make cross-i386
 	cd ..
 
-$(KERNEL): $(START_OBJ) $(KMAIN_OBJ) $(DINOLIB_OBJ) $(SYSTEM_OBJ)
-	$(LD) -m elf_i386 --script=$(LINKER) $(START_OBJ) $(KMAIN_OBJ) $(DINOLIB_OBJ) $(SYSTEM_OBJ) -o $(KERNEL)
+$(KERNEL): $(START_OBJ) $(KMAIN_OBJ) $(DINOLIB_OBJ) $(SYSTEM_OBJ) $(DINOSH_OBJ)
+	$(LD) $(LDFLAGS) --script=$(LINKER) $^ -o $(KERNEL)
 
 $(OBJ_DIR)/%.o: %.s
 	mkdir -p $(dir $@)
@@ -66,9 +74,9 @@ $(OBJ_DIR)/%.o: %.c
 	$(CC) $(CFLAGS)  -c $< -o $@
 
 clean:
-	rm $(ISO) -f
-	rm $(KMAIN_OBJ) $(START_OBJ) -f
-	rm -rf $(OBJ_DIR)
+	$(RM) $(ISO)
+	$(RM) $(KMAIN_OBJ) $(START_OBJ)
+	$(RM) -r $(OBJ_DIR)
 
 fclean: clean
 	rm -rf $(TCC_DIR)
