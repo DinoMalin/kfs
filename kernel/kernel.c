@@ -5,6 +5,8 @@
 #include "idt.h"
 #include "shell.h"
 
+int exit = 0;
+
 void kmain() {
     gdt_install();
     idt_install();
@@ -17,5 +19,8 @@ void kmain() {
     default_color = custom_theme(default_theme);
     printk("This 42 is mandatory");
     init_shell();
-    while (1) {};
+
+    while (!exit) {};
+
+	return exit;
 }

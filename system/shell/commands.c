@@ -11,6 +11,14 @@ void help(char *cmd) {
 	printk(HELP_MSG);
 }
 
+void reboot(char *cmd) {
+	exit = EXIT_REBOOT;
+}
+
+void halt(char *cmd) {
+	exit = EXIT_HALT;
+}
+
 void stack(char *cmd) {
     int nb_args = count_args(cmd);
     if (!good_syntax(cmd) || (nb_args != STACK_ARGS)) {

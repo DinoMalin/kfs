@@ -30,8 +30,11 @@ extern kmain
 _start:
 	mov esp, stack_top
 	call kmain
+	cmp eax, 1
+	je .exit
 	cli
 .halt:
 	hlt
 	jmp .halt
+.exit:
 

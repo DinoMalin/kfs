@@ -22,6 +22,8 @@ void interpret() {
     command(cmd, THEME, theme);
     command(cmd, HELP, help);
     command(cmd, MAN, help);
+    command(cmd, REBOOT, reboot);
+    command(cmd, HALT, halt);
 
     if (!executed)
 		printk(UNKNOWN);
