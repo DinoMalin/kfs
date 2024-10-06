@@ -3,8 +3,6 @@
 unsigned char   *video_memory = START_VMEM;
 int             default_color = DEFAULT;
 
-extern int ps1_len;
-
 void scroll() {
    for (int i = 0; !is_last_line(START_VMEM + i); i += 2) {
        copy_next_line(START_VMEM + i);
@@ -18,22 +16,28 @@ void scroll() {
 
 void backspace() {
     char *start_line = get_command(video_memory);
-    while (*video_memory == 0 && video_memory > start_line)
+    while (*video_memory == 0 && video_memory > start_line) {
         video_memory -= 2;
+		putchar_serial('\b');
+	}
+	putchar_serial(' ');
+	putchar_serial('\b');
     clear_cell(video_memory);
 }
 
-int handle_special_char(char c) {
+static int handle_special_char(char c) {
     switch (c) {
         case '\n':
         if (is_last_line(video_memory))
             scroll();
         else
             go_next_line(video_memory);
+		putchar_serial('\n');
         return 1;
 
         case '\r':
         go_start_line(video_memory);
+		putchar_serial('\r');
         return 1;
 
         case '\b':
@@ -53,6 +57,8 @@ void writek(char *str, unsigned char color, int len) {
 
         video_memory[0] = str[i];
         video_memory[1] = color;
+		putchar_serial(str[i]);
+
         video_memory += 2;
     }
     move_cursor();

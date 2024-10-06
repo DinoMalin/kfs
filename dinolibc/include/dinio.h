@@ -41,6 +41,7 @@
 
 extern unsigned char	*video_memory;
 extern int				default_color;
+extern int				ps1_len;
 
 void    	writek(char *str, unsigned char color, int len);
 int			printk(char *str, ...);
@@ -50,7 +51,8 @@ void		print_memory(int nb, unsigned int addr);
 void		outb(uint16_t port, uint8_t val);
 uint8_t		inb(uint16_t port);
 void		init_serial();
-void		write_serial(char *str);
+void		putchar_serial(char c);
+void		putstr_serial(char *str);
 
 void		color_screen();
 void		clear_screen();

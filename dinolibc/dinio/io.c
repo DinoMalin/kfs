@@ -16,7 +16,13 @@ void init_serial() {
     outb(COM1 + 4, 0x0F);
 }
 
-void write_serial(char *str) {
-    for (int i = 0; str[i]; i++)
-	outb(COM1, str[i]);
+void putchar_serial(char c) {
+	outb(COM1, c);
 }
+
+void putstr_serial(char *str) {
+    for (int i = 0; str[i]; i++) {
+		outb(COM1, str[i]);
+	}
+}
+

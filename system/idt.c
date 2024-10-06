@@ -95,8 +95,8 @@ unsigned char *exceptions[] = {
 
 void fault_handler(struct regs *r) {
     if (r->int_nb < 32) {
-        write_serial(exceptions[r->int_nb]);
-        write_serial(" Exception. System halted.\n");
+        putstr_serial(exceptions[r->int_nb]);
+        putstr_serial(" Exception. System halted.\n");
         printk("%s Exception. System halted.", exceptions[r->int_nb]);
         while (1) {}
     }
