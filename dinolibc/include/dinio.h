@@ -1,60 +1,67 @@
 #pragma once
-# include "dinoint.h"
+#include "dinoint.h"
 
-# define LIN		24
-# define COL		80
+#define LIN 24
+#define COL 80
 
-# define BLACK      0
-# define BLUE       1
-# define GREEN      2
-# define CYAN       3
-# define RED        4
-# define MAGENTA    5
-# define BROWN      6
-# define LGRAY      7
+#define BLACK 0
+#define BLUE 1
+#define GREEN 2
+#define CYAN 3
+#define RED 4
+#define MAGENTA 5
+#define BROWN 6
+#define LGRAY 7
 
-# define DGRAY      8
-# define LBLUE      9
-# define LGREEN     10
-# define LCYAN      11
-# define LRED       12
-# define LMAGENTA   13
-# define YELLOW     14
-# define WHITE      15
+#define DGRAY 8
+#define LBLUE 9
+#define LGREEN 10
+#define LCYAN 11
+#define LRED 12
+#define LMAGENTA 13
+#define YELLOW 14
+#define WHITE 15
 
-# define START_VMEM			((unsigned char *)0xB8000)
-# define LAST_LINE			((unsigned char *)0xB8F00)
-# define END_VMEM			((unsigned char *)0xB8FA0)
+#define START_VMEM ((unsigned char *)0xB8000)
+#define LAST_LINE ((unsigned char *)0xB8F00)
+#define END_VMEM ((unsigned char *)0xB8FA0)
 
-# define is_last_line(vmem)		(vmem >= LAST_LINE ? 1 : 0)
-# define go_next_line(vmem)		((unsigned char *)vmem += (COL - (((vmem - START_VMEM) / 2) % COL)) * 2)
-# define go_start_line(vmem)	((unsigned char *)vmem -= (((vmem - START_VMEM) / 2) % COL) * 2)
-# define get_command(vmem)		(vmem - (vmem - START_VMEM) % (COL * 2) + ps1_len * 2)
+#define is_last_line(vmem) (vmem >= LAST_LINE ? 1 : 0)
+#define go_next_line(vmem)                                                     \
+	((unsigned char *)vmem += (COL - (((vmem - START_VMEM) / 2) % COL)) * 2)
+#define go_start_line(vmem)                                                    \
+	((unsigned char *)vmem -= (((vmem - START_VMEM) / 2) % COL) * 2)
+#define get_command(vmem) (vmem - (vmem - START_VMEM) % (COL * 2) + ps1_len * 2)
 
-# define copy_next_line(vmem)	(vmem)[0] = (vmem)[COL * 2];
+#define copy_next_line(vmem) (vmem)[0] = (vmem)[COL * 2];
 
-# define combine(bg, fg)	(bg * 16 + fg)
-# define color_cell(vmem)	{vmem[1] = default_color;}
-# define clear_cell(vmem)	{vmem[0] = 0; vmem[1] = default_color;}
+#define combine(bg, fg) (bg * 16 + fg)
+#define color_cell(vmem)                                                       \
+	{ vmem[1] = default_color; }
+#define clear_cell(vmem)                                                       \
+	{                                                                          \
+		vmem[0] = 0;                                                           \
+		vmem[1] = default_color;                                               \
+	}
 
-# define COM1 0x3f8
-# define putchar_serial(c)  outb(COM1, c)
+#define COM1 0x3f8
+#define putchar_serial(c) outb(COM1, c)
 
-# define DEFAULT			combine(WHITE, BLACK)
+#define DEFAULT combine(WHITE, BLACK)
 
-extern unsigned char	*video_memory;
-extern int				default_color;
-extern int				ps1_len;
+extern unsigned char *video_memory;
+extern int default_color;
+extern int ps1_len;
 
-void    	writek(char *str, unsigned char color, int len);
-int			printk(char *str, ...);
-void		print_stack(int nb);
-void		print_memory(int nb, unsigned int addr);
+void writek(char *str, unsigned char color, int len);
+int printk(char *str, ...);
+void print_stack(int nb);
+void print_memory(int nb, unsigned int addr);
 
-void		outb(uint16_t port, uint8_t val);
-uint8_t		inb(uint16_t port);
-void		init_serial();
-void		putstr_serial(char *str);
+void outb(uint16_t port, uint8_t val);
+uint8_t inb(uint16_t port);
+void init_serial();
+void putstr_serial(char *str);
 
-void		color_screen();
-void		clear_screen();
+void color_screen();
+void clear_screen();

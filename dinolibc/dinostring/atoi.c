@@ -1,9 +1,9 @@
 #include "dinostring.h"
 
-int	atoi(const char *str) {
-	int	i = 0;
-	int	minus = 1;
-	int	result = 0;
+int atoi(const char *str) {
+	int i = 0;
+	int minus = 1;
+	int result = 0;
 
 	while ((str[i] >= '\t' && str[i] <= '\r') || str[i] == ' ') {
 		i++;

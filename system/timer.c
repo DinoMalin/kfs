@@ -10,22 +10,21 @@ unsigned int ticks = 0;
  * more precise.
  */
 void timer_phase(int hz) {
-    int divisor = BASIC_RATE / hz; 
-    outb(PIT_CMD, SET_DIVISOR);
-    outb(PIT_DATA, divisor & 0xFF);
-    outb(PIT_DATA, divisor >> 8);
+	int divisor = BASIC_RATE / hz;
+	outb(PIT_CMD, SET_DIVISOR);
+	outb(PIT_DATA, divisor & 0xFF);
+	outb(PIT_DATA, divisor >> 8);
 }
 
-void timer_handler(struct regs *r) {
-    ticks++;
-}
+void timer_handler(struct regs *r) { ticks++; }
 
 void timer_install() {
-    timer_phase(RATE);
-    irq_install_handler(0, timer_handler);
+	timer_phase(RATE);
+	irq_install_handler(0, timer_handler);
 }
 
 void wait(unsigned int wait_ticks) {
-    unsigned int offset = ticks + wait_ticks;
-    while(ticks < offset);
+	unsigned int offset = ticks + wait_ticks;
+	while (ticks < offset)
+		;
 }

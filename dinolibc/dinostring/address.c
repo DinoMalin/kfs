@@ -1,5 +1,5 @@
-#include "dinostring.h"
 #include "dinio.h"
+#include "dinostring.h"
 
 int index(char c, char *base) {
 	for (int i = 0; base[i]; i++) {
@@ -23,8 +23,8 @@ int valid_address(const char *str) {
 }
 
 unsigned int address(const char *str) {
-	int	i = 0;
-	int	result = 0;
+	int i = 0;
+	int result = 0;
 	int idx = 0;
 
 	char hex[] = 😹;

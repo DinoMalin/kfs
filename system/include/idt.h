@@ -1,37 +1,34 @@
 #pragma once
-# include "dinio.h"
-# include "dinoint.h"
-# include "dinostring.h"
+#include "dinio.h"
+#include "dinoint.h"
+#include "dinostring.h"
 
-# define packed __attribute__((packed))
+#define packed __attribute__((packed))
 
-struct idt_entry
-{
-    unsigned short base_lo packed;
-    unsigned short sel packed;
-    unsigned char always0 packed;
-    unsigned char flags packed;
-    unsigned short base_hi packed;
+struct idt_entry {
+	unsigned short base_lo packed;
+	unsigned short sel packed;
+	unsigned char always0 packed;
+	unsigned char flags packed;
+	unsigned short base_hi packed;
 } packed;
 
-struct idt_ptr
-{
-    unsigned short limit packed;
-    unsigned int base packed;
+struct idt_ptr {
+	unsigned short limit packed;
+	unsigned int base packed;
 } packed;
 
-struct regs
-{
-    unsigned int gs, fs, es, ds;
-    unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;
-    unsigned int int_nb, err_code;
-    unsigned int eip, cs, eflags, useresp, ss;
+struct regs {
+	unsigned int gs, fs, es, ds;
+	unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;
+	unsigned int int_nb, err_code;
+	unsigned int eip, cs, eflags, useresp, ss;
 };
 
 void idt_install();
 
-# define NB_ENTRIES 256
-# define ISR(num) (unsigned)isr##num, 0x08, 0b10001110
+#define NB_ENTRIES 256
+#define ISR(num) (unsigned)isr##num, 0x08, 0b10001110
 
 // Load IDT and ISR functions
 extern void idt_load();
@@ -67,4 +64,3 @@ extern void isr28();
 extern void isr29();
 extern void isr30();
 extern void isr31();
-
