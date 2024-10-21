@@ -4,6 +4,8 @@ SECTIONS
 {
 	. = 1M;
 
+	kernel_start = .;
+
 	.text BLOCK(4K) : ALIGN (4K)
 	{
 		*(.multiboot)
@@ -28,4 +30,6 @@ SECTIONS
 	}
 
 	.gdt 0x800 : { *(.gdt) }
+
+	kernel_end = .;
 }
