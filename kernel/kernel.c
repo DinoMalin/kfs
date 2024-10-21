@@ -20,6 +20,8 @@ void kmain() {
 	printk("This 42 is mandatory");
 	init_shell();
 
+	alloc_basics();
+
 	while (!exit) {
 	};
 
