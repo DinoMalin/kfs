@@ -1,5 +1,5 @@
 ; enable paging
-global load_page_directory
+global enable_paging
 extern page_directory
 
 enable_paging:

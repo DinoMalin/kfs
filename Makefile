@@ -15,8 +15,8 @@ LINKER		= $(KERNEL_DIR)/linker.ld
 KERNEL		= $(ROOTFS)/boot/kernel.elf
 
 SYSTEM_DIR		= system
-SYSTEM_C		= gdt idt irq timer keyboard cursor workspace physical_mem
-SYSTEM_S		= interrupts
+SYSTEM_C		= gdt idt irq timer keyboard cursor workspace physical_mem virtual_mem
+SYSTEM_S		= interrupts paging
 SYSTEM_SRC		= $(addprefix $(SYSTEM_DIR)/, $(addsuffix .c, $(SYSTEM_C))) \
 				  $(addprefix $(SYSTEM_DIR)/, $(addsuffix .s, $(SYSTEM_S)))
 SYSTEM_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(SYSTEM_DIR)/, $(addsuffix .o, $(SYSTEM_C)))) \

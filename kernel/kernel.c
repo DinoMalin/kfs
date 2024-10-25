@@ -5,6 +5,8 @@
 #include "idt.h"
 #include "shell.h"
 
+#include "virtual_mem.h"
+
 int exit = 0;
 
 void kmain() {
@@ -14,13 +16,13 @@ void kmain() {
 	asm volatile("sti");
 	timer_install();
 	keyboard_install();
-	clear_screen();
 
+	clear_screen();
 	default_color = custom_theme(default_theme);
 	printk("This 42 is mandatory");
 	init_shell();
 
-	alloc_basics();
+	init_paging();
 
 	while (!exit) {
 	};

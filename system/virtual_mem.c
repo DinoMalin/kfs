@@ -9,17 +9,20 @@ void init_page_directory() {
 }
 
 int map(uint32_t physical_addr, uint32_t virtual_addr) {
-	int table = resolve_page_table(virtual_addr);
+	int table = resolve_table(virtual_addr);
 
-	if (!present(page_directory[table_index])) {
-		void *page_table = palloc();
+	if (!present(page_directory[table])) {
+		uint32_t *page_table = (uint32_t *)palloc();
 		if (!page_table)
 			return 0;
-		page_directory[table] = page_table | 0b11;
+		page_directory[table] = (uint32_t)page_table | 0b11;
+		for (int i = 0; i < 1024; i++) {
+			page_table[i] = 0b10;
+		}
 	}
 
 	int page = resolve_page(virtual_addr);
-	page_directory[table][page] = physical_addr | 0b11;
+	((uint32_t *)(page_directory[table]))[page] = physical_addr | 0b11;
 	return 1;
 }
 
@@ -31,9 +34,16 @@ int map_zone(uint32_t physical_addr, uint32_t virtual_addr, int len) {
 	return 1;
 }
 
+extern void *kernel_start;
+extern void *kernel_end;
+
 void init_paging() {
 	init_page_directory();
-	IDENTITY_MAP(0xb8000, VIDEO_AREA);
+
+	if (!IDENTITY_MAP(0, kernel_len + 0x100000))
+		printk("Failed to map kernel");
+	if (!IDENTITY_MAP(0xb8000, VIDEO_AREA))
+		printk("Failed to map video memory");
+
 	enable_paging();
 }
-

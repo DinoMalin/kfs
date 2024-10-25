@@ -15,9 +15,7 @@ void allocate_zone(unsigned int addr, unsigned int len) {
 	}
 }
 
-void free_page(int page) {
-	bitmap[page / 32] &= ~(1 << (page % 32));
-}
+void free_page(int page) { bitmap[page / 32] &= ~(1 << (page % 32)); }
 
 void free_zone(unsigned int addr, unsigned int len) {
 	unsigned int last_page = addr + len;
@@ -31,17 +29,12 @@ void free_zone(unsigned int addr, unsigned int len) {
 extern void *kernel_start;
 extern void *kernel_end;
 
-void alloc_basics() {
-	allocate_zone(0, 0x100000);
-	allocate_zone((unsigned int)&kernel_start, kernel_len(kernel_start, kernel_end));
-}
-
 int get_free_page() {
-	int	i = 0;
+	int i = 0;
 	int current_len = 0;
 
 	while (i < NB_PAGES) {
-		int	j = 0;
+		int j = 0;
 		while (j != 32) {
 			if (page_is_free(page(i, j))) {
 				allocate_page(page(i, j));
@@ -53,9 +46,9 @@ int get_free_page() {
 	return -1;
 }
 
-void *palloc() {
+uint32_t palloc() {
 	int res = get_free_page();
 	if (res == -1)
 		return 0;
-	return (void *)(res * PAGE_SIZE);
+	return res * PAGE_SIZE;
 }
