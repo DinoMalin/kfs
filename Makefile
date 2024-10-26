@@ -1,6 +1,7 @@
 ISO			= kernel.iso
 GRUB_MOD	= part_acorn part_amiga part_apple part_bsd part_dfly part_dvh part_gpt part_msdos part_plan part_sun part_sunpc normal multiboot
 GRUB_RM		= System efi boot/grub/x86_64-efi mach_kernel boot/grub/i386-efi boot/grub/themes efi.img boot/grub/locale
+GRUB_DIR	= i386-pc
 
 ROOTFS		= rootfs
 KERNEL_DIR	= kernel
@@ -51,7 +52,7 @@ LDFLAGS		= -m elf_i386
 
 
 all: tcc $(KERNEL)
-	grub-mkrescue -o $(ISO) $(ROOTFS) "--install-modules=$(GRUB_MOD)" -- -rm_r $(GRUB_RM) -- 
+	grub-mkrescue --directory=$(GRUB_DIR) -o $(ISO) $(ROOTFS) "--install-modules=$(GRUB_MOD)" -- -rm_r $(GRUB_RM) -- 
 	qemu-system-i386 -cdrom $(ISO) -serial stdio
 
 .ONESHELL:
