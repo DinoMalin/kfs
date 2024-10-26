@@ -47,7 +47,7 @@ TCC_DIR	= tinycc
 CC			= ./$(TCC_DIR)/i386-tcc
 CFLAGS		= -nostdlib -fno-builtin -fno-stack-protector \
 			  -I $(DINOLIB_LIB_DIR) -I $(SYSTEM_INC_DIR) -I $(DINOSH_DIR) \
-			  '-Ddefault_theme="$(theme)"' '-DPS1="$(PS1) "'
+			  '-Ddefault_theme="$(theme)"' '-DPS1="$(PS1) "' -g
 LDFLAGS		= -m elf_i386 
 
 
