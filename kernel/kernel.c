@@ -17,15 +17,14 @@ void kmain() {
 	timer_install();
 	keyboard_install();
 
+	init_paging();
+
 	clear_screen();
 	default_color = custom_theme(default_theme);
 	printk("This 42 is mandatory");
 	init_shell();
 
-	init_paging();
-
-	while (!exit) {
-	};
+	while (!exit) {}
 
 	return exit;
 }

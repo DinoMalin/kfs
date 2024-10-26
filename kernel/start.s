@@ -1,5 +1,6 @@
 bits 32
-section .text
+
+section .multiboot
 
 ; Multiboot macros
 MULTIBOOT_PAGE_ALIGN	equ(1 << 0)

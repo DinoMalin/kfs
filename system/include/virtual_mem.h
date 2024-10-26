@@ -14,4 +14,6 @@
  **/
 #define IDENTITY_MAP(addr, len) map_zone(addr, addr, len)
 
+extern void enable_paging();
+
 void init_paging();

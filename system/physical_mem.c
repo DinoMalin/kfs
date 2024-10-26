@@ -42,6 +42,7 @@ int get_free_page() {
 			}
 			j++;
 		}
+		i++;
 	}
 	return -1;
 }
