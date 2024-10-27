@@ -8,8 +8,8 @@ SECTIONS
 		*(.multiboot)
 	}
 
-	. = 1M;
 	kernel_start = .;
+	. = 1M;
 
 	.text BLOCK(4K) : ALIGN(4K)
 	{

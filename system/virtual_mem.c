@@ -2,46 +2,45 @@
 
 uint32_t page_directory[1024] aligned(4096);
 
-void init_page_directory() {
-	for (int i = 0; i < 1024; i++) {
-		page_directory[i] = 0b10; // rw rights
-	}
-}
-
 int map(uint32_t physical_addr, uint32_t virtual_addr) {
-	int table = resolve_table(virtual_addr);
+	int table_index = table_index(virtual_addr);
+	uint32_t *page_table = page_directory + table_index;
 
-	if (!present(page_directory[table])) {
-		uint32_t *page_table = (uint32_t *)palloc();
-		if (!page_table)
+	if (!present(*page_table)) {
+		uint32_t new_table = palloc();
+		if (!new_table)
 			return 0;
-		for (int i = 0; i < 1024; i++) {
-			page_table[i] = 0b10;
-		}
-		page_directory[table] = (uint32_t)page_table | 0b11;
+
+		bzero((void *)new_table, PAGE_SIZE);
+
+		*page_table |= 0b01;
+		*page_table |= 0b10;
+		*page_table |= new_table & 0xfffff000;
 	}
 
-	int page = resolve_page(virtual_addr);
-	((uint32_t *)(page_directory[table]))[page] = physical_addr | 0b11;
+	int page_index = page_index(virtual_addr);
+	uint32_t *page = (uint32_t *)((((*page_table) >> 12) << 12) + page_index);
+
+	*page |= 0b01;
+	*page |= 0b10;
+	*page |= physical_addr & 0xfffff000;
+
 	return 1;
 }
 
-int map_zone(uint32_t physical_addr, uint32_t virtual_addr, int len) {
-	for (int i = 0; i < len; i += PAGE_SIZE) {
+int map_zone(uint32_t physical_addr, uint32_t virtual_addr, uint32_t len) {
+	for (uint32_t i = 0; i <= len; i += PAGE_SIZE) {
 		if (!map(physical_addr + i, virtual_addr + i))
 			return 0;
 	}
 	return 1;
 }
 
-extern void *kernel_start;
-extern void *kernel_end;
-
 void init_paging() {
 	init_bitmap();
-	init_page_directory();
+	bzero((void *)page_directory, PAGE_SIZE);
 
-	if (!IDENTITY_MAP(0, kernel_len + 0x100000))
+	if (!IDENTITY_MAP(0, KERNEL_AREA))
 		printk("Failed to map kernel");
 	if (!IDENTITY_MAP(0xb8000, VIDEO_AREA))
 		printk("Failed to map video memory");

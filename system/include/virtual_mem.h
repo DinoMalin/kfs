@@ -1,14 +1,16 @@
 #pragma once
 
 #include "dinio.h"
+#include "dinostring.h"
 #include "dinoint.h"
 #include "physical_mem.h"
 
 #define VIDEO_AREA 4000
+#define KERNEL_AREA 0x400000
 #define aligned(x) __attribute__((aligned(x)))
 
-#define resolve_table(address) (address / 0x400000)
-#define resolve_page(address) (address % 0x400000)
+#define table_index(addr) (addr / 0x400000)
+#define page_index(addr) (addr % 0x400000)
 #define present(table) (table & 1)
 #define kernel_len ((uint32_t) & kernel_end - (uint32_t) & kernel_start)
 
@@ -18,5 +20,8 @@
 #define IDENTITY_MAP(addr, len) map_zone(addr, addr, len)
 
 extern void enable_paging();
+extern void *kernel_start;
+extern void *kernel_end;
+
 
 void init_paging();
