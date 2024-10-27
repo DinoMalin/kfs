@@ -2,7 +2,7 @@
 #include <physical_mem.h>
 
 // More on bitmap allocator : https://wiki.osdev.org/Page_Frame_Allocation
-uint32_t bitmap[NB_PAGES] = {[0 ... NB_PAGES - 1] = 0xffffffff};
+uint32_t bitmap[NB_PAGES] = {[0 ... NB_PAGES - 1] = 0};
 
 void allocate_page(int page) { bitmap[page / 32] |= 1 << (page % 32); }
 
@@ -49,7 +49,5 @@ int get_free_page() {
 
 uint32_t palloc() {
 	int res = get_free_page();
-	if (res == -1)
-		return 0;
-	return res * PAGE_SIZE;
+	return res == -1 ? res : res * PAGE_SIZE;
 }

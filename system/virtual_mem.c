@@ -13,7 +13,7 @@ int map(uint32_t physical_addr, uint32_t virtual_addr) {
 
 	if (!present(page_directory[table])) {
 		uint32_t *page_table = (uint32_t *)palloc();
-		if (!page_table)
+		if (page_table == -1)
 			return 0;
 		for (int i = 0; i < 1024; i++) {
 			page_table[i] = 0b10;
