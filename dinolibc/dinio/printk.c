@@ -18,10 +18,17 @@ int putchar(char c) {
 }
 
 int puthexa(unsigned int n) {
-	char hexa[16] = "0123456789abcdef";
+	char hexa[] = "0123456789abcdef";
 	if (n >= 16)
 		return puthexa(n / 16) + puthexa(n % 16);
 	return putchar(hexa[n]);
+}
+
+int putbit(unsigned int n) {
+	char bit[] = "01";
+	if (n >= 2)
+		return putbit(n / 2) + putbit(n % 2);
+	return putchar(bit[n]);
 }
 
 int putptr(void *ptr) {
@@ -76,6 +83,9 @@ int format(char *str, int *index, va_list *variadic) {
 	} else if (!strncmp("%byte", str, 5)) {
 		*index += 5;
 		return putbyte(va_arg(*variadic, unsigned char));
+	} else if (!strncmp("%bit", str, 4)) {
+		*index += 4;
+		return putbit(va_arg(*variadic, unsigned int));
 	} else if (!strncmp("%p", str, 2)) {
 		*index += 2;
 		return putptr(va_arg(*variadic, void *));
