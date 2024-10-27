@@ -44,39 +44,63 @@ TCC_DIR	= tinycc
 CC			= ./$(TCC_DIR)/i386-tcc
 CFLAGS		= -nostdlib -fno-builtin -fno-stack-protector \
 			  -I $(DINOLIB_LIB_DIR) -I $(SYSTEM_INC_DIR) -I $(DINOSH_DIR) \
-			  '-Ddefault_theme="$(theme)"' '-DPS1="$(PS1) "' -g
+			  '-Ddefault_theme="$(theme)"' '-DPS1="$(PS1) "' -g \
+			  -Werror
 LDFLAGS		= -m elf_i386 
 
+define legend
+	@echo -n "\e[1;38;2;163;255;149m$(1) \e[0m"
+	@echo $(2)
+endef
+
+define legend_forget
+	@echo -n "\e[1;38;2;163;255;149m$(1) \e[0m"
+	@echo -n "$(2)"
+	@echo -n "                              \r"
+endef
+
+define bad_legend
+	@echo -n "\e[1;38;2;255;149;149m$(1) \e[0m"
+	@echo $(2)
+endef
 
 all: $(CC) $(KERNEL)
-	grub-mkrescue --directory=$(GRUB_DIR) -o $(ISO) $(ROOTFS) "--install-modules=$(GRUB_MOD)" -- -rm_r $(GRUB_RM) -- 
-	qemu-system-i386 -cdrom $(ISO) -serial stdio
+	$(call legend,"Creating",$(ISO))
+	@grub-mkrescue --directory=$(GRUB_DIR) -o $(ISO) $(ROOTFS) "--install-modules=$(GRUB_MOD)" -- -rm_r $(GRUB_RM) --  2>/dev/null
+	$(call legend,"Launching VM...",)
+	@qemu-system-i386 -cdrom $(ISO) -serial stdio
 
 .ONESHELL:
 $(CC):
-	git clone $(TCC_GIT)
-	cd $(TCC_DIR) 
-	./configure
-	make cross-i386
-	cd ..
+	$(call legend,"Compiling TCC...",)
+	@git clone $(TCC_GIT) --quiet
+	@cd $(TCC_DIR)
+	@./configure >/dev/null
+	@make cross-i386 --quiet 2>/dev/null
+	@cd ..
 
 $(KERNEL): $(START_OBJ) $(KMAIN_OBJ) $(DINOLIB_OBJ) $(SYSTEM_OBJ) $(DINOSH_OBJ)
-	$(LD) $(LDFLAGS) --script=$(LINKER) $^ -o $(KERNEL)
+	$(call legend,"Linking",$@)
+	@$(LD) $(LDFLAGS) --script=$(LINKER) $^ -o $(KERNEL)
 
 $(OBJ_DIR)/%.o: %.s
-	mkdir -p $(dir $@)
-	nasm $< -f elf -o $@
+	$(call legend_forget,"Compiling",$<)
+	@mkdir -p $(dir $@)
+	@nasm $< -f elf -o $@
 
 $(OBJ_DIR)/%.o: %.c
-	mkdir -p $(dir $@)
-	$(CC) $(CFLAGS)  -c $< -o $@
+	$(call legend_forget,"Compiling",$<)
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS)  -c $< -o $@
 
 clean:
-	$(RM) $(ISO)
-	$(RM) $(KMAIN_OBJ) $(START_OBJ)
-	$(RM) -r $(OBJ_DIR)
+	$(call bad_legend,"Cleaning",)
+	@$(RM) $(ISO)
+	@$(RM) $(KMAIN_OBJ) $(START_OBJ)
+	@$(RM) -r $(OBJ_DIR)
 
 fclean: clean
-	rm -rf $(TCC_DIR)
+	@$(RM) -r $(TCC_DIR)
 
 re: clean all
+
