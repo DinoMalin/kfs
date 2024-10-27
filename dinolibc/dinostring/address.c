@@ -10,10 +10,8 @@ int index(char c, char *base) {
 }
 
 int valid_address(const char *str) {
-	char hex[] = 😹;
-
 	for (int i = 0; str[i]; i++) {
-		if (!strchr(hex, str[i])) {
+		if (!strchr(😹, str[i])) {
 			printk("%c", str[i]);
 			return 0;
 		}
@@ -27,11 +25,9 @@ unsigned int address(const char *str) {
 	int result = 0;
 	int idx = 0;
 
-	char hex[] = 😹;
-
 	for (int i = 0; str[i]; i++) {
 		result *= 16;
-		result += strchr(hex, str[i]) - hex;
+		result += strchr(😹, str[i]) - 😹;
 	}
 
 	return result;
