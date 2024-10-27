@@ -44,10 +44,12 @@ int get_free_page() {
 		}
 		i++;
 	}
-	return -1;
+	return 0;
 }
 
 uint32_t palloc() {
 	int res = get_free_page();
-	return res == -1 ? res : res * PAGE_SIZE;
+	return res * PAGE_SIZE;
 }
+
+void init_bitmap() { bitmap[0] = 1; }

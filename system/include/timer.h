@@ -1,5 +1,8 @@
 #pragma once
 
+#include "dinio.h"
+#include "irq.h"
+
 #define PIT_DATA 0x40
 #define PIT_CMD 0x43
 

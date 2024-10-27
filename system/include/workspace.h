@@ -2,6 +2,7 @@
 
 #include "cursor.h"
 #include "dinio.h"
+#include "shell.h"
 
 #define NB_WS 2
 

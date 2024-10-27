@@ -3,13 +3,15 @@
 
 #include "gdt.h"
 #include "idt.h"
+#include "irq.h"
+#include "keyboard.h"
 #include "shell.h"
 
 #include "virtual_mem.h"
 
 int exit = 0;
 
-void kmain() {
+int kmain() {
 	gdt_install();
 	idt_install();
 	irq_install();
@@ -24,7 +26,8 @@ void kmain() {
 	printk("This 42 is mandatory");
 	init_shell();
 
-	while (!exit) {}
+	while (!exit) {
+	}
 
 	return exit;
 }

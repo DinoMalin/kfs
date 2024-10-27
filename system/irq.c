@@ -1,3 +1,5 @@
+#pragma once
+
 #include "irq.h"
 
 void *irq_routines[NB_IRQ] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};

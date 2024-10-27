@@ -51,12 +51,12 @@ CFLAGS		= -nostdlib -fno-builtin -fno-stack-protector \
 LDFLAGS		= -m elf_i386 
 
 
-all: tcc $(KERNEL)
+all: $(CC) $(KERNEL)
 	grub-mkrescue --directory=$(GRUB_DIR) -o $(ISO) $(ROOTFS) "--install-modules=$(GRUB_MOD)" -- -rm_r $(GRUB_RM) -- 
 	qemu-system-i386 -cdrom $(ISO) -serial stdio
 
 .ONESHELL:
-tcc:
+$(CC):
 	git clone $(TCC_GIT)
 	cd $(TCC_DIR) 
 	./configure

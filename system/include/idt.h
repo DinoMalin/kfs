@@ -1,4 +1,5 @@
 #pragma once
+
 #include "dinio.h"
 #include "dinoint.h"
 #include "dinostring.h"
@@ -26,6 +27,7 @@ struct regs {
 };
 
 void idt_install();
+void idt_set_gate(unsigned long base, unsigned short sel, unsigned char flags);
 
 #define NB_ENTRIES 256
 #define ISR(num) (unsigned)isr##num, 0x08, 0b10001110

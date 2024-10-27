@@ -1,4 +1,5 @@
 #pragma once
+
 #include "dinio.h"
 #include "dinostring.h"
 #include "timer.h"
@@ -21,6 +22,7 @@ int get_color(char *str);
 int count_args(char *str);
 int good_syntax(char *str);
 void fill_buffer(char *buff);
+int custom_theme(char *str);
 
 extern int ps1_len;
 extern int exit;

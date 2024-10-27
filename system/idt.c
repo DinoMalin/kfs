@@ -1,3 +1,5 @@
+#pragma once
+
 #include "idt.h"
 
 struct idt_entry idt[NB_ENTRIES];
@@ -18,7 +20,7 @@ void idt_set_gate(unsigned long base, unsigned short sel, unsigned char flags) {
 
 void idt_install() {
 	idtp.limit = (sizeof(struct idt_entry) * NB_ENTRIES) - 1;
-	idtp.base = &idt;
+	idtp.base = (uint32_t)&idt;
 
 	memset(&idt, 0, sizeof(struct idt_entry) * NB_ENTRIES);
 

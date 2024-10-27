@@ -15,7 +15,7 @@ void scroll() {
 }
 
 void backspace() {
-	char *start_line = get_command(video_memory);
+	unsigned char *start_line = get_command(video_memory);
 	while (*video_memory == 0 && video_memory > start_line) {
 		video_memory -= 2;
 		putchar_serial('\b');

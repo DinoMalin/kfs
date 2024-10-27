@@ -1,8 +1,11 @@
 #pragma once
+
+#include "dinio.h"
 #include "dinoint.h"
 #include "physical_mem.h"
 
 #define VIDEO_AREA 4000
+#define aligned(x) __attribute__((aligned(x)))
 
 #define resolve_table(address) (address / 0x400000)
 #define resolve_page(address) (address % 0x400000)

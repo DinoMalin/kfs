@@ -1,5 +1,7 @@
 #pragma once
 
+#include "dinoint.h"
+
 #define packed __attribute__((packed))
 
 struct gdt_entry {

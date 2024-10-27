@@ -1,5 +1,4 @@
 #include "gdt.h"
-#include "dinoint.h"
 
 struct gdt_entry gdt[NB_SEGMENTS] __attribute__((section(".gdt")));
 struct gdt_ptr gp;
@@ -24,7 +23,7 @@ void gdt_set_gate(unsigned long base, unsigned long limit, unsigned char access,
 
 void gdt_install() {
 	gp.limit = (sizeof(struct gdt_entry) * NB_SEGMENTS) - 1;
-	gp.base = &gdt;
+	gp.base = (uint32_t)&gdt;
 
 	gdt_set_gate(null_descriptor);
 	gdt_set_gate(kernel_code);

@@ -11,3 +11,4 @@
 #define page(offset, page) (offset * 32 + page)
 
 uint32_t palloc();
+void init_bitmap();

@@ -1,4 +1,6 @@
 #pragma once
+
+#include "cursor.h"
 #include "dinoint.h"
 
 #define LIN 24
