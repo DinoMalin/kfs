@@ -6,6 +6,7 @@ int atoi(const char *str);
 char *strchr(const char *str, int search);
 
 void *memset(void *pointer, int value, unsigned int size);
+void *ft_memcpy(void *dst, const void *src, size_t size);
 #define bzero(ptr, size) memset(ptr, 0, size)
 
 int isalpha(char c);
