@@ -1,6 +1,10 @@
 ISO			= kernel.iso
-GRUB_MOD	= part_acorn part_amiga part_apple part_bsd part_dfly part_dvh part_gpt part_msdos part_plan part_sun part_sunpc normal multiboot
-GRUB_RM		= System efi boot/grub/x86_64-efi mach_kernel boot/grub/i386-efi boot/grub/themes efi.img boot/grub/locale
+GRUB_MOD	= part_acorn part_amiga part_apple part_bsd \
+			  part_dfly part_dvh part_gpt part_msdos \
+			  part_plan part_sun part_sunpc normal multiboot
+GRUB_RM		= System efi boot/grub/x86_64-efi mach_kernel \
+			  boot/grub/i386-efi boot/grub/themes efi.img \
+			  boot/grub/locale
 GRUB_DIR	= i386-pc
 
 ROOTFS		= rootfs
@@ -16,27 +20,20 @@ LINKER		= $(KERNEL_DIR)/linker.ld
 KERNEL		= $(ROOTFS)/boot/kernel.elf
 
 SYSTEM_DIR		= system
-SYSTEM_C		= gdt idt irq timer keyboard cursor workspace physical_mem virtual_mem
-SYSTEM_S		= interrupts paging
-SYSTEM_SRC		= $(addprefix $(SYSTEM_DIR)/, $(addsuffix .c, $(SYSTEM_C))) \
-				  $(addprefix $(SYSTEM_DIR)/, $(addsuffix .s, $(SYSTEM_S)))
-SYSTEM_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(SYSTEM_DIR)/, $(addsuffix .o, $(SYSTEM_C)))) \
-				  $(addprefix $(OBJ_DIR)/, $(addprefix $(SYSTEM_DIR)/, $(addsuffix .o, $(SYSTEM_S))))
+SYSTEM_SRC_C	= $(wildcard $(SYSTEM_DIR)/*.c)
+SYSTEM_SRC_S	= $(wildcard $(SYSTEM_DIR)/*.s)
+SYSTEM_OBJ		= $(SYSTEM_SRC_C:%.c=$(OBJ_DIR)/%.o) \
+				  $(SYSTEM_SRC_S:%.s=$(OBJ_DIR)/%.o)
 SYSTEM_INC_DIR	= $(SYSTEM_DIR)/include
 
 DINOLIB_DIR		= dinolibc
 DINOLIB_LIB_DIR	= $(DINOLIB_DIR)/include
-DINOLIB			= dinostring/strlen dinostring/strncmp dinostring/memset \
-				  dinostring/isalpha dinostring/isdigit dinostring/atoi \
-				  dinostring/address dinostring/strchr \
-				  dinio/writek dinio/printk dinio/io dinio/memory dinio/screen
-DINOLIB_SRC		= $(addprefix $(DINOLIB_DIR)/, $(addsuffix .c, $(DINOLIB)))
-DINOLIB_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(DINOLIB_DIR)/, $(addsuffix .o, $(DINOLIB))))
+DINOLIB_SRC		= $(wildcard $(DINOLIB_DIR)/**/*.c)
+DINOLIB_OBJ		= $(DINOLIB_SRC:%.c=$(OBJ_DIR)/%.o)
 
 DINOSH_DIR		= shell
-DINOSH			= shell utils commands
-DINOSH_SRC		= $(addprefix $(DINOSH_DIR)/, $(addsuffix .c, $(DINOSH)))
-DINOSH_OBJ		= $(addprefix $(OBJ_DIR)/, $(addprefix $(DINOSH_DIR)/, $(addsuffix .o, $(DINOSH))))
+DINOSH_SRC		= $(wildcard $(DINOSH_DIR)/*.c)
+DINOSH_OBJ		= $(DINOSH_SRC:%.c=$(OBJ_DIR)/%.o)
 
 theme=dinosaur
 PS1=DinOS>
