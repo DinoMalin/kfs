@@ -16,15 +16,17 @@ int map(uint32_t physical_addr, uint32_t virtual_addr) {
 		*page_table |= 0b01;
 		*page_table |= 0b10;
 		*page_table |= new_table & 0xfffff000;
+		printk("new table : %x | %bit\n", new_table, *page_table);
 	}
 
 	int page_index = page_index(virtual_addr);
-	uint32_t *page = (uint32_t *)((((*page_table) >> 12) << 12) + page_index);
+	uint32_t *page = (void *)((*page_table & 0xfffff000) + page_index);
 
 	*page |= 0b01;
 	*page |= 0b10;
 	*page |= physical_addr & 0xfffff000;
 
+	printk("new page : %x | %bit\n", physical_addr, *page);
 	return 1;
 }
 
@@ -37,7 +39,6 @@ int map_zone(uint32_t physical_addr, uint32_t virtual_addr, uint32_t len) {
 }
 
 void init_paging() {
-	init_bitmap();
 	bzero((void *)page_directory, PAGE_SIZE);
 
 	if (!IDENTITY_MAP(0, KERNEL_AREA))

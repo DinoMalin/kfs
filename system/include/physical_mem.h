@@ -11,4 +11,5 @@
 #define page(offset, page) (offset * 32 + page)
 
 uint32_t palloc();
-void init_bitmap();
+void pmem_alloc_zone(unsigned int addr, unsigned int len);
+void init_pmem();

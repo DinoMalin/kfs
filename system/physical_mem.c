@@ -4,24 +4,24 @@
 // More on bitmap allocator : https://wiki.osdev.org/Page_Frame_Allocation
 uint32_t bitmap[NB_PAGES] = {[0 ... NB_PAGES - 1] = 0};
 
-void allocate_page(int page) { bitmap[page / 32] |= 1 << (page % 32); }
+void pmem_alloc_page(int page) { bitmap[page / 32] |= 1 << (page % 32); }
 
-void allocate_zone(unsigned int addr, unsigned int len) {
+void pmem_alloc_zone(unsigned int addr, unsigned int len) {
 	unsigned int last_page = addr + len;
 
 	while (addr + PAGE_SIZE <= last_page) {
-		allocate_page(addr / PAGE_SIZE);
+		pmem_alloc_page(addr / PAGE_SIZE);
 		addr += PAGE_SIZE;
 	}
 }
 
-void free_page(int page) { bitmap[page / 32] &= ~(1 << (page % 32)); }
+void pmem_free_page(int page) { bitmap[page / 32] &= ~(1 << (page % 32)); }
 
-void free_zone(unsigned int addr, unsigned int len) {
+void pmem_free_zone(unsigned int addr, unsigned int len) {
 	unsigned int last_page = addr + len;
 
 	while (addr + PAGE_SIZE <= last_page) {
-		free_page(addr / PAGE_SIZE);
+		pmem_free_page(addr / PAGE_SIZE);
 		addr += PAGE_SIZE;
 	}
 }
@@ -37,7 +37,7 @@ int get_free_page() {
 		int j = 0;
 		while (j != 32) {
 			if (page_is_free(page(i, j))) {
-				allocate_page(page(i, j));
+				pmem_alloc_page(page(i, j));
 				return page(i, j);
 			}
 			j++;
@@ -52,4 +52,4 @@ uint32_t palloc() {
 	return res * PAGE_SIZE;
 }
 
-void init_bitmap() { bitmap[0] = 1; }
+void init_pmem() { bitmap[0] = 1; }
