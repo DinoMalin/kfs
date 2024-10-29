@@ -4,8 +4,6 @@
 #include "dinoint.h"
 #include "dinostring.h"
 
-#define packed __attribute__((packed))
-
 struct idt_entry {
 	unsigned short base_lo packed;
 	unsigned short sel packed;

@@ -16,17 +16,15 @@ int map(uint32_t physical_addr, uint32_t virtual_addr) {
 		*page_table |= 0b01;
 		*page_table |= 0b10;
 		*page_table |= new_table & 0xfffff000;
-		printk("new table : %x | %bit\n", new_table, *page_table);
 	}
 
 	int page_index = page_index(virtual_addr);
-	uint32_t *page = (void *)((*page_table & 0xfffff000) + page_index);
+	uint32_t *page = (void *)((*page_table & 0xfffff000) + (page_index * 4));
 
-	*page |= 0b01;
+	*page = 0b01;
 	*page |= 0b10;
 	*page |= physical_addr & 0xfffff000;
 
-	printk("new page : %x | %bit\n", physical_addr, *page);
 	return 1;
 }
 

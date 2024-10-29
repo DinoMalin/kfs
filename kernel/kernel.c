@@ -1,18 +1,17 @@
 #include "kernel.h"
 
 int exit = 0;
+struct multiboot_info *multiboot;
 
-void ksetup(int magic, struct multiboot_info *multiboot) {
+void ksetup(int magic, struct multiboot_info *_multiboot) {
 	if (magic != MULTIBOOT_MAGIC)
-		kernel_panic("wrong multiboot magic")
-	if (!multiboot->flags & MULTIBOOT_INFO_MEM_MAP)
-		kernel_panic("mmap not set");
+		kernel_panic("wrong multiboot magic") if (!_multiboot->flags &
+												  MULTIBOOT_INFO_MEM_MAP)
+			kernel_panic("mmap not set");
+
+	multiboot = _multiboot;
 	keep_mmap_info(multiboot);
 	init_pmem();
-	pmem_alloc_zone(multiboot->mmap_addr, multiboot->mmap_length);
-
-	printk("length = %u", multiboot->mmap_length);
-	printk("addr = %x", multiboot->mmap_addr);
 
 	gdt_install();
 	idt_install();
@@ -30,8 +29,8 @@ int kmain() {
 	printk("This 42 is mandatory");
 	init_shell();
 
-	while (!exit) {
-	}
+	while (!exit)
+		;
 
 	return exit;
 }

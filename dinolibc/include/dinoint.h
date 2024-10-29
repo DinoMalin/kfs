@@ -1,5 +1,7 @@
 #pragma once
 
+#define packed __attribute__((packed))
+
 /* 7.18.1.1  Exact-width integer types */
 typedef signed char int8_t;
 typedef unsigned char uint8_t;
