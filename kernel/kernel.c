@@ -5,9 +5,9 @@ struct multiboot_info *multiboot;
 
 void ksetup(int magic, struct multiboot_info *_multiboot) {
 	if (magic != MULTIBOOT_MAGIC)
-		kernel_panic("wrong multiboot magic")
-	if (!_multiboot->flags & MULTIBOOT_INFO_MEM_MAP)
-		kernel_panic("mmap not set");
+		kernel_panic("wrong multiboot magic") if (!_multiboot->flags &
+												  MULTIBOOT_INFO_MEM_MAP)
+			kernel_panic("mmap not set");
 
 	multiboot = _multiboot;
 	keep_mmap_info(multiboot);

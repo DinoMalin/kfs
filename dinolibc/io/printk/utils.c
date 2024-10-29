@@ -20,6 +20,12 @@ int putunbr(unsigned int n) {
 	return putchar(n + '0');
 }
 
+int putlu(unsigned long long n) {
+	if (n >= 10)
+		return putlu(n / 10) + putlu(n % 10);
+	return putchar(n + '0');
+}
+
 int puthexa(unsigned int n) {
 	if (n >= 16)
 		return puthexa(n / 16) + puthexa(n % 16);

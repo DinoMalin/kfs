@@ -2,7 +2,7 @@
 #include <types.h>
 
 // More on bitmap allocator : https://wiki.osdev.org/Page_Frame_Allocation
-u32 bitmap[NB_PAGES] = {[0 ... NB_PAGES - 1] = 0};
+u32 bitmap[NB_PAGES] = {[0 ... NB_PAGES - 1] = 0xffffffff};
 
 void pmem_alloc_page(int page) { bitmap[page / 32] |= 1 << (page % 32); }
 void pmem_free_page(int page) { bitmap[page / 32] &= ~(1 << (page % 32)); }
@@ -10,8 +10,11 @@ void pmem_free_page(int page) { bitmap[page / 32] &= ~(1 << (page % 32)); }
 void pmem_alloc_zone(u32 addr, u32 len) {
 	u32 last_page = addr + len;
 
-	while (addr + PAGE_SIZE <= last_page) {
-		pmem_alloc_page(addr / PAGE_SIZE);
+	while (addr <= last_page) {
+		if (addr == 0)
+			pmem_alloc_page(0);
+		else
+			pmem_alloc_page(addr / PAGE_SIZE);
 		addr += PAGE_SIZE;
 	}
 }
@@ -19,8 +22,11 @@ void pmem_alloc_zone(u32 addr, u32 len) {
 void pmem_free_zone(u32 addr, u32 len) {
 	u32 last_page = addr + len;
 
-	while (addr + PAGE_SIZE <= last_page) {
-		pmem_free_page(addr / PAGE_SIZE);
+	while (addr <= last_page) {
+		if (addr == 0)
+			pmem_free_page(0);
+		else
+			pmem_free_page(addr / PAGE_SIZE);
 		addr += PAGE_SIZE;
 	}
 }
@@ -55,7 +61,8 @@ void init_pmem() {
 	struct mmap_entry *mmap = (struct mmap_entry *)multiboot->mmap_addr;
 	int len = multiboot->mmap_len / sizeof(struct mmap_entry);
 	for (u32 i = 0; i < len; i++) {
-		pmem_alloc_zone(mmap[i].addr, mmap[i].len);
+		if (available(mmap[i]))
+			pmem_free_zone(mmap[i].addr, mmap[i].len);
 	}
 	pmem_alloc_zone(0, (u32)&kernel_end);
 }

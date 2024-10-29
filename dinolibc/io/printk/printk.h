@@ -2,6 +2,7 @@
 
 #include "io.h"
 #include "string.h"
+#include "types.h"
 #include "variadic.h"
 
 #define FORMAT(format, ret)                                                    \
@@ -16,6 +17,7 @@
 int putnbr(int n);
 int putunbr(unsigned int n);
 int puthexa(unsigned int n);
+int putlu(unsigned long long n);
 
 int putbit(unsigned int n);
 int putbyte(unsigned int n);

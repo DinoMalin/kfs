@@ -19,6 +19,7 @@ int format(char *str, int *index, va_list *variadic) {
 	FORMAT("%s", putstr(va_arg(*variadic, char *)));
 	FORMAT("%u", putunbr(va_arg(*variadic, unsigned int)));
 	FORMAT("%x", puthexa(va_arg(*variadic, unsigned int)));
+	FORMAT("%lu", putlu(va_arg(*variadic, unsigned long long))); // Should not be used with another arg, my variadic doesn't handle 64 bits well
 	FORMAT("%byte", putbyte(va_arg(*variadic, unsigned char)));
 	FORMAT("%bit", putbit(va_arg(*variadic, unsigned int)));
 	FORMAT("%nonl", ((no_newline = 1), 0));

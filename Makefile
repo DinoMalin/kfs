@@ -40,8 +40,9 @@ PS1=DinOS>
 
 TCC_GIT	= https://github.com/TinyCC/tinycc
 TCC_DIR	= tinycc
+LIBTCC	= ./$(TCC_DIR)/i386-libtcc1.a
 
-CC			= ./$(TCC_DIR)/i386-tcc
+CC			= $(TCC_DIR)/i386-tcc
 CFLAGS		= -nostdlib -fno-builtin -fno-stack-protector \
 			  -I $(DINOLIB_LIB_DIR) -I $(SYSTEM_INC_DIR) -I $(DINOSH_DIR) \
 			  '-Ddefault_theme="$(theme)"' '-DPS1="$(PS1) "' -g \
@@ -83,7 +84,7 @@ $(CC):
 
 $(KERNEL): $(START_OBJ) $(KMAIN_OBJ) $(DINOLIB_OBJ) $(SYSTEM_OBJ) $(DINOSH_OBJ)
 	$(call legend,"Linking",$@)
-	@$(LD) $(LDFLAGS) --script=$(LINKER) $^ -o $(KERNEL)
+	@$(LD) $(LDFLAGS) --script=$(LINKER) $^ $(LIBTCC) -o $(KERNEL)
 
 $(OBJ_DIR)/%.o: %.s
 	$(call legend_forget,"Compiling",$<)
