@@ -70,6 +70,7 @@ int custom_theme(char *str) {
 	add_theme("powershell", BLUE, WHITE);
 	add_theme("casamit", BLACK, MAGENTA);
 	add_theme("rosa", MAGENTA, LGREEN);
+	add_theme("louis", BLUE, CYAN);
 	add_theme("default", BLACK, WHITE);
 
 	return 0;
