@@ -1,7 +1,7 @@
 #include "shell.h"
 
 void fill_buffer(char *buff) {
-	unsigned char *start = video_memory;
+	u8 *start = video_memory;
 	go_start_line(start);
 	start += ps1_len * 2;
 
@@ -24,7 +24,7 @@ int check_arg(char *cmd, char *str) {
 	}
 	if (cmd[i] == ' ' && !str[i])
 		return 1;
-	return !((unsigned char)cmd[i] - (unsigned char)str[i]);
+	return !((u8)cmd[i] - (u8)str[i]);
 }
 
 int get_color(char *str) {

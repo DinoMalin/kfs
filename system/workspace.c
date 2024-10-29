@@ -1,7 +1,7 @@
 #include "workspace.h"
 
 workspace ws[NB_WS] = {0};
-unsigned char active_ws = 0;
+u8 active_ws = 0;
 
 void copy_workspace() {
 	for (int i = 0; i < 4000; i++)

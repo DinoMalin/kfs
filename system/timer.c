@@ -1,6 +1,6 @@
 #include "timer.h"
 
-unsigned int ticks = 0;
+u32 ticks = 0;
 
 /* The clock by default run
  * at 1193180Hz, and trigger IRQ0
@@ -23,8 +23,8 @@ void timer_install() {
 	irq_install_handler(0, timer_handler);
 }
 
-void wait(unsigned int wait_ticks) {
-	unsigned int offset = ticks + wait_ticks;
+void wait(u32 wait_ticks) {
+	u32 offset = ticks + wait_ticks;
 	while (ticks < offset)
 		;
 }

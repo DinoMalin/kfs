@@ -5,27 +5,27 @@
 #include "types.h"
 
 struct idt_entry {
-	unsigned short base_lo packed;
-	unsigned short sel packed;
-	unsigned char always0 packed;
-	unsigned char flags packed;
-	unsigned short base_hi packed;
+	u16 base_lo packed;
+	u16 sel packed;
+	u8 always0 packed;
+	u8 flags packed;
+	u16 base_hi packed;
 } packed;
 
 struct idt_ptr {
-	unsigned short limit packed;
-	unsigned int base packed;
+	u16 limit packed;
+	u32 base packed;
 } packed;
 
 struct regs {
-	unsigned int gs, fs, es, ds;
-	unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;
-	unsigned int int_nb, err_code;
-	unsigned int eip, cs, eflags, useresp, ss;
+	u32 gs, fs, es, ds;
+	u32 edi, esi, ebp, esp, ebx, edx, ecx, eax;
+	u32 int_nb, err_code;
+	u32 eip, cs, eflags, useresp, ss;
 };
 
 void idt_install();
-void idt_set_gate(unsigned long base, unsigned short sel, unsigned char flags);
+void idt_set_gate(unsigned long base, unsigned short sel, u8 flags);
 
 #define NB_ENTRIES 256
 #define ISR(num) (unsigned)isr##num, 0x08, 0b10001110

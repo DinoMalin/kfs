@@ -1,22 +1,23 @@
 #pragma once
+#include "types.h"
 
 struct multiboot_info {
-	uint32_t flags;
-	uint32_t mmap_len;
-	uint32_t mmap_addr;
+	u32 flags;
+	u32 mmap_len;
+	u32 mmap_addr;
 };
 
 struct mmap_entry {
-	uint32_t size;
-	uint64_t addr;
-	uint64_t len;
-	uint32_t type;
+	u32 size;
+	u64 addr;
+	u64 len;
+	u32 type;
 };
 
 #define keep_mmap_info(info)                                                   \
 	{                                                                          \
-		info->mmap_len = (*(uint32_t *)(((char *)info) + 44));                 \
-		info->mmap_addr = (*(uint32_t *)(((char *)info) + 48));                \
+		info->mmap_len = (*(u32 *)(((char *)info) + 44));                      \
+		info->mmap_addr = (*(u32 *)(((char *)info) + 48));                     \
 	}
 
 #define MULTIBOOT_MAGIC 0x2BADB002

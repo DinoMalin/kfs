@@ -12,4 +12,4 @@
 #define RATE 100
 
 void timer_install();
-void wait(unsigned int wait_ticks);
+void wait(u32 wait_ticks);

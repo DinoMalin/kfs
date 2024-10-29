@@ -42,7 +42,7 @@ void memory(char *cmd) {
 		printk(ERADDR);
 		return;
 	}
-	unsigned int addr = address(cmd);
+	u32 addr = address(cmd);
 	print_memory(lines, addr);
 }
 

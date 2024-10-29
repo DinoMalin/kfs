@@ -1,13 +1,13 @@
 #include "virtual_mem.h"
 
-uint32_t page_directory[1024] aligned(4096);
+u32 page_directory[1024] aligned(4096);
 
-int map(uint32_t physical_addr, uint32_t virtual_addr) {
+int map(u32 physical_addr, u32 virtual_addr) {
 	int table_index = table_index(virtual_addr);
-	uint32_t *page_table = page_directory + table_index;
+	u32 *page_table = page_directory + table_index;
 
 	if (!present(*page_table)) {
-		uint32_t new_table = palloc();
+		u32 new_table = palloc();
 		if (!new_table)
 			return 0;
 
@@ -19,7 +19,7 @@ int map(uint32_t physical_addr, uint32_t virtual_addr) {
 	}
 
 	int page_index = page_index(virtual_addr);
-	uint32_t *page = (void *)((*page_table & 0xfffff000) + (page_index * 4));
+	u32 *page = (void *)((*page_table & 0xfffff000) + (page_index * 4));
 
 	*page = 0b01;
 	*page |= 0b10;
@@ -28,8 +28,8 @@ int map(uint32_t physical_addr, uint32_t virtual_addr) {
 	return 1;
 }
 
-int map_zone(uint32_t physical_addr, uint32_t virtual_addr, uint32_t len) {
-	for (uint32_t i = 0; i <= len; i += PAGE_SIZE) {
+int map_zone(u32 physical_addr, u32 virtual_addr, u32 len) {
+	for (u32 i = 0; i <= len; i += PAGE_SIZE) {
 		if (!map(physical_addr + i, virtual_addr + i))
 			return 0;
 	}

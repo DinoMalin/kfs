@@ -5,7 +5,7 @@
 struct idt_entry idt[NB_ENTRIES];
 struct idt_ptr idtp;
 
-void idt_set_gate(unsigned long base, unsigned short sel, unsigned char flags) {
+void idt_set_gate(unsigned long base, unsigned short sel, u8 flags) {
 	static nb = 0;
 
 	idt[nb].base_lo = base & 0xFFFF;
@@ -20,7 +20,7 @@ void idt_set_gate(unsigned long base, unsigned short sel, unsigned char flags) {
 
 void idt_install() {
 	idtp.limit = (sizeof(struct idt_entry) * NB_ENTRIES) - 1;
-	idtp.base = (uint32_t)&idt;
+	idtp.base = (u32)&idt;
 
 	memset(&idt, 0, sizeof(struct idt_entry) * NB_ENTRIES);
 
@@ -60,38 +60,38 @@ void idt_install() {
 	idt_load();
 }
 
-unsigned char *exceptions[] = {"Division By Zero",
-							   "Debug",
-							   "Non Maskable Interrupt",
-							   "Breakpoint",
-							   "Into Detected Overflow",
-							   "Out of Bounds",
-							   "Invalid Opcode",
-							   "No Coprocessor",
-							   "Double Fault",
-							   "Coprocessor Segment Overrun",
-							   "Bad TSS",
-							   "Segment Not Present",
-							   "Stack Fault",
-							   "General Protection Fault",
-							   "Page Fault",
-							   "Unknown Interrupt",
-							   "Coprocessor Fault",
-							   "Alignment Check",
-							   "Machine Check",
-							   "Reserved",
-							   "Reserved",
-							   "Reserved",
-							   "Reserved",
-							   "Reserved",
-							   "Reserved",
-							   "Reserved",
-							   "Reserved",
-							   "Reserved",
-							   "Reserved",
-							   "Reserved",
-							   "Reserved",
-							   "Reserved"};
+u8 *exceptions[] = {"Division By Zero",
+					"Debug",
+					"Non Maskable Interrupt",
+					"Breakpoint",
+					"Into Detected Overflow",
+					"Out of Bounds",
+					"Invalid Opcode",
+					"No Coprocessor",
+					"Double Fault",
+					"Coprocessor Segment Overrun",
+					"Bad TSS",
+					"Segment Not Present",
+					"Stack Fault",
+					"General Protection Fault",
+					"Page Fault",
+					"Unknown Interrupt",
+					"Coprocessor Fault",
+					"Alignment Check",
+					"Machine Check",
+					"Reserved",
+					"Reserved",
+					"Reserved",
+					"Reserved",
+					"Reserved",
+					"Reserved",
+					"Reserved",
+					"Reserved",
+					"Reserved",
+					"Reserved",
+					"Reserved",
+					"Reserved",
+					"Reserved"};
 
 void fault_handler(struct regs *r) {
 	if (r->int_nb < 32) {

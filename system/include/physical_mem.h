@@ -13,6 +13,6 @@
 #define page_is_free(page) (!(bitmap[page / 32] & (1 << (page % 32))))
 #define page(offset, page) (offset * 32 + page)
 
-uint32_t palloc();
-void pmem_alloc_zone(unsigned int addr, unsigned int len);
+u32 palloc();
+void pmem_alloc_zone(u32 addr, u32 len);
 void init_pmem();

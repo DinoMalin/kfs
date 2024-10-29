@@ -5,8 +5,7 @@ struct gdt_ptr gp;
 
 extern void gdt_flush();
 
-void gdt_set_gate(unsigned long base, unsigned long limit, unsigned char access,
-				  unsigned char gran) {
+void gdt_set_gate(unsigned long base, unsigned long limit, u8 access, u8 gran) {
 	static int nb = 0;
 
 	gdt[nb].base_low = (base & 0xFFFF);
@@ -23,7 +22,7 @@ void gdt_set_gate(unsigned long base, unsigned long limit, unsigned char access,
 
 void gdt_install() {
 	gp.limit = (sizeof(struct gdt_entry) * NB_SEGMENTS) - 1;
-	gp.base = (uint32_t)&gdt;
+	gp.base = (u32)&gdt;
 
 	gdt_set_gate(null_descriptor);
 	gdt_set_gate(kernel_code);

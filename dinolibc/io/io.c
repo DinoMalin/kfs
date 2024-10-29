@@ -1,11 +1,11 @@
 #include "io.h"
 
-inline void outb(uint16_t port, uint8_t val) {
+inline void outb(u16 port, u8 val) {
 	asm volatile("outb %b0, %w1" : : "a"(val), "Nd"(port) : "memory");
 }
 
-inline uint8_t inb(uint16_t port) {
-	uint8_t ret;
+inline u8 inb(u16 port) {
+	u8 ret;
 	asm volatile("inb %w1, %b0" : "=a"(ret) : "Nd"(port) : "memory");
 	return ret;
 }

@@ -7,8 +7,8 @@
 #define NB_WS 2
 
 typedef struct {
-	unsigned char vmem[4000];
-	unsigned char *cursor;
+	u8 vmem[4000];
+	u8 *cursor;
 } workspace;
 
 void auto_switch_workspace();

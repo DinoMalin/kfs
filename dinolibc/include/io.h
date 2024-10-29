@@ -53,8 +53,8 @@ int printk(char *str, ...);
 void print_stack(int nb);
 void print_memory(int nb, unsigned int addr);
 
-void outb(uint16_t port, uint8_t val);
-uint8_t inb(uint16_t port);
+void outb(u16 port, u8 val);
+u8 inb(u16 port);
 void init_serial();
 void putstr_serial(char *str);
 

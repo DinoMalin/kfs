@@ -1,6 +1,6 @@
 #include "keyboard.h"
 
-unsigned char kbus[256] = {
+u8 kbus[256] = {
 	0,		  ESCAPE,	'1',	   '2',		  '3',		   '4',
 	'5',	  '6',		'7',	   '8',		  '9',		   '0',
 	'-',	  '=',		BACKSPACE, TAB,		  'q',		   'w',
@@ -36,7 +36,7 @@ unsigned char kbus[256] = {
 key_status ks = 0;
 int enter = 0;
 
-int shortcut(unsigned char scancode) {
+int shortcut(u8 scancode) {
 	if (CTRL_SHORT('a')) {
 		auto_switch_workspace();
 		return 1;
@@ -44,7 +44,7 @@ int shortcut(unsigned char scancode) {
 	return 0;
 }
 
-int check_key(unsigned char scancode) {
+int check_key(u8 scancode) {
 	if (isshift(scancode)) {
 		ks ^= shift;
 		return 1;
@@ -59,7 +59,7 @@ int check_key(unsigned char scancode) {
 }
 
 void keyboard_handler(struct regs *r) {
-	unsigned char scancode = inb(KB_DATA);
+	u8 scancode = inb(KB_DATA);
 	if (scancode & RELEASE) {
 		check_key(scancode);
 	} else {

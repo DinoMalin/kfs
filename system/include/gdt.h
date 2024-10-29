@@ -2,20 +2,18 @@
 
 #include "types.h"
 
-#define packed __attribute__((packed))
-
 struct gdt_entry {
-	unsigned short limit_low packed;
-	unsigned short base_low packed;
-	unsigned char base_middle packed;
-	unsigned char access packed;
-	unsigned char granularity packed;
-	unsigned char base_high packed;
+	u16 limit_low packed;
+	u16 base_low packed;
+	u8 base_middle packed;
+	u8 access packed;
+	u8 granularity packed;
+	u8 base_high packed;
 } packed;
 
 struct gdt_ptr {
-	unsigned short limit packed;
-	unsigned int base packed;
+	u16 limit packed;
+	u32 base packed;
 } packed;
 
 void gdt_install();
