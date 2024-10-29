@@ -28,7 +28,7 @@ SYSTEM_INC_DIR	= $(SYSTEM_DIR)/include
 
 DINOLIB_DIR		= dinolibc
 DINOLIB_LIB_DIR	= $(DINOLIB_DIR)/include
-DINOLIB_SRC		= $(wildcard $(DINOLIB_DIR)/**/*.c)
+DINOLIB_SRC		= $(shell find $(DINOLIB_DIR) -name "*.c")
 DINOLIB_OBJ		= $(DINOLIB_SRC:%.c=$(OBJ_DIR)/%.o)
 
 DINOSH_DIR		= shell
@@ -48,19 +48,21 @@ CFLAGS		= -nostdlib -fno-builtin -fno-stack-protector \
 			  -Werror
 LDFLAGS		= -m elf_i386 
 
+SHELL		= bash
+
 define legend
-	@echo -n "\e[1;38;2;163;255;149m$(1) \e[0m"
+	@echo -en "\e[1;38;2;163;255;149m$(1) \e[0m"
 	@echo $(2)
 endef
 
 define legend_forget
-	@echo -n "\e[1;38;2;163;255;149m$(1) \e[0m"
-	@echo -n "$(2)"
-	@echo -n "                              \r"
+	@echo -en "\e[1;38;2;163;255;149m$(1) \e[0m"
+	@echo -en "$(2)"
+	@echo -en "                              \r"
 endef
 
 define bad_legend
-	@echo -n "\e[1;38;2;255;149;149m$(1) \e[0m"
+	@echo -en "\e[1;38;2;255;149;149m$(1) \e[0m"
 	@echo $(2)
 endef
 
