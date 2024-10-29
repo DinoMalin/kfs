@@ -1,9 +1,9 @@
 #pragma once
 
 #include "io.h"
-#include "types.h"
-#include "string.h"
 #include "physical_mem.h"
+#include "string.h"
+#include "types.h"
 
 #define VIDEO_AREA 4000
 #define KERNEL_AREA 0x400000

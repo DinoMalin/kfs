@@ -1,7 +1,7 @@
 #pragma once
 
-#include "io.h"
 #include "idt.h"
+#include "io.h"
 
 #define NB_IRQ 16
 

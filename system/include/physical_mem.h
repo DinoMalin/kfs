@@ -1,7 +1,7 @@
 #pragma once
 
-#include "types.h"
 #include "multiboot.h"
+#include "types.h"
 
 // 4 GiB / 4MiB / 32 bits
 #define NB_PAGES 32768

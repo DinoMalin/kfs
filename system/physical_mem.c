@@ -1,10 +1,11 @@
-#include <types.h>
 #include <physical_mem.h>
+#include <types.h>
 
 // More on bitmap allocator : https://wiki.osdev.org/Page_Frame_Allocation
 uint32_t bitmap[NB_PAGES] = {[0 ... NB_PAGES - 1] = 0};
 
 void pmem_alloc_page(int page) { bitmap[page / 32] |= 1 << (page % 32); }
+void pmem_free_page(int page) { bitmap[page / 32] &= ~(1 << (page % 32)); }
 
 void pmem_alloc_zone(uint32_t addr, uint32_t len) {
 	uint32_t last_page = addr + len;
@@ -15,10 +16,8 @@ void pmem_alloc_zone(uint32_t addr, uint32_t len) {
 	}
 }
 
-void pmem_free_page(int page) { bitmap[page / 32] &= ~(1 << (page % 32)); }
-
-void pmem_free_zone(uint32_t addr, uint32_t len) {
-	uint32_t last_page = addr + len;
+void pmem_free_zone(u32 addr, u32 len) {
+	u32 last_page = addr + len;
 
 	while (addr + PAGE_SIZE <= last_page) {
 		pmem_free_page(addr / PAGE_SIZE);

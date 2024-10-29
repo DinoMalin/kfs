@@ -1,8 +1,8 @@
 #pragma once
 
 #include "io.h"
-#include "types.h"
 #include "string.h"
+#include "types.h"
 
 struct idt_entry {
 	unsigned short base_lo packed;
