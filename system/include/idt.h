@@ -1,8 +1,8 @@
 #pragma once
 
-#include "dinio.h"
-#include "dinoint.h"
-#include "dinostring.h"
+#include "io.h"
+#include "types.h"
+#include "string.h"
 
 struct idt_entry {
 	unsigned short base_lo packed;

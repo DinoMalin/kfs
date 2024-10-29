@@ -1,6 +1,6 @@
 #pragma once
 
-#include "dinoint.h"
+#include "types.h"
 
 #define packed __attribute__((packed))
 

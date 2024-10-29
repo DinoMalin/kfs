@@ -1,7 +1,7 @@
 #pragma once
 
 #include "cursor.h"
-#include "dinio.h"
+#include "io.h"
 #include "shell.h"
 
 #define NB_WS 2

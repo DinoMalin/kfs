@@ -1,5 +1,5 @@
-#include "dinio.h"
-#include "dinostring.h"
+#include "io.h"
+#include "string.h"
 
 int index(char c, char *base) {
 	for (int i = 0; base[i]; i++) {

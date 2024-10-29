@@ -1,5 +1,5 @@
-#include "dinoint.h"
-#include "dinostring.h"
+#include "types.h"
+#include "string.h"
 
 void *memset(void *pointer, int value, unsigned int size) {
 	unsigned int i = 0;

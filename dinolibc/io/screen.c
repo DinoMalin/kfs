@@ -1,4 +1,4 @@
-#include "dinio.h"
+#include "io.h"
 
 void color_screen() {
 	unsigned char *vmem = START_VMEM;

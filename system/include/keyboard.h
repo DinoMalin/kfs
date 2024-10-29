@@ -1,6 +1,6 @@
 #pragma once
 
-#include "dinio.h"
+#include "io.h"
 #include "irq.h"
 #include "shell.h"
 #include "workspace.h"

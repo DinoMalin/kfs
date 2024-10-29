@@ -1,6 +1,6 @@
 #pragma once
 
-#include "dinoint.h"
+#include "types.h"
 #include "multiboot.h"
 
 // 4 GiB / 4MiB / 32 bits

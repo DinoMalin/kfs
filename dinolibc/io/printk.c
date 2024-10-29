@@ -1,6 +1,6 @@
-#include "dinio.h"
-#include "dinoarg.h"
-#include "dinostring.h"
+#include "io.h"
+#include "variadic.h"
+#include "string.h"
 
 int no_newline = 0;
 

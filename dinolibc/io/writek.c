@@ -1,4 +1,4 @@
-#include "dinio.h"
+#include "io.h"
 
 unsigned char *video_memory = START_VMEM;
 int default_color = DEFAULT;

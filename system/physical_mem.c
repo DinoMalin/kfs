@@ -1,4 +1,4 @@
-#include <dinoint.h>
+#include <types.h>
 #include <physical_mem.h>
 
 // More on bitmap allocator : https://wiki.osdev.org/Page_Frame_Allocation

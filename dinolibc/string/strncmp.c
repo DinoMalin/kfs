@@ -1,4 +1,4 @@
-#include "dinostring.h"
+#include "string.h"
 
 int strncmp(char *str1, char *str2, int size) {
 	int i;

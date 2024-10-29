@@ -1,6 +1,6 @@
 #pragma once
 
-#include "dinio.h"
+#include "io.h"
 #include "idt.h"
 
 #define NB_IRQ 16

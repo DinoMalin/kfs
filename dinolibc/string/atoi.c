@@ -1,4 +1,4 @@
-#include "dinostring.h"
+#include "string.h"
 
 int atoi(const char *str) {
 	int i = 0;

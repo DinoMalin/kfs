@@ -1,7 +1,7 @@
 #pragma once
 
 #include "cursor.h"
-#include "dinoint.h"
+#include "types.h"
 
 #define LIN 24
 #define COL 80
