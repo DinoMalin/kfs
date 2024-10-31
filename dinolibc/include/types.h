@@ -2,6 +2,7 @@
 
 #define packed __attribute__((packed))
 #define aligned(x) __attribute__((aligned(x)))
+#define section(x) __attribute__((section(x)))
 
 typedef signed char i8;
 typedef unsigned char u8;
