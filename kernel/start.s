@@ -67,13 +67,15 @@ global _start
 extern ksetup
 extern kmain
 
-map page_directory, 0
 mov esp, stack_top
 
 push ebx
 push eax
 
 call ksetup
+
+map page_directory, 0
+
 call kmain
 cmp eax, 1
 je .exit
