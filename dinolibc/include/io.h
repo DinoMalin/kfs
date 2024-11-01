@@ -24,9 +24,9 @@
 #define YELLOW 14
 #define WHITE 15
 
-#define START_VMEM ((unsigned char *)0xc03ff000)
-#define LAST_LINE ((unsigned char *)0xB8F00)
-#define END_VMEM ((unsigned char *)0xB8FA0)
+#define START_VMEM ((unsigned char *)0xC00B8000)
+#define LAST_LINE ((unsigned char *)0xC00B8F00)
+#define END_VMEM ((unsigned char *)0xC00B8FA0)
 
 #define combine(bg, fg) (bg * 16 + fg)
 #define color_cell(vmem)                                                       \

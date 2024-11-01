@@ -35,8 +35,6 @@ extern first_table
 %endmacro
 
 _start:
-	map first_table + 1023 * 4, 0xb8000 ; Map the video memory on first page
-
 	map page_directory + 768 * 4, first_table ; 0xC0000000/PAGE_SIZE/NB_ENTRIES = 768
 	map page_directory, first_table
 	map page_directory + 1023 * 4, page_directory
