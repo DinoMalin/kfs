@@ -1,9 +1,9 @@
 #include "kernel.h"
 
 int exit = 0;
-struct multiboot_info *multiboot;
+multiboot_info *multiboot;
 
-void ksetup(int magic, struct multiboot_info *_multiboot) {
+void ksetup(int magic, multiboot_info *_multiboot) {
 	if (magic != MULTIBOOT_MAGIC)
 		kernel_panic("wrong multiboot magic");
 	if (!_multiboot->flags & MULTIBOOT_INFO_MEM_MAP)

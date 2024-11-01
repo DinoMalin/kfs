@@ -55,8 +55,8 @@ u32 palloc() {
 }
 
 void init_pmem() {
-	struct mmap_entry *mmap = (struct mmap_entry *)multiboot->mmap_addr;
-	int len = multiboot->mmap_len / sizeof(struct mmap_entry);
+	mmap_entry *mmap = (mmap_entry *)multiboot->mmap_addr;
+	int len = multiboot->mmap_len / sizeof(mmap_entry);
 	for (u32 i = 0; i < len; i++) {
 		if (available(mmap[i]))
 			pmem_free_zone(mmap[i].addr, mmap[i].len);

@@ -1,18 +1,18 @@
 #pragma once
 #include "types.h"
 
-struct multiboot_info {
+typedef struct multiboot_info {
 	u32 flags;
 	u32 mmap_len;
 	u32 mmap_addr;
-};
+} multiboot_info;
 
-struct mmap_entry {
+typedef struct mmap_entry {
 	u32 size;
 	u64 addr;
 	u64 len;
 	u32 type;
-};
+} mmap_entry;
 
 #define keep_mmap_info(info)                                                   \
 	{                                                                          \
