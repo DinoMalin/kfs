@@ -31,9 +31,6 @@ void pmem_free_zone(u32 addr, u32 len) {
 	}
 }
 
-extern void *kernel_start;
-extern void *kernel_end;
-
 int get_free_page() {
 	int i = 0;
 	int current_len = 0;
@@ -66,3 +63,4 @@ void init_pmem() {
 	}
 	pmem_alloc_zone(0, (u32)&kernel_end);
 }
+

@@ -3,37 +3,46 @@ ENTRY(_start)
 SECTIONS
 {
 
-	.multiboot :
+	. = 1M;
+	.multiboot.data ALIGN(4K):
 	{
-		*(.multiboot)
+		*(.multiboot.data)
+	}
+	.multiboot.bss ALIGN(4K) :
+	{
+		page_directory = .;
+		. += 0x1000;
+		first_table = .;
+		. += 0x1000;
+	}
+	.multiboot.text ALIGN(4K):
+	{
+		*(.multiboot.text)
 	}
 
+	. += 0xC0000000;
 	kernel_start = .;
-	. = 1M;
-
-	.text BLOCK(4K) : ALIGN(4K)
+	.text ALIGN(4K) : AT(ADDR (.text) - 0xC0000000)
 	{
 		*(.text)
 	}
 
-	.rodata BLOCK(4K) : ALIGN(4K)
+	.rodata ALIGN(4K) : AT(ADDR (.rodata) - 0xC0000000)
 	{
 		*(.rodata)
 	}
 
-	.data BLOCK(4K) : ALIGN(4K)
+	.data ALIGN(4K) : AT(ADDR (.data) - 0xC0000000)
 	{
 		*(.data)
 	}
 
 
-	.bss BLOCK(4K) : ALIGN(4K)
+	.bss ALIGN(4K) : AT(ADDR (.bss) - 0xC0000000)
 	{
 		*(COMMON)
 		*(.bss)
 	}
-
-	.gdt 0x800 : { *(.gdt) }
 
 	kernel_end = .;
 }
