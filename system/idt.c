@@ -95,8 +95,6 @@ u8 *exceptions[] = {"Division By Zero",
 
 void fault_handler(struct regs *r) {
 	if (r->int_nb < 32) {
-		putstr_serial(exceptions[r->int_nb]);
-		putstr_serial(" Exception. System halted.\n");
 		printk("%s Exception. System halted.", exceptions[r->int_nb]);
 		while (1) {
 		}
