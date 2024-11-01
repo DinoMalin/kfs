@@ -5,7 +5,9 @@ GRUB_MOD	= part_acorn part_amiga part_apple part_bsd \
 GRUB_RM		= System efi boot/grub/x86_64-efi mach_kernel \
 			  boot/grub/i386-efi boot/grub/themes efi.img \
 			  boot/grub/locale
-GRUB_DIR	= i386-pc
+GRUB_DIR		= i386-pc
+GRUB_DIR_TAR	= i386-pc.tar.zst
+GRUB_DIR_LNK	= https://github.com/DinoMalingue/i386-pc/raw/master/i386-pc.tar.zst
 
 ROOTFS		= rootfs
 KERNEL_DIR	= kernel
@@ -67,11 +69,17 @@ define bad_legend
 	@echo $(2)
 endef
 
-all: $(CC) $(KERNEL)
+all: $(CC) $(GRUB_DIR) $(KERNEL)
 	$(call legend,"Creating",$(ISO))
 	@grub-mkrescue --directory=$(GRUB_DIR) -o $(ISO) $(ROOTFS) "--install-modules=$(GRUB_MOD)" -- -rm_r $(GRUB_RM) --  2>/dev/null
 	$(call legend,"Launching VM...",)
 	@qemu-system-i386 -cdrom $(ISO) -serial stdio
+
+$(GRUB_DIR):
+	$(call legend,"Downloading",$@)
+	wget $(GRUB_DIR_LNK) --quiet
+	tar -xf $(GRUB_DIR_TAR)
+	rm $(GRUB_DIR_TAR)
 
 .ONESHELL:
 $(CC):
@@ -104,6 +112,7 @@ clean:
 
 fclean: clean
 	@$(RM) -r $(TCC_DIR)
+	@$(RM) -r $(GRUB_DIR)
 
 re: clean all
 

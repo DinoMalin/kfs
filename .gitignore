@@ -2,3 +2,4 @@
 *.o
 *.elf
 tinycc/
+i386-pc/
