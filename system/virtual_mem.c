@@ -1,5 +1,7 @@
 #include "virtual_mem.h"
 
+u32 *page_directory = (void *)PAGE_DIRECTORY_ADDR;
+
 int map(u32 physical_addr, u32 virtual_addr) {
 	int table_index = table_index(virtual_addr);
 	u32 *page_table = page_directory + table_index;
@@ -34,11 +36,3 @@ int map_zone(u32 physical_addr, u32 virtual_addr, u32 len) {
 	return 1;
 }
 
-void init_paging() {
-	bzero((void *)page_directory, PAGE_SIZE);
-
-	if (!IDENTITY_MAP(KERNEL_VIRTUAL_ADDR, VIDEO_AREA))
-		printk("Failed to map kernel");
-	if (!IDENTITY_MAP(0xb8000, VIDEO_AREA))
-		printk("Failed to map video memory");
-}

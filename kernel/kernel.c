@@ -4,8 +4,6 @@ int exit = 0;
 struct multiboot_info *multiboot;
 
 void ksetup(int magic, struct multiboot_info *_multiboot) {
-	*((u8 *)0xb8000) = 'a';
-	*((u8 *)0xb8001) = 0x1f;
 	if (magic != MULTIBOOT_MAGIC)
 		kernel_panic("wrong multiboot magic");
 	if (!_multiboot->flags & MULTIBOOT_INFO_MEM_MAP)
@@ -22,7 +20,6 @@ void ksetup(int magic, struct multiboot_info *_multiboot) {
 
 	timer_install();
 	keyboard_install();
-//	init_paging();
 }
 
 int kmain() {

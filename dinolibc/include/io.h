@@ -24,7 +24,7 @@
 #define YELLOW 14
 #define WHITE 15
 
-#define START_VMEM ((unsigned char *)0xB8000)
+#define START_VMEM ((unsigned char *)0xc03ff000)
 #define LAST_LINE ((unsigned char *)0xB8F00)
 #define END_VMEM ((unsigned char *)0xB8FA0)
 

@@ -35,8 +35,11 @@ extern first_table
 %endmacro
 
 _start:
+	map first_table + 1023 * 4, 0xb8000 ; Map the video memory on first page
+
 	map page_directory + 768 * 4, first_table ; 0xC0000000/PAGE_SIZE/NB_ENTRIES = 768
 	map page_directory, first_table
+	map page_directory + 1023 * 4, page_directory
 
 	xor edi, edi ; counter
 	mov esi, first_table ; pointer toward table
@@ -66,16 +69,17 @@ global _start
 extern ksetup
 extern kmain
 
-	mov esp, stack_top
+map page_directory, 0
+mov esp, stack_top
 
-	push ebx
-	push eax
+push ebx
+push eax
 
-	call ksetup
-	call kmain
-	cmp eax, 1
-	je .exit
-	cli
+call ksetup
+call kmain
+cmp eax, 1
+je .exit
+cli
 .halt:
 	hlt
 	jmp .halt
