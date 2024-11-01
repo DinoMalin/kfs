@@ -2,8 +2,8 @@
 
 #include "io.h"
 #include "multiboot.h"
-#include "types.h"
 #include "paging.h"
+#include "types.h"
 
 #define zone_to_allocate(offset, page, len)                                    \
 	((offset * 32 + page - len) * PAGE_SIZE)
@@ -14,4 +14,3 @@
 u32 palloc();
 void pmem_alloc_zone(u32 addr, u32 len);
 void init_pmem();
-

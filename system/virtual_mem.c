@@ -10,21 +10,14 @@ int map(u32 physical_addr, u32 virtual_addr) {
 		u32 new_table = palloc();
 		if (!new_table)
 			return 0;
-
 		bzero((void *)new_table, PAGE_SIZE);
-
-		*page_table = 0b01;
-		*page_table |= 0b10;
-		*page_table |= new_table & 0xfffff000;
+		*page_table = MAPPED(new_table);
 	}
 
 	int page_index = page_index(virtual_addr);
 	u32 *page = (void *)((*page_table & 0xfffff000) + (page_index * 4));
 
-	*page = 0b01;
-	*page |= 0b10;
-	*page |= physical_addr & 0xfffff000;
-
+	*page = MAPPED(physical_addr);
 	return 1;
 }
 
@@ -35,4 +28,3 @@ int map_zone(u32 physical_addr, u32 virtual_addr, u32 len) {
 	}
 	return 1;
 }
-
