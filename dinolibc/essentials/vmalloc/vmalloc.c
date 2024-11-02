@@ -1,6 +1,6 @@
 #include "vmalloc.h"
 
-mem_entry *heap_descriptor = (mem_entry *)HEAP_DESCRIPTOR;
+mem_entry *heap_descriptor = (mem_entry *)KERNEL_HEAP_DESCRIPTOR;
 
 void *vmalloc(u32 size) {
 	int entry = find_free_entry();

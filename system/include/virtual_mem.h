@@ -23,7 +23,8 @@
 #define INDEX_TO_PAGE(table_index, page_index)                                 \
 	(INDEX_TO_TABLE(table_index) + (page_index * 4))
 
-#define HEAP_DESCRIPTOR_INDEX 775
+#define KERNEL_HEAP_DESCRIPTOR_INDEX 775
+#define USER_HEAP_DESCRIPTOR_INDEX 669
 
 void *map_new_page(u32 virtual_addr);
 void init_pages();

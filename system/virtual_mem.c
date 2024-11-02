@@ -50,17 +50,17 @@ void unmap_page(u32 addr) {
 }
 
 void init_heap() {
-	map_new_page(HEAP);
+	map_new_page(KERNEL_HEAP);
 
-	mem_entry *heap_descriptor = (void *)HEAP_DESCRIPTOR;
-	heap_descriptor->addr = (void *)HEAP;
+	mem_entry *heap_descriptor = (void *)KERNEL_HEAP_DESCRIPTOR;
+	heap_descriptor->addr = (void *)KERNEL_HEAP;
 	heap_descriptor->size = 0;
 	heap_descriptor->next = 0;
 }
 
 void init_pages() {
 	v_page_directory = (void *)PAGE_DIRECTORY_PTR_ADDR;
-	map_table(HEAP_DESCRIPTOR_INDEX);
-	bzero((void *)HEAP_DESCRIPTOR, TABLE_SIZE);
+	map_table(KERNEL_HEAP_DESCRIPTOR_INDEX);
+	bzero((void *)KERNEL_HEAP_DESCRIPTOR, TABLE_SIZE);
 	init_heap();
 }

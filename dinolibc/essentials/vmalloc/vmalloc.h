@@ -3,7 +3,7 @@
 
 #define MAX_ALLOCS 349525
 #define no_space_left(size, last)                                              \
-	((last->addr + last->size + size) >= (void *)END_HEAP)
+	((last->addr + last->size + size) >= (void *)END_KERNEL_HEAP)
 #define PAGE_REFERENCE(addr) (addr & 0xfffff000)
 #define is_last(node) (node->next == NULL)
 #define different_pages(a, b)                                                  \
