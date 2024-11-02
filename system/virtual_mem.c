@@ -50,8 +50,19 @@ int map_table(u32 index) {
 	return 1;
 }
 
+void init_heap() {
+	map_new_page(HEAP);
+
+	mem_entry *heap_descriptor = (void *)HEAP_DESCRIPTOR;
+	heap_descriptor->addr = (void *)HEAP;
+	heap_descriptor->size = 0;
+	heap_descriptor->next = 0;
+
+}
+
 void init_pages() {
 	v_page_directory = (void *)PAGE_DIRECTORY_PTR_ADDR;
-	map_table(ALLOC_DIRECTORY_INDEX);
-	bzero((void *)ALLOC_DIRECTORY, TABLE_SIZE);
+	map_table(HEAP_DESCRIPTOR_INDEX);
+	bzero((void *)HEAP_DESCRIPTOR, TABLE_SIZE);
+	init_heap();
 }

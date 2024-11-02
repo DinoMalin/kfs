@@ -26,12 +26,25 @@ void ksetup(int magic, multiboot_info *_multiboot) {
 int kmain() {
 	clear_screen();
 	default_color = custom_theme(default_theme);
-	printk("This 42 is mandatory");
-	init_shell();
 
 	int *i = kmalloc(4);
-	*i = 4;
-	printk("%d", i);
+	if (!i)
+		printk("Error in memory allocation");
+	else {
+		*i = 4;
+		printk("Allocation succeed ! Value : %d - Address: 0x%x", *i, i);
+	}
+
+	int *j = kmalloc(4);
+	if (!j)
+		printk("Error in memory allocation");
+	else {
+		*j = 8;
+		printk("Allocation succeed ! Value : %d - Address: 0x%x", *j, j);
+	}
+
+	printk("This 42 is mandatory");
+	init_shell();
 
 	while (!exit)
 		;
