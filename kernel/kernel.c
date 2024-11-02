@@ -27,20 +27,21 @@ int kmain() {
 	clear_screen();
 	default_color = custom_theme(default_theme);
 
-	int *i = vmalloc(4);
-	if (!i)
-		printk("Error in memory allocation");
-	else {
-		*i = 4;
-		printk("Allocation succeed ! Value : %d - Address: 0x%x", *i, i);
-	}
-
-	int *j = vmalloc(4);
-	if (!j)
-		printk("Error in memory allocation");
-	else {
-		*j = 8;
-		printk("Allocation succeed ! Value : %d - Address: 0x%x", *j, j);
+	for (int i = 0; i < 2048; i++) {
+		int *j = vmalloc(4);
+		int *k = vmalloc(4);
+		if (!j)
+			printk("Error in memory allocation");
+		else {
+			*j = 42;
+			printk("Allocation succeed ! Value : %d - Address: 0x%x", *j, j);
+			vfree(j);
+			if (k) {
+				printk("SECOND Allocation succeed ! Value : %d - Address: 0x%x", *k, k);
+			} else {
+				printk("SECOND Allocation FAILED !");
+			}
+		}
 	}
 
 	printk("This 42 is mandatory");
