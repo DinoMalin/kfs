@@ -12,5 +12,6 @@
 #define available(entry) (entry.type == 1)
 
 u32 palloc();
+void pmem_free_page(int page);
 void pmem_alloc_zone(u32 addr, u32 len);
 void init_pmem();

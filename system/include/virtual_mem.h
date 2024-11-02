@@ -27,3 +27,4 @@
 
 void *map_new_page(u32 virtual_addr);
 void init_pages();
+void unmap_page(u32 addr);

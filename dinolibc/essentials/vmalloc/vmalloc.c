@@ -31,6 +31,8 @@ void vfree(void *addr) {
 
 	while (curr->next) {
 		if (curr->next->addr == addr) {
+			if (is_last(curr->next) && different_pages(curr, curr->next))
+				unmap_page((u32)curr->next->addr);
 			curr->next->addr = NULL;
 			curr->next = curr->next->next;
 			return;

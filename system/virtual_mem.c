@@ -22,21 +22,13 @@ int map(u32 physical_addr, u32 virtual_addr) {
 	return 1;
 }
 
-int map_zone(u32 physical_addr, u32 virtual_addr, u32 len) {
-	for (u32 i = 0; i <= len; i += PAGE_SIZE) {
-		if (!map(physical_addr + i, virtual_addr + i))
-			return 0;
-	}
-	return 1;
-}
-
-void *map_new_page(u32 virtual_addr) {
+void *map_new_page(u32 addr) {
 	u32 p_new_page = palloc();
 	if (!p_new_page)
 		return 0;
-	if (!map(p_new_page, virtual_addr))
+	if (!map(p_new_page, addr))
 		return 0;
-	return (void *)virtual_addr;
+	return (void *)addr;
 }
 
 int map_table(u32 index) {
@@ -48,6 +40,13 @@ int map_table(u32 index) {
 		}
 	}
 	return 1;
+}
+
+void unmap_page(u32 addr) {
+	u32 page_index = addr / 0x1000;
+	u32 *page_descriptor = (void *)PAGE_DIRECTORY_ADDR + (page_index * 4);
+	*page_descriptor = 0;
+	pmem_free_page(addr / page_index);
 }
 
 void init_heap() {
