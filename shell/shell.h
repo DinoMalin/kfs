@@ -1,8 +1,8 @@
 #pragma once
 
+#include "essentials.h"
 #include "io.h"
 #include "string.h"
-#include "essentials.h"
 #include "timer.h"
 #include "workspace.h"
 
@@ -85,7 +85,11 @@ extern int exit;
 	}
 #define add_theme(name, bg, fg)                                                \
 	if (check_arg(str, name))                                                  \
-	return combine(bg, fg)
+		return combine(bg, fg);
+#define add_color(name, color)                                                 \
+	if (check_arg(str, name))                                                  \
+		return color;
+
 #define skip_prefix(str) !(str += 2)
 
 #define HELP_MSG                                                               \

@@ -6,7 +6,7 @@ char *readline() {
 	start += ps1_len * 2;
 
 	int len = 0;
-	for (int i = 0; start[i] && start + i < END_VMEM ; i++) {
+	for (int i = 0; start[i] && start + i < END_VMEM; i++) {
 		len++;
 	}
 
@@ -15,8 +15,8 @@ char *readline() {
 	if (!result)
 		return NULL;
 
-	for (int i = 0; i < len ; i++) {
-		result[i] = start[i*2];
+	for (int i = 0; i < len; i++) {
+		result[i] = start[i * 2];
 	}
 	result[len] = '\0';
 
@@ -36,38 +36,21 @@ int check_arg(char *cmd, char *str) {
 }
 
 int get_color(char *str) {
-	if (check_arg(str, "black"))
-		return BLACK;
-	else if (check_arg(str, "blue"))
-		return BLUE;
-	else if (check_arg(str, "green"))
-		return GREEN;
-	else if (check_arg(str, "cyan"))
-		return CYAN;
-	else if (check_arg(str, "red"))
-		return RED;
-	else if (check_arg(str, "magenta"))
-		return MAGENTA;
-	else if (check_arg(str, "brown"))
-		return BROWN;
-	else if (check_arg(str, "light_gray"))
-		return LGRAY;
-	else if (check_arg(str, "dark_gray"))
-		return DGRAY;
-	else if (check_arg(str, "light_blue"))
-		return LBLUE;
-	else if (check_arg(str, "light_green"))
-		return LGREEN;
-	else if (check_arg(str, "light_cyan"))
-		return LCYAN;
-	else if (check_arg(str, "light_red"))
-		return LRED;
-	else if (check_arg(str, "light_magenta"))
-		return LMAGENTA;
-	else if (check_arg(str, "yellow"))
-		return YELLOW;
-	else if (check_arg(str, "white"))
-		return WHITE;
+	add_color("black", BLACK);
+	add_color("blue", GREEN);
+	add_color("cyan", CYAN);
+	add_color("red", RED);
+	add_color("magenta", MAGENTA);
+	add_color("brown", BROWN);
+	add_color("light_gray", LGRAY);
+	add_color("dark_gray", DGRAY);
+	add_color("light_blue", LBLUE);
+	add_color("light_green", LGREEN);
+	add_color("light_cyan", LCYAN);
+	add_color("light_red", LRED);
+	add_color("light_magenta", LMAGENTA);
+	add_color("yellow", YELLOW);
+	add_color("white", WHITE);
 	return WRONG_COLOR;
 }
 
@@ -80,7 +63,6 @@ int custom_theme(char *str) {
 	add_theme("rosa", MAGENTA, LGREEN);
 	add_theme("louis", BLUE, CYAN);
 	add_theme("default", BLACK, WHITE);
-
 	return 0;
 }
 
