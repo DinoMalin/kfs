@@ -1,18 +1,26 @@
 #include "shell.h"
 
-void fill_buffer(char *buff) {
+char *readline() {
 	u8 *start = video_memory;
 	go_start_line(start);
 	start += ps1_len * 2;
 
-	int i = 0;
-	int j = 0;
-
-	while (start + i < END_VMEM) {
-		buff[j] = start[i];
-		i += 2;
-		j++;
+	int len = 0;
+	for (int i = 0; start[i] && start + i < END_VMEM ; i++) {
+		len++;
 	}
+
+	len /= 2;
+	char *result = vmalloc(len + 1);
+	if (!result)
+		return NULL;
+
+	for (int i = 0; i < len ; i++) {
+		result[i] = start[i*2];
+	}
+	result[len] = '\0';
+
+	return result;
 }
 
 int check_arg(char *cmd, char *str) {

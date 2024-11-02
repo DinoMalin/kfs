@@ -2,6 +2,7 @@
 
 #include "io.h"
 #include "string.h"
+#include "essentials.h"
 #include "timer.h"
 #include "workspace.h"
 
@@ -17,11 +18,11 @@ void help(char *cmd);
 void reboot(char *cmd);
 void halt(char *cmd);
 
+char *readline();
 int check_arg(char *cmd, char *str);
 int get_color(char *str);
 int count_args(char *str);
 int good_syntax(char *str);
-void fill_buffer(char *buff);
 int custom_theme(char *str);
 
 extern int ps1_len;

@@ -12,8 +12,7 @@ void command(char *cmd, char *line, void (*handler)(char *)) {
 }
 
 void interpret() {
-	char cmd[BUFF_SIZE];
-	fill_buffer(cmd);
+	char *cmd = readline();
 
 	command(cmd, MEMORY, memory);
 	command(cmd, ECHO, echo);
@@ -24,6 +23,8 @@ void interpret() {
 	command(cmd, MAN, help);
 	command(cmd, REBOOT, reboot);
 	command(cmd, HALT, halt);
+
+	vfree(cmd);
 
 	if (!executed)
 		printk(UNKNOWN);
