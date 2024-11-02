@@ -5,6 +5,7 @@
 #define NB_PAGES 32768
 #define PAGE_SIZE 4096
 #define TABLE_SIZE 0x400000
+#define ALLOC_DIRECTORY 0xc1c00000
 
 extern void *kernel_start;
 extern void *kernel_end;

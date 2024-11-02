@@ -16,7 +16,7 @@
 #define CLEAR_TABLE(index) bzero((void *)INDEX_TO_TABLE(index), PAGE_SIZE)
 
 #define PRESENT(table) (table & 1)
-#define MAPPED(addr) ((physical_addr & 0xfffff000) | 0b11)
+#define MAPPED(addr) ((addr & 0xfffff000) | 0b11)
 
 #define INDEX_TO_ADDR(index) (index * TABLE_SIZE)
 #define INDEX_TO_TABLE(index) ((u32)PAGE_DIRECTORY_ADDR + (index * PAGE_SIZE))

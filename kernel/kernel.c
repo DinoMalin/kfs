@@ -29,6 +29,10 @@ int kmain() {
 	printk("This 42 is mandatory");
 	init_shell();
 
+	int *i = kmalloc(4);
+	*i = 4;
+	printk("%d", i);
+
 	while (!exit)
 		;
 

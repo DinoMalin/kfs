@@ -1,10 +1,10 @@
 #include "virtual_mem.h"
 
-u32 *page_directory;
+u32 *v_page_directory;
 
 int map(u32 physical_addr, u32 virtual_addr) {
 	u32 table_index = table_index(virtual_addr);
-	u32 *page_table = page_directory + table_index;
+	u32 *page_table = v_page_directory + table_index;
 
 	if (!PRESENT(*page_table)) {
 		u32 new_table = palloc();
@@ -51,7 +51,7 @@ int map_table(u32 index) {
 }
 
 void init_pages() {
-	page_directory = (void *)PAGE_DIRECTORY_PTR_ADDR;
+	v_page_directory = (void *)PAGE_DIRECTORY_PTR_ADDR;
 	map_table(ALLOC_DIRECTORY_INDEX);
-	CLEAR_TABLE(ALLOC_DIRECTORY_INDEX);
+	bzero((void *)ALLOC_DIRECTORY, TABLE_SIZE);
 }
