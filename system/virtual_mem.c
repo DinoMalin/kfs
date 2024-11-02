@@ -34,10 +34,8 @@ void *map_new_page(u32 addr) {
 int map_table(u32 index) {
 	u32 addr = INDEX_TO_ADDR(index);
 	for (u32 i = 0; i < 1024; i++) {
-		if (!map_new_page(addr + (i * PAGE_SIZE))) {
-			printk("couldnt map");
+		if (!map_new_page(addr + (i * PAGE_SIZE)))
 			return 0;
-		}
 	}
 	return 1;
 }
@@ -49,18 +47,22 @@ void unmap_page(u32 addr) {
 	pmem_free_page(addr / page_index);
 }
 
-void init_heap() {
-	map_new_page(KERNEL_HEAP);
-
+int init_heap() {
+	if (!map_new_page(KERNEL_HEAP))
+		return 0;
 	mem_entry *heap_descriptor = (void *)KERNEL_HEAP_DESCRIPTOR;
 	heap_descriptor->addr = (void *)KERNEL_HEAP;
 	heap_descriptor->size = 0;
 	heap_descriptor->next = 0;
+	return 1;
 }
 
-void init_pages() {
+int init_pages() {
 	v_page_directory = (void *)PAGE_DIRECTORY_PTR_ADDR;
-	map_table(KERNEL_HEAP_DESCRIPTOR_INDEX);
+	if (!map_table(KERNEL_HEAP_DESCRIPTOR_INDEX))
+		return 0;
 	bzero((void *)KERNEL_HEAP_DESCRIPTOR, TABLE_SIZE);
-	init_heap();
+	if (!init_heap())
+		return 0;
+	return 1;
 }

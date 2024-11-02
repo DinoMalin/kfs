@@ -27,5 +27,5 @@
 #define USER_HEAP_DESCRIPTOR_INDEX 669
 
 void *map_new_page(u32 virtual_addr);
-void init_pages();
+int init_pages();
 void unmap_page(u32 addr);
