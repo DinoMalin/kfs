@@ -8,3 +8,4 @@
 
 void *vmalloc(u32 size);
 void vfree(void *addr);
+int vsize(void *addr);

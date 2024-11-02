@@ -38,3 +38,14 @@ void vfree(void *addr) {
 		curr = curr->next;
 	}
 }
+
+int vsize(void *addr) {
+	mem_entry *curr = heap_descriptor + 1;
+
+	while (curr) {
+		if (curr->addr == addr)
+			return curr->size;
+		curr = curr->next;
+	}
+	return 0;
+}
