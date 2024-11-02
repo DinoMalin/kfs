@@ -1,9 +1,11 @@
 #include "string.h"
 #include "types.h"
+#include "io.h"
 
-void *memset(void *pointer, int value, unsigned int size) {
-	unsigned int i = 0;
-	while (i < size)
-		*(unsigned char *)(pointer + i++) = (unsigned char)value;
+void *memset(void *pointer, int value, u32 size) {
+	u32 i = 0;
+	while (i < size) {
+		*(u8 *)(pointer + i++) = (u8)value;
+	}
 	return (pointer);
 }

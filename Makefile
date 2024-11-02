@@ -61,7 +61,7 @@ endef
 define legend_forget
 	@echo -en "\e[1;38;2;163;255;149m$(1) \e[0m"
 	@echo -en "$(2)"
-	@echo -en "                              \r"
+	@echo -en "                                                 \r"
 endef
 
 define bad_legend
