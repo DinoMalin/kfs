@@ -57,7 +57,6 @@ void init_heap() {
 	heap_descriptor->addr = (void *)HEAP;
 	heap_descriptor->size = 0;
 	heap_descriptor->next = 0;
-
 }
 
 void init_pages() {

@@ -18,7 +18,7 @@ u32 get_hole(mem_entry *a, mem_entry *b) {
 
 void *find_hole(u32 size) {
 	mem_entry *curr = (void *)heap_descriptor;
-	
+
 	while (curr->next) {
 		u32 hole = get_hole(curr, curr->next);
 		if (hole >= size)

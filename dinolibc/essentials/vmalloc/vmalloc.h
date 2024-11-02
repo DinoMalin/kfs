@@ -2,7 +2,8 @@
 #include "essentials.h"
 
 #define MAX_ALLOCS 349525
-#define no_space_left(size, last) ((last->addr + last->size + size) >= (void *)END_HEAP)
+#define no_space_left(size, last)                                              \
+	((last->addr + last->size + size) >= (void *)END_HEAP)
 #define PAGE_REFERENCE(addr) (addr & 0xfffff000)
 
 extern mem_entry *heap_descriptor;

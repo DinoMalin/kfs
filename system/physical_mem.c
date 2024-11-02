@@ -64,4 +64,3 @@ void init_pmem() {
 	}
 	pmem_alloc_zone(0, TABLE_SIZE);
 }
-

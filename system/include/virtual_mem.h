@@ -20,7 +20,8 @@
 
 #define INDEX_TO_ADDR(index) (index * TABLE_SIZE)
 #define INDEX_TO_TABLE(index) ((u32)PAGE_DIRECTORY_ADDR + (index * PAGE_SIZE))
-#define INDEX_TO_PAGE(table_index, page_index) (INDEX_TO_TABLE(table_index) + (page_index * 4))
+#define INDEX_TO_PAGE(table_index, page_index)                                 \
+	(INDEX_TO_TABLE(table_index) + (page_index * 4))
 
 #define HEAP_DESCRIPTOR_INDEX 775
 

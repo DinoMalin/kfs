@@ -18,7 +18,7 @@ void *vmalloc(u32 size) {
 			if (!map_new_page(new_page))
 				return NULL;
 		}
-	
+
 		addr = last->addr + last->size;
 	}
 
@@ -33,7 +33,7 @@ void vfree(void *addr) {
 		if (curr->next->addr == addr) {
 			curr->next->addr = NULL;
 			curr->next = curr->next->next;
-			return ;
+			return;
 		}
 		curr = curr->next;
 	}

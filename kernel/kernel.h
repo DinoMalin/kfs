@@ -1,8 +1,8 @@
 #pragma once
 
+#include "essentials.h"
 #include "io.h"
 #include "string.h"
-#include "essentials.h"
 
 #include "gdt.h"
 #include "idt.h"

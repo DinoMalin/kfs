@@ -1,6 +1,6 @@
+#include "io.h"
 #include "string.h"
 #include "types.h"
-#include "io.h"
 
 void *memset(void *pointer, int value, u32 size) {
 	u32 i = 0;
