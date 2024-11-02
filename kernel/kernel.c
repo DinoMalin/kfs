@@ -20,6 +20,7 @@ void ksetup(int magic, multiboot_info *_multiboot) {
 
 	timer_install();
 	keyboard_install();
+	init_pages();
 }
 
 int kmain() {
