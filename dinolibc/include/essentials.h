@@ -10,4 +10,4 @@
 #define PAGE_REFERENCE(addr) (addr & 0xfffff000)
 #define no_space_left(size, last) ((last->addr + last->size + size) >= (void *)END_HEAP)
 
-void *kmalloc(u32 size);
+void *vmalloc(u32 size);

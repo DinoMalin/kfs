@@ -15,7 +15,7 @@ void *find_hole(u32 size) {
 	mem_entry *curr = (void *)alloc_dir;
 	
 	while (curr->next) {
-		u32 hole = ((curr->addr + curr->size) - curr->next);
+		u32 hole = ((curr->addr + curr->size) - curr->next->addr);
 		if (hole >= size)
 			return curr->addr + curr->size;
 		curr = curr->next;
@@ -47,11 +47,12 @@ void insert(int entry, void *addr, u32 size) {
 	}
 
 	alloc_dir[entry].addr = addr;
+	alloc_dir[entry].size = size;
 	alloc_dir[entry].next = curr->next;
 	curr->next = alloc_dir + entry;
 }
 
-void *kmalloc(u32 size) {
+void *vmalloc(u32 size) {
 	int entry = find_free_entry();
 	if (!entry)
 		return NULL;
@@ -71,7 +72,6 @@ void *kmalloc(u32 size) {
 		addr = last->addr + last->size;
 	}
 
-	printk("here");
 	insert(entry, addr, size);
 	return addr;
 }

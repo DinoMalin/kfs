@@ -27,7 +27,7 @@ int kmain() {
 	clear_screen();
 	default_color = custom_theme(default_theme);
 
-	int *i = kmalloc(4);
+	int *i = vmalloc(4);
 	if (!i)
 		printk("Error in memory allocation");
 	else {
@@ -35,7 +35,7 @@ int kmain() {
 		printk("Allocation succeed ! Value : %d - Address: 0x%x", *i, i);
 	}
 
-	int *j = kmalloc(4);
+	int *j = vmalloc(4);
 	if (!j)
 		printk("Error in memory allocation");
 	else {
