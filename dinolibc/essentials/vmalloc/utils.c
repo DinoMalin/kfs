@@ -36,10 +36,21 @@ u32 find_free_entry() {
 	return 0;
 }
 
-u32 need_to_allocate(u32 size) {
-	mem_entry *last = lstlast(heap_descriptor);
+u32 need_to_allocate(mem_entry *last, u32 size) {
 	u32 end_addr = (u32)last->addr + last->size;
 	return (PAGE_REFERENCE(end_addr) != PAGE_REFERENCE(end_addr + size));
+}
+
+void *allocate_pages(u32 start, u32 size) {
+	u32 page = PAGE_REFERENCE(start);
+	u32 end = start + size;
+
+	while (page <= end) {
+		if (!map_new_page(page))
+			return NULL;
+		page += PAGE_SIZE;
+	}
+	return (void *)start;
 }
 
 void insert(int entry, void *addr, u32 size) {

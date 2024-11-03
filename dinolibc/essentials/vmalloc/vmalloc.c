@@ -13,16 +13,15 @@ void *vmalloc(u32 size) {
 	void *addr = find_hole(size);
 	if (!addr) {
 		mem_entry *last = lstlast(heap_descriptor);
-		if (need_to_allocate(size)) {
+		addr = last->addr + last->size;
+
+		if (need_to_allocate(last, size)) {
 			if (no_space_left(size, last))
 				return NULL;
 
-			u32 new_page = PAGE_REFERENCE((u32)last->addr + last->size + size);
-			if (!map_new_page(new_page))
+			if (!allocate_pages((u32)addr, size))
 				return NULL;
 		}
-
-		addr = last->addr + last->size;
 	}
 
 	insert(entry, addr, size);
