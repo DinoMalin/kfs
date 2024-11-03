@@ -14,7 +14,7 @@ void command(char *cmd, char *line, void (*handler)(char *)) {
 void interpret() {
 	char *cmd = readline();
 	if (!cmd)
-		kernel_panic("allocation error", NO_EXIT);
+		return;
 
 	command(cmd, MEMORY, memory);
 	command(cmd, ECHO, echo);

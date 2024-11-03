@@ -73,7 +73,7 @@ all: $(CC) $(GRUB_DIR) $(KERNEL)
 	$(call legend,"Creating",$(ISO))
 	@grub-mkrescue --directory=$(GRUB_DIR) -o $(ISO) $(ROOTFS) "--install-modules=$(GRUB_MOD)" -- -rm_r $(GRUB_RM) --  2>/dev/null
 	$(call legend,"Launching VM...",)
-	@qemu-system-i386 -cdrom $(ISO) -serial stdio
+	@qemu-system-i386 -cdrom $(ISO) -serial stdio --enable-kvm
 
 $(GRUB_DIR):
 	$(call legend,"Downloading",$@)

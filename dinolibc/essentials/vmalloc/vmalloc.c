@@ -3,6 +3,9 @@
 mem_entry *heap_descriptor = (mem_entry *)KERNEL_HEAP_DESCRIPTOR;
 
 void *vmalloc(u32 size) {
+	if (!size)
+		return NULL;
+
 	int entry = find_free_entry();
 	if (!entry)
 		return NULL;

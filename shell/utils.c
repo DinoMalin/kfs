@@ -10,10 +10,15 @@ char *readline() {
 		len++;
 	}
 
-	len /= 2;
-	char *result = vmalloc(len + 1);
-	if (!result)
+	if (!len)
 		return NULL;
+	len /= 2;
+
+	char *result = vmalloc(len + 1);
+	if (!result) {
+		kernel_panic("allocation error", NO_EXIT);
+		return NULL;
+	}
 
 	for (int i = 0; i < len; i++) {
 		result[i] = start[i * 2];
