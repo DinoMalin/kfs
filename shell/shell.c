@@ -5,7 +5,7 @@ int switching = 0;
 int executed = 0;
 
 void command(char *cmd, char *line, void (*handler)(char *)) {
-	if (executed || !check_arg(cmd, line))
+	if (!cmd || executed || !check_arg(cmd, line))
 		return;
 	handler(args(line));
 	executed = 1;
@@ -13,6 +13,8 @@ void command(char *cmd, char *line, void (*handler)(char *)) {
 
 void interpret() {
 	char *cmd = readline();
+	if (!cmd)
+		kernel_panic("allocation error", NO_EXIT);
 
 	command(cmd, MEMORY, memory);
 	command(cmd, ECHO, echo);

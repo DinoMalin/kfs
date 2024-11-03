@@ -9,9 +9,9 @@ void echo(char *cmd) {
 
 void help(char *cmd) { printk(HELP_MSG); }
 
-void reboot(char *cmd) { exit = EXIT_REBOOT; }
+void reboot(char *cmd) { end = EXIT_REBOOT; }
 
-void halt(char *cmd) { exit = EXIT_HALT; }
+void halt(char *cmd) { end = EXIT_HALT; }
 
 void memory(char *cmd) {
 	int nb_args = count_args(cmd);

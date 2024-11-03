@@ -73,15 +73,19 @@ push ebx
 push eax
 
 call ksetup
+cmp eax, 2
+je _halt
 
 map page_directory, 0
 
 call kmain
 cmp eax, 1
-je .exit
+je exit
+
+_halt:
 cli
-.halt:
+halt:
 	hlt
-	jmp .halt
-.exit:
+	jmp halt
+exit:
 

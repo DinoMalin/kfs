@@ -13,9 +13,3 @@
 #include "multiboot.h"
 #include "physical_mem.h"
 #include "virtual_mem.h"
-
-#define kernel_panic(msg)                                                      \
-	{                                                                          \
-		printk("kernel lost in the sauce : %s", msg);                          \
-		exit = 1;                                                              \
-	}

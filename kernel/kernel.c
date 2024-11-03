@@ -1,13 +1,13 @@
 #include "kernel.h"
 
-int exit = 0;
+int end = 0;
 multiboot_info *multiboot;
 
-void ksetup(int magic, multiboot_info *_multiboot) {
+int ksetup(int magic, multiboot_info *_multiboot) {
 	if (magic != MULTIBOOT_MAGIC)
-		kernel_panic("wrong multiboot magic");
+		kernel_panic("wrong multiboot magic", EXIT);
 	if (!_multiboot->flags & MULTIBOOT_INFO_MEM_MAP)
-		kernel_panic("mmap not set");
+		kernel_panic("mmap not set", EXIT);
 
 	multiboot = _multiboot;
 	keep_mmap_info(multiboot);
@@ -21,7 +21,8 @@ void ksetup(int magic, multiboot_info *_multiboot) {
 	timer_install();
 	keyboard_install();
 	if (!init_pages())
-		kernel_panic("failed to init basic pages");
+		kernel_panic("failed to init basic pages", EXIT);
+	return end;
 }
 
 int kmain() {
@@ -31,8 +32,8 @@ int kmain() {
 	printk("This 42 is mandatory");
 	init_shell();
 
-	while (!exit)
+	while (!end)
 		;
 
-	return exit;
+	return end;
 }

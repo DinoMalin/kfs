@@ -26,7 +26,7 @@ int good_syntax(char *str);
 int custom_theme(char *str);
 
 extern int ps1_len;
-extern int exit;
+extern int end;
 
 #define MEMORY "memory"
 #define MEMORY_USAGE "memory <number> [address]"
