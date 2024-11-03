@@ -17,6 +17,7 @@ void theme(char *cmd);
 void help(char *cmd);
 void reboot(char *cmd);
 void halt(char *cmd);
+void _valgrind(char *cmd);
 
 char *readline();
 int check_arg(char *cmd, char *str);
@@ -51,6 +52,7 @@ extern int end;
 #define MAN "man"
 #define REBOOT "reboot"
 #define HALT "halt"
+#define VALGRIND "valgrind"
 
 #define WRONG_COLOR 16
 #define BUFF_SIZE 2000

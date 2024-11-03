@@ -36,8 +36,8 @@ u32 find_free_entry() {
 	return 0;
 }
 
-u32 need_to_allocate(mem_entry *last, u32 size) {
-	u32 end_addr = (u32)last->addr + last->size;
+u32 need_to_allocate(mem_entry *target, u32 size) {
+	u32 end_addr = (u32)target->addr + target->size - 1;
 	return (PAGE_REFERENCE(end_addr) != PAGE_REFERENCE(end_addr + size));
 }
 
@@ -58,4 +58,9 @@ void insert(int entry, mem_entry *target, void *addr, u32 size) {
 	heap_descriptor[entry].size = size;
 	heap_descriptor[entry].next = target->next;
 	target->next = heap_descriptor + entry;
+}
+
+void display_node_info(mem_entry *node) {
+	printk("%d bytes allocated", node->size);
+	printk("    at %p\n", node->addr);
 }

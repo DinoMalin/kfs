@@ -7,11 +7,11 @@ void echo(char *cmd) {
 	printk("%s", cmd);
 }
 
+void lilalelolu() { printk("lalelilalo"); }
 void help(char *cmd) { printk(HELP_MSG); }
-
 void reboot(char *cmd) { end = EXIT_REBOOT; }
-
 void halt(char *cmd) { end = EXIT_HALT; }
+void _valgrind(char *cmd) { valgrind(); }
 
 void memory(char *cmd) {
 	int nb_args = count_args(cmd);
@@ -98,5 +98,3 @@ void theme(char *cmd) {
 	}
 	apply_color(combine(bg, fg));
 }
-
-void lilalelolu() { printk("lalelilalo"); }

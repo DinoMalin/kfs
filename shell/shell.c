@@ -25,6 +25,7 @@ void interpret() {
 	command(cmd, MAN, help);
 	command(cmd, REBOOT, reboot);
 	command(cmd, HALT, halt);
+	command(cmd, VALGRIND, _valgrind);
 
 	vfree(cmd);
 
