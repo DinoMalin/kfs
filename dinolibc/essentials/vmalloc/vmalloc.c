@@ -3,6 +3,7 @@
 mem_entry *heap_descriptor = (mem_entry *)KERNEL_HEAP_DESCRIPTOR;
 
 void *vmalloc(u32 size) {
+	static int last = 0;
 	if (!size || size > SIZE_HEAP)
 		return NULL;
 
@@ -10,21 +11,25 @@ void *vmalloc(u32 size) {
 	if (!entry)
 		return NULL;
 
-	void *addr = find_hole(size);
-	if (!addr) {
-		mem_entry *last = lstlast(heap_descriptor);
-		addr = (void *)ALIGN((u32)last->addr + last->size);
+	mem_entry *target = find_hole(size);
+	void *addr;
+	if (!target) {
+		target = heap_descriptor + last;
+   		addr = (void *)ALIGN((u32)target->addr + target->size);
 
-		if (need_to_allocate(last, size)) {
-			if (no_space_left(size, last))
+		if (need_to_allocate(target, size)) {
+			if (no_space_left(size, target))
 				return NULL;
 
 			if (!allocate_pages((u32)addr, size))
 				return NULL;
 		}
+		last = entry;
+	} else {
+   		addr = (void *)ALIGN((u32)target->addr + target->size);
 	}
 
-	insert(entry, addr, size);
+	insert(entry, target, addr, size);
 	return addr;
 }
 

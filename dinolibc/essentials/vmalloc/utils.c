@@ -16,13 +16,13 @@ u32 get_hole(mem_entry *a, mem_entry *b) {
 	return b->addr - end_addr;
 }
 
-void *find_hole(u32 size) {
+mem_entry *find_hole(u32 size) {
 	mem_entry *curr = (void *)heap_descriptor;
 
 	while (curr->next) {
 		u32 hole = get_hole(curr, curr->next);
 		if (hole >= size)
-			return (void *)ALIGN((u32)curr->addr + curr->size);
+			return curr;
 		curr = curr->next;
 	}
 	return 0;
@@ -53,17 +53,9 @@ void *allocate_pages(u32 start, u32 size) {
 	return (void *)start;
 }
 
-void insert(int entry, void *addr, u32 size) {
-	mem_entry *curr = heap_descriptor;
-
-	while (curr->next) {
-		if (curr->next->addr > addr)
-			break;
-		curr = curr->next;
-	}
-
+void insert(int entry, mem_entry *target, void *addr, u32 size) {
 	heap_descriptor[entry].addr = addr;
 	heap_descriptor[entry].size = size;
-	heap_descriptor[entry].next = curr->next;
-	curr->next = heap_descriptor + entry;
+	heap_descriptor[entry].next = target->next;
+	target->next = heap_descriptor + entry;
 }
