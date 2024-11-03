@@ -22,3 +22,11 @@ extern int end;
 		if (must_exit)                                                         \
 			end = 2;                                                           \
 	}
+
+#define fkernel_panic(must_exit, msg, ...)                                     \
+	{                                                                          \
+		printk("kernel lost in the sauce: %nonl");                             \
+		printk(msg, __VA_ARGS__);                                              \
+		if (must_exit)                                                         \
+			end = 2;                                                           \
+	}

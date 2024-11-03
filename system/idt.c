@@ -93,10 +93,19 @@ u8 *exceptions[] = {"Division By Zero",
 					"Reserved",
 					"Reserved"};
 
+u32 get_cr() {
+	unsigned int cr;
+	asm volatile("movl %%cr2, %0" : "=r"(cr));
+	return cr;
+}
+
 void fault_handler(struct regs *r) {
+	if (r->int_nb == 14) {
+		fkernel_panic(EXIT, "%s exception\nInvalid access to 0x%x",
+					  exceptions[r->int_nb], get_cr());
+	} else if (r->int_nb < 32)
+		fkernel_panic(EXIT, "%s exception", exceptions[r->int_nb]);
 	if (r->int_nb < 32) {
-		printk("%s Exception. System halted.", exceptions[r->int_nb]);
-		while (1) {
-		}
+		GO_HALT();
 	}
 }

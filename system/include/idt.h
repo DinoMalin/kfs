@@ -1,5 +1,6 @@
 #pragma once
 
+#include "essentials.h"
 #include "io.h"
 #include "string.h"
 #include "types.h"
@@ -29,6 +30,9 @@ void idt_set_gate(unsigned long base, unsigned short sel, u8 flags);
 
 #define NB_ENTRIES 256
 #define ISR(num) (unsigned)isr##num, 0x08, 0b10001110
+#define GO_HALT()                                                              \
+	while (1)                                                                  \
+		;
 
 // Load IDT and ISR functions
 extern void idt_load();
