@@ -8,6 +8,7 @@
 #define is_last(node) (node->next == NULL)
 #define different_pages(a, b)                                                  \
 	(PAGE_REFERENCE((u32)a->addr + a->size - 1) != PAGE_REFERENCE((u32)b->addr))
+#define ALIGN(addr) ((addr + 8) & 0xfffffff8)
 
 extern mem_entry *heap_descriptor;
 

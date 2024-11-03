@@ -10,7 +10,7 @@ mem_entry *lstlast(mem_entry *lst) {
 }
 
 u32 get_hole(mem_entry *a, mem_entry *b) {
-	void *end_addr = a->addr + a->size;
+	void *end_addr = (void *)ALIGN((u32)a->addr + a->size);
 	if (end_addr >= b->addr)
 		return 0;
 	return b->addr - end_addr;
@@ -22,7 +22,7 @@ void *find_hole(u32 size) {
 	while (curr->next) {
 		u32 hole = get_hole(curr, curr->next);
 		if (hole >= size)
-			return curr->addr + curr->size;
+			return (void *)ALIGN((u32)curr->addr + curr->size);
 		curr = curr->next;
 	}
 	return 0;

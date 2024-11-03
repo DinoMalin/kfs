@@ -13,7 +13,7 @@ void *vmalloc(u32 size) {
 	void *addr = find_hole(size);
 	if (!addr) {
 		mem_entry *last = lstlast(heap_descriptor);
-		addr = last->addr + last->size;
+		addr = (void *)ALIGN((u32)last->addr + last->size);
 
 		if (need_to_allocate(last, size)) {
 			if (no_space_left(size, last))
