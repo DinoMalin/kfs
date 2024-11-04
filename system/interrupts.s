@@ -1,4 +1,20 @@
 ; GDT load function
+%macro isr 1
+isr%1:
+    cli
+    push byte 0
+    push byte %1
+    jmp isr_common_stub
+%endmacro
+
+%macro irq 1
+irq%1:
+    cli
+    push byte 0
+    push byte %1 + 32
+    jmp irq_common_stub
+%endmacro
+
 global gdt_flush
 extern gp
 gdt_flush:
@@ -126,333 +142,75 @@ global irq15
 
 ; ISR
 ; 0: Divison By Zero Exception
-isr0:
-    cli
-    push byte 0
-    push byte 0
-    jmp isr_common_stub
-
+isr 0
 ; 1: Debug Exception
-isr1:
-    cli
-    push byte 0
-    push byte 1
-    jmp isr_common_stub
-
+isr 1
 ; 2: Non Maskable Interrupt Exception
-isr2:
-    cli
-    push byte 0
-    push byte 2
-    jmp isr_common_stub
-
+isr 2
 ; 3: Breakpoint Exception
-isr3:
-    cli
-    push byte 0
-    push byte 3
-    jmp isr_common_stub
-
+isr 3
 ; 4: Into Detected Overflow Exception
-isr4:
-    cli
-    push byte 0
-    push byte 4
-    jmp isr_common_stub
-
+isr 4
 ; 5: Out of Bounds Exception
-isr5:
-    cli
-    push byte 0
-    push byte 5
-    jmp isr_common_stub
-
+isr 5
 ; 6: Invalid Opcode Exception
-isr6:
-    cli
-    push byte 0
-    push byte 6
-    jmp isr_common_stub
-
+isr 6
 ; 7: No Coprocessor Exception
-isr7:
-    cli
-    push byte 0
-    push byte 7
-    jmp isr_common_stub
-
+isr 7
 ; 8: Double Fault Exception
-isr8:
-    cli
-    push byte 8
-    jmp isr_common_stub
-
+isr 8
 ; 9: Coprocessor Segment Overrun Exception
-isr9:
-    cli
-    push byte 0
-    push byte 9
-    jmp isr_common_stub
-
+isr 9
 ; 10: Bad TSS Exception
-isr10:
-    cli
-    push byte 10
-    jmp isr_common_stub
-
+isr 10
 ; 11: Segment Not Present Exception
-isr11:
-    cli
-    push byte 11
-    jmp isr_common_stub
-
+isr 11
 ; 12: Stack Fault Exception
-isr12:
-    cli
-    push byte 12
-    jmp isr_common_stub
-
+isr 12
 ; 13: General Protection Fault Exception
-isr13:
-    cli
-    push byte 13
-    jmp isr_common_stub
-
+isr 13
 ; 14: Page Fault Exception
-isr14:
-    cli
-    push byte 14
-    jmp isr_common_stub
-
+isr 14
 ; 15: Unknown Interrupt Exception
-isr15:
-    cli
-    push byte 0
-    push byte 15
-    jmp isr_common_stub
-
+isr 15
 ; 16: Coprocessor Fault Exception
-isr16:
-    cli
-    push byte 0
-    push byte 16
-    jmp isr_common_stub
-
+isr 16
 ; 17: Alignment Check Exception
-isr17:
-    cli
-    push byte 0
-    push byte 17
-    jmp isr_common_stub
-
+isr 17
 ; 18: Machine Check Exception
-isr18:
-    cli
-    push byte 0
-    push byte 18
-    jmp isr_common_stub
-
-; 19: Reserved Exceptions
-isr19:
-    cli
-    push byte 0
-    push byte 19
-    jmp isr_common_stub
-
-; 20: Reserved Exceptions
-isr20:
-    cli
-    push byte 0
-    push byte 20
-    jmp isr_common_stub
-
-; 21: Reserved Exceptions
-isr21:
-    cli
-    push byte 0
-    push byte 21
-    jmp isr_common_stub
-
-; 22: Reserved Exceptions
-isr22:
-    cli
-    push byte 0
-    push byte 22
-    jmp isr_common_stub
-
-; 23: Reserved Exceptions
-isr23:
-    cli
-    push byte 0
-    push byte 23
-    jmp isr_common_stub
-
-; 24: Reserved Exceptions
-isr24:
-    cli
-    push byte 0
-    push byte 24
-    jmp isr_common_stub
-
-; 25: Reserved Exceptions
-isr25:
-    cli
-    push byte 0
-    push byte 25
-    jmp isr_common_stub
-
-; 26: Reserved Exceptions
-isr26:
-    cli
-    push byte 0
-    push byte 26
-    jmp isr_common_stub
-
-; 27: Reserved Exceptions
-isr27:
-    cli
-    push byte 0
-    push byte 27
-    jmp isr_common_stub
-
-; 28: Reserved Exceptions
-isr28:
-    cli
-    push byte 0
-    push byte 28
-    jmp isr_common_stub
-
-; 29: Reserved Exceptions
-isr29:
-    cli
-    push byte 0
-    push byte 29
-    jmp isr_common_stub
-
-; 30: Reserved Exceptions
-isr30:
-    cli
-    push byte 0
-    push byte 30
-    jmp isr_common_stub
-
-; 31: Reserved Exceptions
-isr31:
-    cli
-    push byte 0
-    push byte 31
-    jmp isr_common_stub
+isr 18
+; 19 -> 31 : Reserved Exceptions
+isr 19
+isr 20
+isr 21
+isr 22
+isr 23
+isr 24
+isr 25
+isr 26
+isr 27
+isr 28
+isr 29
+isr 30
+isr 31
 
 ; Interrupt Requests
-; 32: IRQ0
-irq0:
-    cli
-    push byte 0
-    push byte 32
-    jmp irq_common_stub
-
-; 33: IRQ1
-irq1:
-    cli
-    push byte 0
-    push byte 33
-    jmp irq_common_stub
-
-; 34: IRQ2
-irq2:
-    cli
-    push byte 0
-    push byte 34
-    jmp irq_common_stub
-
-; 35: IRQ3
-irq3:
-    cli
-    push byte 0
-    push byte 35
-    jmp irq_common_stub
-
-; 36: IRQ4
-irq4:
-    cli
-    push byte 0
-    push byte 36
-    jmp irq_common_stub
-
-; 37: IRQ5
-irq5:
-    cli
-    push byte 0
-    push byte 37
-    jmp irq_common_stub
-
-; 38: IRQ6
-irq6:
-    cli
-    push byte 0
-    push byte 38
-    jmp irq_common_stub
-
-; 39: IRQ7
-irq7:
-    cli
-    push byte 0
-    push byte 39
-    jmp irq_common_stub
-
-; 40: IRQ8
-irq8:
-    cli
-    push byte 0
-    push byte 40
-    jmp irq_common_stub
-
-; 41: IRQ9
-irq9:
-    cli
-    push byte 0
-    push byte 41
-    jmp irq_common_stub
-
-; 42: IRQ10
-irq10:
-    cli
-    push byte 0
-    push byte 42
-    jmp irq_common_stub
-
-; 43: IRQ11
-irq11:
-    cli
-    push byte 0
-    push byte 43
-    jmp irq_common_stub
-
-; 44: IRQ12
-irq12:
-    cli
-    push byte 0
-    push byte 44
-    jmp irq_common_stub
-
-; 45: IRQ13
-irq13:
-    cli
-    push byte 0
-    push byte 45
-    jmp irq_common_stub
-
-; 46: IRQ14
-irq14:
-    cli
-    push byte 0
-    push byte 46
-    jmp irq_common_stub
-
-; 47: IRQ15
-irq15:
-    cli
-    push byte 0
-    push byte 47
-    jmp irq_common_stub
-
+; 32: IRQ0 : System clock
+irq 0
+; 33: IRQ1 : Keyboard
+irq 1
+; 34 -> 47 : Currently unused
+irq 2
+irq 3
+irq 4
+irq 5
+irq 6
+irq 7
+irq 8
+irq 9
+irq 10
+irq 11
+irq 12
+irq 13
+irq 14
+irq 15
