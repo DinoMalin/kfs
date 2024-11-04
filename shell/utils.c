@@ -1,33 +1,5 @@
 #include "shell.h"
 
-char *readline() {
-	u8 *start = video_memory;
-	go_start_line(start);
-	start += ps1_len * 2;
-
-	int len = 0;
-	for (int i = 0; start[i] && start + i < END_VMEM; i++) {
-		len++;
-	}
-
-	if (!len)
-		return NULL;
-	len /= 2;
-
-	char *result = vmalloc(len + 1);
-	if (!result) {
-		kernel_panic("allocation error", NO_EXIT);
-		return NULL;
-	}
-
-	for (int i = 0; i < len; i++) {
-		result[i] = start[i * 2];
-	}
-	result[len] = '\0';
-
-	return result;
-}
-
 int check_arg(char *cmd, char *str) {
 	int i;
 

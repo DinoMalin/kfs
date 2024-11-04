@@ -52,7 +52,7 @@ int check_key(u8 scancode) {
 		ks ^= ctrl;
 		return 1;
 	} else if (isenter(scancode)) {
-		shell();
+		submit_line();
 		return 1;
 	}
 	return 0;
@@ -65,6 +65,7 @@ void keyboard_handler(struct regs *r) {
 	} else {
 		if (!check_key(scancode) && !shortcut(scancode)) {
 			writek(&kbus[maj(scancode)], default_color, 1);
+			add_character(kbus[maj(scancode)]);
 		}
 	}
 }

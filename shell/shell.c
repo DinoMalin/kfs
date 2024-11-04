@@ -27,8 +27,6 @@ void interpret() {
 	command(cmd, HALT, halt);
 	command(cmd, VALGRIND, _valgrind);
 
-	vfree(cmd);
-
 	if (!executed)
 		printk(UNKNOWN);
 	executed = 0;
@@ -42,6 +40,7 @@ void shell() {
 }
 
 void init_shell() {
+	init_readline();
 	apply_color(default_color);
 	ps1_len = strlen(PS1);
 	printk(PS1);

@@ -11,6 +11,12 @@ void vfree(void *addr);
 int vsize(void *addr);
 void valgrind();
 
+void init_readline();
+char *readline();
+void add_character(char c);
+#define submit_line() shell()
+#define RL_BUFF_SIZE 1024
+
 typedef enum {
 	NO_EXIT,
 	EXIT,
