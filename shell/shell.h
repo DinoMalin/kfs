@@ -2,6 +2,7 @@
 
 #include "essentials.h"
 #include "io.h"
+#include "keyboard.h"
 #include "string.h"
 #include "timer.h"
 #include "workspace.h"
@@ -16,6 +17,7 @@ void theme(char *cmd);
 void help(char *cmd);
 void reboot(char *cmd);
 void halt(char *cmd);
+void _layout(char *cmd);
 void _switch(char *cmd);
 void _valgrind(char *cmd);
 void _syscall(char *cmd);
@@ -47,6 +49,10 @@ extern int end;
 #define SYSCALL_USAGE "syscall <number>"
 #define SYSCALL_ARGS 1
 
+#define LAYOUT "layout"
+#define LAYOUT_USAGE "layout <kbmap>"
+#define LAYOUT_ARGS 1
+
 #define THEME "theme"
 #define THEME_USAGE "theme <foreground color> <background color>"
 #define THEME_ARGS 1
@@ -68,6 +74,7 @@ extern int end;
 #define ERTOOBIG "dinosh: Value too big (max: %d)"
 #define ERCOLOR "dinosh: Color is not valid"
 #define ERADDR "dinosh: Address is not valid"
+#define ERNOLAYOUT "dinosh: No such layout"
 
 #define EXIT_REBOOT 1;
 #define EXIT_HALT 2;
@@ -104,6 +111,8 @@ extern int end;
 	"\n"                                                                       \
 	"halt                         halt the computer.\n"                        \
 	"\n"                                                                       \
+	"layout <kbmap>               apply the <kbmap> layout to the keyboard\n"  \
+	"\n"                                                                       \
 	"lilalelolu                   lalelilalo\n"                                \
 	"\n"                                                                       \
 	"reboot                       restart the computer.\n"                     \
@@ -124,5 +133,4 @@ extern int end;
 	"theme <fg> <bg>              modify the colors of the output.\n"          \
 	"      <theme>                use a custom theme."                         \
 	"\n"                                                                       \
-	"valgrind                     perform a memory check. "                    \
-	"\n"
+	"valgrind                     perform a memory check.\n"\

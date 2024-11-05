@@ -24,6 +24,7 @@ void interpret() {
 	command(cmd, MAN, help);
 	command(cmd, REBOOT, reboot);
 	command(cmd, HALT, halt);
+	command(cmd, LAYOUT, _layout);
 	command(cmd, SWITCH, _switch);
 	command(cmd, VALGRIND, _valgrind);
 	command(cmd, SYSCALL, _syscall);

@@ -2,16 +2,32 @@
 
 extern int switching;
 
-void echo(char *cmd) {
-	next_arg(cmd);
-	printk("%s", cmd);
-}
-
 void lilalelolu() { printk("lalelilalo"); }
 void help(char *cmd) { printk(HELP_MSG); }
 void reboot(char *cmd) { end = EXIT_REBOOT; }
 void halt(char *cmd) { end = EXIT_HALT; }
 void _valgrind(char *cmd) { valgrind(); }
+
+void echo(char *cmd) {
+	next_arg(cmd);
+	printk("%s", cmd);
+}
+
+void _layout(char *cmd) {
+	int nb_args = count_args(cmd);
+	if (!good_syntax(cmd) || (nb_args != LAYOUT_ARGS)) {
+		printk(ERSYNT, LAYOUT_USAGE);
+		return;
+	}
+
+	next_arg(cmd);
+	if (!strcmp(cmd, "azerty"))
+		switch_layout(FR);
+	else if (!strcmp(cmd, "qwerty"))
+		switch_layout(US);
+	else
+		printk(ERNOLAYOUT);
+}
 
 void memory(char *cmd) {
 	int nb_args = count_args(cmd);

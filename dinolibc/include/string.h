@@ -2,6 +2,7 @@
 
 int strlen(char *str);
 int strncmp(char *str1, char *str2, int size);
+int strcmp(char *str1, char *str2);
 int atoi(const char *str);
 char *strchr(const char *str, int search);
 
