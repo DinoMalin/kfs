@@ -12,12 +12,13 @@ void init_shell();
 void memory(char *cmd);
 void echo(char *cmd);
 void lilalelolu();
-void sh_switch(char *cmd);
 void theme(char *cmd);
 void help(char *cmd);
 void reboot(char *cmd);
 void halt(char *cmd);
+void _switch(char *cmd);
 void _valgrind(char *cmd);
+void _syscall(char *cmd);
 
 char *readline();
 int check_arg(char *cmd, char *str);
@@ -41,6 +42,10 @@ extern int end;
 #define ECHO "echo"
 #define ECHO_USAGE "echo <message>"
 #define ECHO_ARGS 1
+
+#define SYSCALL "syscall"
+#define SYSCALL_USAGE "syscall <number>"
+#define SYSCALL_ARGS 1
 
 #define THEME "theme"
 #define THEME_USAGE "theme <foreground color> <background color>"
@@ -71,6 +76,7 @@ extern int end;
 #define isword(c) (isalpha(c) || isdigit(c) || c == '_' || c == '-')
 #define authorized_character(c) (isword(c) || c == ' ')
 
+#define skip_prefix(str) !(str += 2)
 #define next_arg(str)                                                          \
 	{                                                                          \
 		while (isword(*str)) {                                                 \
@@ -92,8 +98,6 @@ extern int end;
 	if (check_arg(str, name))                                                  \
 		return color;
 
-#define skip_prefix(str) !(str += 2)
-
 #define HELP_MSG                                                               \
 	"DINOS - HELP\n"                                                           \
 	"echo <value>                 display <value> on the output.\n"            \
@@ -113,7 +117,12 @@ extern int end;
 	"                             address must start with 0x and be in "       \
 	"hexadecimal."                                                             \
 	"\n"                                                                       \
+	"syscall <number>             call syscall <number>.\n"                    \
+	"\n"                                                                       \
 	"switch <number>              switch to the <number> workspace.\n"         \
 	"\n"                                                                       \
 	"theme <fg> <bg>              modify the colors of the output.\n"          \
-	"      <theme>                use a custom theme.\n"\
+	"      <theme>                use a custom theme."                         \
+	"\n"                                                                       \
+	"valgrind                     perform a memory check. "                    \
+	"\n"

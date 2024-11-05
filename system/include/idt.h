@@ -21,18 +21,30 @@ struct idt_ptr {
 struct regs {
 	u32 gs, fs, es, ds;
 	u32 edi, esi, ebp, esp, ebx, edx, ecx, eax;
-	u32 int_nb, err_code;
+	u32 int_nb, code;
 	u32 eip, cs, eflags, useresp, ss;
 };
 
 void idt_install();
-void idt_set_gate(unsigned long base, unsigned short sel, u8 flags);
+void idt_set_gate(int nb, unsigned long base, unsigned short sel, u8 flags);
 
 #define NB_ENTRIES 256
-#define ISR(num) (unsigned)isr##num, 0x08, 0b10001110
+#define ISR(num) num, (unsigned)isr_table[num], 0x08, 0b10001110
+#define SOFT_INT 0x80, (unsigned)software_isr, 0x08, 0b10001110
 #define GO_HALT()                                                              \
-	while (1)                                                                  \
-		;
+	while (1) {                                                                \
+	}
+
+#define EXCEPTIONS_MSG                                                         \
+	"Division By Zero", "Debug", "Non Maskable Interrupt", "Breakpoint",       \
+		"Into Detected Overflow", "Out of Bounds", "Invalid Opcode",           \
+		"No Coprocessor", "Double Fault", "Coprocessor Segment Overrun",       \
+		"Bad TSS", "Segment Not Present", "Stack Fault",                       \
+		"General Protection Fault", "Page Fault", "Unknown Interrupt",         \
+		"Coprocessor Fault", "Alignment Check", "Machine Check", "Reserved",   \
+		"Reserved", "Reserved", "Reserved", "Reserved", "Reserved",            \
+		"Reserved", "Reserved", "Reserved", "Reserved", "Reserved",            \
+		"Reserved", "Reserved"
 
 // Load IDT and ISR functions
 extern void idt_load();
@@ -68,3 +80,4 @@ extern void isr28();
 extern void isr29();
 extern void isr30();
 extern void isr31();
+extern void software_isr();

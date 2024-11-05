@@ -5,9 +5,12 @@
 struct idt_entry idt[NB_ENTRIES];
 struct idt_ptr idtp;
 
-void idt_set_gate(unsigned long base, unsigned short sel, u8 flags) {
-	static nb = 0;
+void (*isr_table[])() = {
+	isr0,  isr1,  isr2,	 isr3,	isr4,  isr5,  isr6,	 isr7,	isr8,  isr9,  isr10,
+	isr11, isr12, isr13, isr14, isr15, isr16, isr17, isr18, isr19, isr20, isr21,
+	isr22, isr23, isr24, isr25, isr26, isr27, isr28, isr29, isr30, isr31};
 
+void idt_set_gate(int nb, unsigned long base, unsigned short sel, u8 flags) {
 	idt[nb].base_lo = base & 0xFFFF;
 	idt[nb].base_hi = (base >> 16) & 0xFFFF;
 
@@ -24,74 +27,15 @@ void idt_install() {
 
 	memset(&idt, 0, sizeof(struct idt_entry) * NB_ENTRIES);
 
-	idt_set_gate(ISR(0));
-	idt_set_gate(ISR(1));
-	idt_set_gate(ISR(2));
-	idt_set_gate(ISR(3));
-	idt_set_gate(ISR(4));
-	idt_set_gate(ISR(5));
-	idt_set_gate(ISR(6));
-	idt_set_gate(ISR(7));
-	idt_set_gate(ISR(8));
-	idt_set_gate(ISR(9));
-	idt_set_gate(ISR(10));
-	idt_set_gate(ISR(11));
-	idt_set_gate(ISR(12));
-	idt_set_gate(ISR(13));
-	idt_set_gate(ISR(14));
-	idt_set_gate(ISR(15));
-	idt_set_gate(ISR(16));
-	idt_set_gate(ISR(17));
-	idt_set_gate(ISR(18));
-	idt_set_gate(ISR(19));
-	idt_set_gate(ISR(20));
-	idt_set_gate(ISR(21));
-	idt_set_gate(ISR(22));
-	idt_set_gate(ISR(23));
-	idt_set_gate(ISR(24));
-	idt_set_gate(ISR(25));
-	idt_set_gate(ISR(26));
-	idt_set_gate(ISR(27));
-	idt_set_gate(ISR(28));
-	idt_set_gate(ISR(29));
-	idt_set_gate(ISR(30));
-	idt_set_gate(ISR(31));
+	for (int i = 0; i < 31; i++) {
+		idt_set_gate(ISR(i));
+	}
+	idt_set_gate(SOFT_INT);
 
 	idt_load();
 }
 
-u8 *exceptions[] = {"Division By Zero",
-					"Debug",
-					"Non Maskable Interrupt",
-					"Breakpoint",
-					"Into Detected Overflow",
-					"Out of Bounds",
-					"Invalid Opcode",
-					"No Coprocessor",
-					"Double Fault",
-					"Coprocessor Segment Overrun",
-					"Bad TSS",
-					"Segment Not Present",
-					"Stack Fault",
-					"General Protection Fault",
-					"Page Fault",
-					"Unknown Interrupt",
-					"Coprocessor Fault",
-					"Alignment Check",
-					"Machine Check",
-					"Reserved",
-					"Reserved",
-					"Reserved",
-					"Reserved",
-					"Reserved",
-					"Reserved",
-					"Reserved",
-					"Reserved",
-					"Reserved",
-					"Reserved",
-					"Reserved",
-					"Reserved",
-					"Reserved"};
+u8 *exceptions[] = {EXCEPTIONS_MSG};
 
 u32 get_cr() {
 	unsigned int cr;

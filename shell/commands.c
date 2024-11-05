@@ -46,7 +46,7 @@ void memory(char *cmd) {
 	print_memory(lines, addr);
 }
 
-void sh_switch(char *cmd) {
+void _switch(char *cmd) {
 	int nb_args = count_args(cmd);
 	if (!good_syntax(cmd) || (nb_args != SWITCH_ARGS)) {
 		printk(ERSYNT, SWITCH_USAGE);
@@ -97,4 +97,22 @@ void theme(char *cmd) {
 		return;
 	}
 	apply_color(combine(bg, fg));
+}
+
+void _syscall(char *cmd) {
+	int nb_args = count_args(cmd);
+	if (!good_syntax(cmd) || (nb_args != SYSCALL_ARGS)) {
+		printk(ERSYNT, SYSCALL_USAGE);
+		return;
+	}
+
+	next_arg(cmd);
+	int call = atoi(cmd);
+
+	if (!isdigit(*cmd)) {
+		printk(ERVALUE);
+		return;
+	}
+
+	syscall(call);
 }

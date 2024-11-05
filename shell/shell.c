@@ -19,13 +19,14 @@ void interpret() {
 	command(cmd, MEMORY, memory);
 	command(cmd, ECHO, echo);
 	command(cmd, LILALELOLU, lilalelolu);
-	command(cmd, SWITCH, sh_switch);
 	command(cmd, THEME, theme);
 	command(cmd, HELP, help);
 	command(cmd, MAN, help);
 	command(cmd, REBOOT, reboot);
 	command(cmd, HALT, halt);
+	command(cmd, SWITCH, _switch);
 	command(cmd, VALGRIND, _valgrind);
+	command(cmd, SYSCALL, _syscall);
 
 	if (!executed)
 		printk(UNKNOWN);

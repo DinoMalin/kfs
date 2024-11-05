@@ -37,3 +37,6 @@ extern int end;
 		if (must_exit)                                                         \
 			end = 2;                                                           \
 	}
+
+// #define do_software_interrupt() asm volatile("int $0x80")
+extern void syscall(int code);

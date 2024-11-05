@@ -40,20 +40,6 @@ void irq_install() {
 
 	idt_set_gate(IRQ(0));
 	idt_set_gate(IRQ(1));
-	idt_set_gate(IRQ(2));
-	idt_set_gate(IRQ(3));
-	idt_set_gate(IRQ(4));
-	idt_set_gate(IRQ(5));
-	idt_set_gate(IRQ(6));
-	idt_set_gate(IRQ(7));
-	idt_set_gate(IRQ(8));
-	idt_set_gate(IRQ(9));
-	idt_set_gate(IRQ(10));
-	idt_set_gate(IRQ(11));
-	idt_set_gate(IRQ(12));
-	idt_set_gate(IRQ(13));
-	idt_set_gate(IRQ(14));
-	idt_set_gate(IRQ(15));
 }
 
 void irq_handler(struct regs *r) {

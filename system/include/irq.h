@@ -28,7 +28,7 @@ void irq_install_handler(int index, void (*handler)(struct regs *r));
 void irq_uninstall_handler(int index);
 void irq_handler(struct regs *r);
 
-#define IRQ(num) (unsigned)irq##num, 0x08, 0b10001110
+#define IRQ(num) num + 32, (unsigned)irq##num, 0x08, 0b10001110
 #define EOI 0x20
 
 #define PIC1 0x20
