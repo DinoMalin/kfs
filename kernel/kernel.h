@@ -13,3 +13,5 @@
 #include "multiboot.h"
 #include "physical_mem.h"
 #include "virtual_mem.h"
+
+#define PROVOC_GPF() asm volatile("int $0x81")
